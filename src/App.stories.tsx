@@ -1,13 +1,20 @@
+import type { Meta, StoryObj } from "@storybook/react";
 import App from "./App";
 
-export default {
+// Définition du Meta type pour les stories
+const meta: Meta<typeof App> = {
   title: "App",
   component: App,
 };
 
-const Template = (args: { [key: string]: any }) => <App {...args} />;
+export default meta;
 
-export const Default = Template.bind({});
-Default.args = {
-  // Ajoutez ici les props par défaut si nécessaire
+// Définition du type Story
+type Story = StoryObj<typeof App>;
+
+// Création des stories avec le type correct
+export const Default: Story = {
+  args: {
+    // Ajoutez ici les props par défaut si nécessaire
+  },
 };
