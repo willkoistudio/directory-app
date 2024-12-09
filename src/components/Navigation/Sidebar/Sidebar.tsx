@@ -9,34 +9,29 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "../../ui/sidebar";
-import { Calendar, Home, Inbox, Search, Settings } from "lucide-react";
+import { Home, Search, UserRoundPlus, HousePlus } from "lucide-react";
 import styles from "./Sidebar.module.scss";
 
 const items = [
   {
     title: "Home",
-    url: "#",
+    url: "/",
     icon: Home,
   },
   {
-    title: "Inbox",
-    url: "#",
-    icon: Inbox,
-  },
-  {
-    title: "Calendar",
-    url: "#",
-    icon: Calendar,
-  },
-  {
     title: "Search",
-    url: "#",
+    url: "/search",
     icon: Search,
   },
   {
-    title: "Settings",
-    url: "#",
-    icon: Settings,
+    title: "Add Contact",
+    url: "/add-contact",
+    icon: UserRoundPlus,
+  },
+  {
+    title: "Add Company",
+    url: "/add-company",
+    icon: HousePlus,
   },
 ];
 
@@ -48,11 +43,12 @@ const AppSidebar: React.FC = () => {
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel>
-            {" "}
             <a href="#" className={styles.header__logo}>
               {appName}
             </a>
           </SidebarGroupLabel>
+        </SidebarGroup>
+        <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map((item) => (

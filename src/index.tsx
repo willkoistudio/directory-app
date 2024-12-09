@@ -1,7 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App";
 import "./assets/main.css";
+import "./assets/override.scss";
 
 const container = document.getElementById("root");
 
@@ -16,7 +17,3 @@ root.render(
     <App />
   </React.StrictMode>
 );
-
-useEffect(() => {
-  document.body.classList.add("dark");
-}, []);

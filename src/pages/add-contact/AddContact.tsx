@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Card,
   CardContent,
@@ -8,8 +8,15 @@ import {
 import { Input } from "../../components/ui/input";
 import { Button } from "../../components/ui/button";
 import { Label } from "../../components/ui/label";
+import { usePageName } from "../../context/PageNameContext";
 
 const AddContact: React.FC = () => {
+  const { setPageName } = usePageName();
+
+  useEffect(() => {
+    setPageName("Add Contact"); // Mettre à jour le nom de la page
+  }, [setPageName]);
+
   return (
     <Card>
       <CardHeader>
@@ -36,4 +43,4 @@ const AddContact: React.FC = () => {
   );
 };
 
-export default AddContact;
+export { AddContact };
