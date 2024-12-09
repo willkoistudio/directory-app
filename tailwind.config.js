@@ -1,9 +1,12 @@
+const { join } = require("path");
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  darkMode: ["class"],
-  content: ["/index.html", "./src/**/*.{html,js,jsx,ts,tsx}"],
+  darkMode: "class",
+  content: [join(__dirname, "./src/**/*.{js,ts,jsx,tsx}")],
   theme: {
     colors: {
+      black: "#000",
       blue: "#1fb6ff",
       purple: "#7e5bef",
       pink: "#ff49db",
@@ -22,6 +25,8 @@ module.exports = {
     },
     extend: {
       colors: {
+        black: "#000",
+
         border: "hsl(var(--border))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",

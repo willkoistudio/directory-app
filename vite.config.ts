@@ -7,7 +7,6 @@ export default defineConfig({
   resolve: {
     alias: {
       crypto: "empty-module",
-      "@": path.resolve(__dirname, "./src"),
     },
   },
   define: {
