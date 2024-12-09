@@ -1,0 +1,11 @@
+.header {
+  &__logo {
+    background-image: url("/logo-horizontal.svg");
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 120px;
+    height: 25px;
+    display: block;
+    text-indent: -9999px;
+  }
+}
