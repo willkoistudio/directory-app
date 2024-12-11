@@ -1,10 +1,9 @@
-import { Address } from "./Address";
+import { Address } from "./address";
 
 export interface Contact {
   id: string;
   name: string;
   companyId: string;
-  status: "pending" | "processing" | "success" | "failed";
   email: string;
   phone: string;
   workPhone: string;
@@ -17,5 +16,4 @@ export interface Contact {
   avatar?: string;
   createdAt?: Date;
   updatedAt?: Date;
-  updatedBy?: string;
 }

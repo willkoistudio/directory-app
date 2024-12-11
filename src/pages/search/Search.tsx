@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Contact } from "../../models/Contact";
+import { Contact } from "../../models/contact";
 import { usePageName } from "../../context/PageNameContext";
 
 import { ArrowUpDown, Filter, MoreHorizontal } from "lucide-react";
@@ -30,11 +30,8 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../../components/ui/dropdown-menu";
-
 import {
   Drawer,
   DrawerClose,
@@ -46,13 +43,28 @@ import {
   DrawerTrigger,
 } from "../../components/ui/drawer";
 import { Label } from "../../components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "../../components/ui/select";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "../../components/ui/avatar";
+import { ROUTE_NAMES } from "../../helpers/const/routes";
+import { useNavigate } from "react-router-dom"; // Ajoutez cette ligne
 
 const data: Contact[] = [
   {
     id: "m5gr84i9",
     name: "Leanne Graham",
     companyId: "0",
-    status: "success",
     email: "ken99@yahoo.com",
     phone: "1-770-736-8031 x56442",
     workPhone: "010-692-6593 x09125",
@@ -69,13 +81,11 @@ const data: Contact[] = [
     avatar: "https://i.pravatar.cc/150?u=a042581f4e29026024d",
     createdAt: new Date(),
     updatedAt: new Date(),
-    updatedBy: "admin",
   },
   {
     id: "3c23d152",
     name: "Ervin Howell",
     companyId: "0",
-    status: "success",
     email: "shanna@yahoo.com",
     phone: "010-692-6593 x09125",
     workPhone: "1-463-123-3447",
@@ -92,13 +102,11 @@ const data: Contact[] = [
     avatar: "https://i.pravatar.cc/150?u=a042581f4e29026024d",
     createdAt: new Date(),
     updatedAt: new Date(),
-    updatedBy: "admin",
   },
   {
     id: "3c23d152",
     name: "Will Smirs",
     companyId: "0",
-    status: "success",
     email: "shanna@yahoo.com",
     phone: "010-692-6593 x09125",
     workPhone: "1-463-123-3447",
@@ -115,25 +123,8 @@ const data: Contact[] = [
     avatar: "https://i.pravatar.cc/150?u=a042581f4e29026024d",
     createdAt: new Date(),
     updatedAt: new Date(),
-    updatedBy: "admin",
   },
 ];
-
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "../../components/ui/select";
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "../../components/ui/avatar";
-import { ROUTE_NAMES } from "../../helpers/const/routes";
 
 export const columns: ColumnDef<Contact>[] = [
   {
@@ -246,15 +237,7 @@ export const columns: ColumnDef<Contact>[] = [
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(contact.name)}
-            >
-              Copy contact name
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>View related company</DropdownMenuItem>
-            <DropdownMenuItem>View contact details</DropdownMenuItem>
+            <DropdownMenuItem>Remove contact</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );
@@ -263,6 +246,7 @@ export const columns: ColumnDef<Contact>[] = [
 ];
 
 const Search: React.FC = () => {
+  const navigate = useNavigate();
   const { setPageName } = usePageName();
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -296,19 +280,13 @@ const Search: React.FC = () => {
   }, []);
 
   return (
-    <section className="">
-      <div className="my-8">
-        <h2 className="text-3xl font-bold text-center mb-4">
-          Search a contact
-        </h2>
-        <p className="text-center mb-8 ">
-          You can search for a contact by name, email, function or company.
-        </p>
+    <section>
+      <div className="mb-8 mt-12">
         <div className="flex justify-between">
           <Input
-            className="px-6  h-12 w-1/2"
+            className="px-6 h-12 w-1/2"
             type="search"
-            placeholder="Search a name..."
+            placeholder="Search a contact..."
             value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
             onChange={(event) =>
               table.getColumn("name")?.setFilterValue(event.target.value)
@@ -408,6 +386,8 @@ const Search: React.FC = () => {
                   <TableRow
                     key={row.id}
                     data-state={row.getIsSelected() && "selected"}
+                    className="cursor-pointer hover:bg-white/5"
+                    onClick={() => navigate(`/contact/${row.id}`)}
                   >
                     {row.getVisibleCells().map((cell) => (
                       <TableCell key={cell.id}>

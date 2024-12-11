@@ -6,10 +6,7 @@ import { Textarea } from "../../components/ui/textarea";
 const AddContactThirdStep: FC = () => {
   return (
     <>
-      <p className="text-center pt-8 pb-8">
-        Complementary infos about your contact
-      </p>
-      <section className="grid grid-cols-2 gap-8 px-8">
+      <section className="grid grid-cols-2 gap-8 px-8 mt-12">
         <div>
           <Label>Fax</Label>
           <Input type="phone" />

@@ -8,8 +8,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../../components/ui/select";
-import { Company } from "../../models/Company";
+import { Company } from "../../models/company";
 import { Textarea } from "../../components/ui/textarea";
+import { Button } from "../../components/ui/button";
+import { Save } from "lucide-react";
 
 const cities = [
   {
@@ -88,8 +90,7 @@ const countries = [
 const AddCompanySecondStep: FC = () => {
   return (
     <>
-      <p className="text-center pt-8 pb-8">Tell us about the company</p>
-      <section className="grid grid-cols-2 gap-8 px-8">
+      <section className="grid grid-cols-2 gap-8 px-8 mt-12">
         <div>
           <Label>Name</Label>
           <Input type="text" />
@@ -145,6 +146,11 @@ const AddCompanySecondStep: FC = () => {
           <Textarea />
         </div>
       </section>
+      <div className="flex justify-center px-8 mt-12">
+        <Button className="bg-red h-14 px-8">
+          <Save /> Save company infos
+        </Button>
+      </div>
     </>
   );
 };

@@ -1,6 +1,7 @@
 import { FC, useState } from "react";
 import { Input } from "../../components/ui/input";
 import { X } from "lucide-react";
+import { Label } from "../../components/ui/label";
 
 const AddContactFourthStep: FC = () => {
   const [keywords, setKeywords] = useState<string[]>([]);
@@ -15,35 +16,38 @@ const AddContactFourthStep: FC = () => {
   };
   return (
     <>
-      <p className="text-center pt-8 pb-8">Add some keywords to your contact</p>
       <section>
-        <div className="flex mb-8">
+        <div className="mt-12 w-1/2 mx-auto">
+          <Label className="block pb-4">
+            Add some keywords to your contact
+          </Label>
+
           <Input
             type="text"
-            className="w-1/2 mx-auto h-14"
+            className=" h-14"
             placeholder="Add a keyword and press enter"
             value={inputValue} // Liaison de la valeur de l'input
             onChange={(e) => setInputValue(e.target.value)} // Mise à jour de l'état de l'input
             onKeyDown={handleKeyDown} // Ajout de l'événement de la touche
           />
-        </div>
-        <div className="flex flex-wrap justify-center ">
-          {keywords.map((keyword, index) => (
-            <div
-              key={index}
-              className="bg-red px-4 py-2 rounded-lg mx-2 mb-2 relative"
-            >
-              <span
-                className="absolute -top-2 -right-3 cursor-pointer bg-white rounded-full px-1.5"
-                onClick={() =>
-                  setKeywords(keywords.filter((_, i) => i !== index))
-                }
+          <div className="flex flex-wrap justify-center mt-8 ">
+            {keywords.map((keyword, index) => (
+              <div
+                key={index}
+                className="bg-red px-4 py-2 rounded-lg mx-2 mb-4 relative group"
               >
-                <X width={12} className="text-red" />
-              </span>
-              {keyword}
-            </div>
-          ))}
+                <span
+                  className="absolute -top-2 -right-3 cursor-pointer bg-white rounded-full px-1.5 opacity-0 group-hover:opacity-100"
+                  onClick={() =>
+                    setKeywords(keywords.filter((_, i) => i !== index))
+                  }
+                >
+                  <X width={12} className="text-red" />
+                </span>
+                {keyword}
+              </div>
+            ))}
+          </div>
         </div>
       </section>
     </>

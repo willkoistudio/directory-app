@@ -71,11 +71,7 @@ const AddCompany: React.FC = () => {
 
   return (
     <>
-      <div className="text-center my-8">
-        <h1 className="text-3xl font-bold mb-4">New company</h1>
-        <p>Please fill in the form to create a new company</p>
-      </div>
-      <nav className="flex border border-white/10 rounded-lg px-6 py-4">
+      <nav className="mt-12 flex border border-white/10 rounded-lg px-6 py-4">
         {addCompanySteps.map((step) => (
           <div
             className="add-contact-steps-navigation flex gap-2 items-center cursor-pointer"

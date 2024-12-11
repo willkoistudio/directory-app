@@ -6,7 +6,9 @@ import { Save } from "lucide-react";
 const AddContactFifthStep: FC = () => {
   return (
     <>
-      <p className="text-center pt-8 pb-8">Here is a preview of your contact</p>
+      <p className="text-2xl1 text-center pt-8 pb-8">
+        Here is a preview of your contact
+      </p>
       <section className="grid grid-cols-2 gap-8 px-8">
         <div>
           <div className="pb-4">

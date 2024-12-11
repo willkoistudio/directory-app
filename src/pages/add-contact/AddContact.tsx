@@ -102,11 +102,7 @@ const AddContact: React.FC = () => {
 
   return (
     <div>
-      <div className="text-center my-8">
-        <h1 className="text-3xl font-bold mb-4">New contact</h1>
-        <p>Please fill in the form to create a new contact</p>
-      </div>
-      <nav className="flex border border-white/10 rounded-lg px-6 py-4">
+      <nav className="flex border border-white/10 rounded-lg px-6 py-4 mt-12">
         {addContactSteps.map((step) => (
           <div
             className="add-contact-steps-navigation flex gap-2 items-center cursor-pointer"

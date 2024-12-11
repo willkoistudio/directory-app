@@ -8,7 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../../components/ui/select";
-import { Company } from "../../models/Company";
+import { Company } from "../../models/company";
 
 const companiesList: Company[] = [
   {
@@ -158,8 +158,7 @@ const countries = [
 const AddContactSecondStep: FC = () => {
   return (
     <>
-      <p className="text-center pt-8 pb-8">Tell us about your contact</p>
-      <section className="grid grid-cols-2 gap-8 px-8">
+      <section className="grid grid-cols-2 gap-8 mt-12 px-8">
         <div>
           <Label>Name</Label>
           <Input type="text" />
