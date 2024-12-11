@@ -168,8 +168,8 @@ const Home: React.FC = () => {
         </Card>
         <Card>
           <CardHeader>
-            <CardTitle>Bar Chart - Label</CardTitle>
-            <CardDescription>January - June 2024</CardDescription>
+            <CardTitle>Visits</CardTitle>
+            <CardDescription>Number of visitors per month</CardDescription>
           </CardHeader>
           <CardContent>
             <ChartContainer config={chartConfig2}>

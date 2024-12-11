@@ -16,7 +16,7 @@ const AddContactFirstStep: FC = () => {
             className="mx-auto rounded-lg"
           />
         </Card>
-        <Card className="text-center border-2 border-dashed py-12 px-8 w-full relative">
+        <Card className="text-center border-2 border-dashed py-12 px-8 w-1/2 relative mx-auto">
           <ImageUp className="mx-auto h-12 w-12" />
           <p className="text-xl my-4 font-bold">Import a profile picture</p>
           <p className="text-gray">Maximum file size: 10MB</p>

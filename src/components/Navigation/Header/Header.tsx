@@ -20,7 +20,7 @@ const Header: React.FC = () => {
         <div className="flex gap-6 ml-auto mr-0">
           <DropdownMenu>
             <DropdownMenuTrigger>
-              <Languages className="cursor-pointer" />
+              <Languages className="cursor-pointer hover:text-gray " />
             </DropdownMenuTrigger>
             <DropdownMenuContent className="border-white/10">
               <DropdownMenuLabel className="border-white/10 border-b">
@@ -37,7 +37,7 @@ const Header: React.FC = () => {
           </DropdownMenu>
           <DropdownMenu>
             <DropdownMenuTrigger>
-              <BellDot className="cursor-pointer" />
+              <BellDot className="cursor-pointer hover:text-gray" />
             </DropdownMenuTrigger>
             <DropdownMenuContent className="border-white/10">
               <DropdownMenuLabel className="border-white/10 border-b">
@@ -52,7 +52,7 @@ const Header: React.FC = () => {
           </DropdownMenu>
           <DropdownMenu>
             <DropdownMenuTrigger>
-              <Settings className="cursor-pointer" />
+              <Settings className="cursor-pointer hover:text-gray" />
             </DropdownMenuTrigger>
             <DropdownMenuContent className="border-white/10">
               <DropdownMenuLabel className="border-white/10 border-b">
