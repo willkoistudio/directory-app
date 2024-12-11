@@ -3,14 +3,17 @@ import { usePageName } from "../../context/PageNameContext";
 import { Button } from "../../components/ui/button";
 import { Badge } from "../../components/ui/badge";
 import styles from "./AddContact.module.scss";
-import { AddContactFirstStep } from "../../features/add-contact-steps/AddContactFirstStep/AddContactFirstStep";
+import { AddContactFirstStep } from "../../features/add-contact-steps/AddContactFirstStep";
 import { AddContactSecondStep } from "../../features/add-contact-steps/AddContactSecondStep";
 import { AddContactThirdStep } from "../../features/add-contact-steps/AddContactThirdStep";
 import { AddContactFourthStep } from "../../features/add-contact-steps/AddContactFourthStep";
 import { AddContactFifthStep } from "../../features/add-contact-steps/AddContactFifthStep";
-import { AddContactSixthStep } from "../../features/add-contact-steps/AddContactSixthStep";
 import { Check } from "lucide-react";
 import { ROUTE_NAMES } from "../../helpers/const/routes";
+import { Form } from "../../components/ui/form";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 export interface AddContactStep {
   name: string;
@@ -24,29 +27,25 @@ const addContactSteps: AddContactStep[] = [
     stepNumber: 1,
     isCompleted: false,
   },
+
   {
-    name: "Name",
+    name: "Primary infos",
     stepNumber: 2,
     isCompleted: false,
   },
   {
-    name: "Company infos",
+    name: "Secondary infos",
     stepNumber: 3,
     isCompleted: false,
   },
   {
-    name: "Secondary infos",
+    name: "Keywords",
     stepNumber: 4,
     isCompleted: false,
   },
   {
-    name: "Keywords",
-    stepNumber: 5,
-    isCompleted: false,
-  },
-  {
     name: "Summary",
-    stepNumber: 6,
+    stepNumber: 5,
     isCompleted: false,
   },
 ];
@@ -77,8 +76,6 @@ const AddContact: React.FC = () => {
         return <AddContactFourthStep />;
       case 5:
         return <AddContactFifthStep />;
-      case 6:
-        return <AddContactSixthStep />;
       default:
         return;
     }
@@ -88,17 +85,33 @@ const AddContact: React.FC = () => {
     setPageName(ROUTE_NAMES.ADD_CONTACT); // Mettre à jour le nom de la page
   }, []);
 
+  const formSchema = z.object({
+    name: z.string().min(2).max(50),
+  });
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      name: "",
+    },
+  });
+
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    console.log(values);
+  }
+
   return (
     <div>
       <div className="text-center my-8">
-        <h1 className="text-3xl font-bold mb-4">Ajouter un contact</h1>
-        <p>Veuillez remplir le formulaire ci-dessous</p>
+        <h1 className="text-3xl font-bold mb-4">New contact</h1>
+        <p>Please fill in the form to create a new contact</p>
       </div>
-      <div className="flex border border-white/10 rounded-lg px-6 py-4">
+      <nav className="flex border border-white/10 rounded-lg px-6 py-4">
         {addContactSteps.map((step) => (
           <div
-            className="add-contact-steps-navigation flex gap-2 items-center"
+            className="add-contact-steps-navigation flex gap-2 items-center cursor-pointer"
             key={step.stepNumber}
+            onClick={() => setCurrentStep(step.stepNumber)}
           >
             <div className="add-contact-steps-navigation-icon">
               <Badge className={`${stepsIconColor(step)} py-1 `}>
@@ -106,7 +119,7 @@ const AddContact: React.FC = () => {
               </Badge>
             </div>
             <span className="whitespace-nowrap">{step.name}</span>
-            {step.stepNumber !== 6 && (
+            {step.stepNumber !== 5 && (
               <span className={styles["add-contact-steps-navigation-line"]} />
             )}
           </div>
@@ -121,14 +134,14 @@ const AddContact: React.FC = () => {
           </Button>
           <Button
             className="bg-red"
-            disabled={currentStep === 6}
+            disabled={currentStep === 5}
             onClick={() => setCurrentStep(currentStep + 1)}
           >
             Next
           </Button>
         </div>
-      </div>
-      {dispatchCurrentStep()}
+      </nav>
+      <Form {...form}>{dispatchCurrentStep()}</Form>
     </div>
   );
 };

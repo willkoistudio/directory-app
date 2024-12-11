@@ -306,7 +306,7 @@ const Search: React.FC = () => {
         </p>
         <div className="flex justify-between">
           <Input
-            className="px-6 text-black h-12 w-1/2"
+            className="px-6  h-12 w-1/2"
             type="search"
             placeholder="Search a name..."
             value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}

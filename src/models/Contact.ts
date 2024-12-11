@@ -1,9 +1,4 @@
-export interface Address {
-  street: string;
-  city: string;
-  postalCode: string;
-  country: string;
-}
+import { Address } from "./Address";
 
 export interface Contact {
   id: string;
@@ -13,21 +8,13 @@ export interface Contact {
   email: string;
   phone: string;
   workPhone: string;
-  fax: string;
+  fax?: string;
+  notes?: string;
   function: string;
   website: string;
   address: Address;
   keywords: string[];
   avatar?: string;
-  createdAt?: Date;
-  updatedAt?: Date;
-  updatedBy?: string;
-}
-
-export interface Company {
-  id: string;
-  name: string;
-  phone: string;
   createdAt?: Date;
   updatedAt?: Date;
   updatedBy?: string;

@@ -20,6 +20,7 @@ module.exports = {
       "gray-light": "#d3dce6",
       background: "hsl(var(--background))",
       foreground: "hsl(var(--foreground))",
+      popover: "hsl(var(--popover))",
     },
     fontFamily: {
       sans: ["Graphik", "sans-serif"],

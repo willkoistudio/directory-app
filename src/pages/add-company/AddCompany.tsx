@@ -1,27 +1,117 @@
 import React, { useEffect } from "react";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "../../components/ui/card";
 import { usePageName } from "../../context/PageNameContext";
 import { ROUTE_NAMES } from "../../helpers/const/routes";
+import { AddContactStep } from "../add-contact/AddContact";
+import styles from "../add-contact/AddContact.module.scss";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Badge } from "../../components/ui/badge";
+import { Check } from "lucide-react";
+import { Button } from "../../components/ui/button";
+import { Form } from "../../components/ui/form";
+import { AddCompanyFirstStep } from "../../features/add-company-steps/AddCompanyFirstStep";
+import { AddCompanySecondStep } from "../../features/add-company-steps/AddCompanySecondStep";
+
+const addCompanySteps: AddContactStep[] = [
+  {
+    name: "Logo",
+    stepNumber: 1,
+    isCompleted: false,
+  },
+  {
+    name: "Company infos",
+    stepNumber: 2,
+    isCompleted: false,
+  },
+];
 
 const AddCompany: React.FC = () => {
   const { setPageName } = usePageName();
+  const [currentStep, setCurrentStep] = React.useState(1);
+
+  const stepsIconColor = (step: AddContactStep) => {
+    if (step.isCompleted) {
+      return `${styles["step-completed"]} bg-green border-green `;
+    } else if (step.stepNumber === currentStep) {
+      return "bg-red border-red";
+    } else {
+      return "";
+    }
+  };
+
+  const dispatchCurrentStepContent = () => {
+    switch (currentStep) {
+      case 1:
+        return <AddCompanyFirstStep />;
+      case 2:
+        return <AddCompanySecondStep />;
+      default:
+        return;
+    }
+  };
+  const formSchema = z.object({
+    name: z.string().min(2).max(50),
+  });
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      name: "",
+    },
+  });
+
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    console.log(values);
+  }
 
   useEffect(() => {
     setPageName(ROUTE_NAMES.ADD_COMPANY); // Mettre à jour le nom de la page
   }, []);
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Ajouter une entreprise</CardTitle>
-      </CardHeader>
-      <CardContent>{/* Contenu du formulaire */}</CardContent>
-    </Card>
+    <>
+      <div className="text-center my-8">
+        <h1 className="text-3xl font-bold mb-4">New company</h1>
+        <p>Please fill in the form to create a new company</p>
+      </div>
+      <nav className="flex border border-white/10 rounded-lg px-6 py-4">
+        {addCompanySteps.map((step) => (
+          <div
+            className="add-contact-steps-navigation flex gap-2 items-center cursor-pointer"
+            key={step.stepNumber}
+            onClick={() => setCurrentStep(step.stepNumber)}
+          >
+            <div className="add-contact-steps-navigation-icon">
+              <Badge className={`${stepsIconColor(step)} py-1 `}>
+                {step.isCompleted ? <Check size={14} /> : step.stepNumber}
+              </Badge>
+            </div>
+            <span className="whitespace-nowrap">{step.name}</span>
+            {step.stepNumber !== 2 && (
+              <span className={styles["add-contact-steps-navigation-line"]} />
+            )}
+          </div>
+        ))}
+        <div className="flex gap-2 ml-auto">
+          <Button
+            variant={"outline"}
+            disabled={currentStep === 1}
+            onClick={() => setCurrentStep(currentStep - 1)}
+          >
+            Back
+          </Button>
+          <Button
+            className="bg-red"
+            disabled={currentStep === 2}
+            onClick={() => setCurrentStep(currentStep + 1)}
+          >
+            Next
+          </Button>
+        </div>
+      </nav>
+      <Form {...form}>{dispatchCurrentStepContent()}</Form>
+    </>
   );
 };
 
