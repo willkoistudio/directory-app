@@ -18,25 +18,24 @@ const App: React.FC = () => {
 
   return (
     <SidebarProvider>
-      <AppSidebar />
-      <div className="w-full bg-white/5">
-        <PageNameProvider>
+      <PageNameProvider>
+        <AppSidebar />
+        <div className="w-full bg-white/5">
           <Header />
-          <main className="p-8">
+          <main className="container mx-auto">
             <BrowserRouter>
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/add-contact" element={<AddContact />} />
                 <Route path="/add-company" element={<AddCompany />} />
-                <Route path="/add-contact" element={<AddContact />} />
                 <Route path="/contact/:id" element={<ContactDetail />} />
                 <Route path="/search" element={<Search />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </BrowserRouter>
           </main>
-        </PageNameProvider>
-      </div>
+        </div>
+      </PageNameProvider>
     </SidebarProvider>
   );
 };

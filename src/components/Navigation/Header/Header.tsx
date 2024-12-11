@@ -10,9 +10,9 @@ const Header: React.FC = () => {
       <NavigationMenu className="flex w-full justify-between">
         <span>{pageName}</span>
         <div className="flex gap-6 ml-auto mr-0">
-          <Languages />
-          <BellDot />
-          <Settings />
+          <Languages className="cursor-pointer" />
+          <BellDot className="cursor-pointer" />
+          <Settings className="cursor-pointer" />
         </div>
       </NavigationMenu>
     </header>

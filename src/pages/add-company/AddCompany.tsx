@@ -6,13 +6,14 @@ import {
   CardTitle,
 } from "../../components/ui/card";
 import { usePageName } from "../../context/PageNameContext";
+import { ROUTE_NAMES } from "../../helpers/const/routes";
 
 const AddCompany: React.FC = () => {
   const { setPageName } = usePageName();
 
   useEffect(() => {
-    setPageName("Add Company"); // Mettre à jour le nom de la page
-  }, [setPageName]);
+    setPageName(ROUTE_NAMES.ADD_COMPANY); // Mettre à jour le nom de la page
+  }, []);
 
   return (
     <Card>

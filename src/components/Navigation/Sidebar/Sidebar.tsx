@@ -11,25 +11,27 @@ import {
 } from "../../ui/sidebar";
 import { Home, Search, UserRoundPlus, HousePlus } from "lucide-react";
 import styles from "./Sidebar.module.scss";
+import { ROUTE_NAMES } from "../../../helpers/const/routes";
+import { usePageName } from "../../../context/PageNameContext";
 
 const items = [
   {
-    title: "Home",
+    title: ROUTE_NAMES.HOME,
     url: "/",
     icon: Home,
   },
   {
-    title: "Search",
+    title: ROUTE_NAMES.SEARCH,
     url: "/search",
     icon: Search,
   },
   {
-    title: "Add Contact",
+    title: ROUTE_NAMES.ADD_CONTACT,
     url: "/add-contact",
     icon: UserRoundPlus,
   },
   {
-    title: "Add Company",
+    title: ROUTE_NAMES.ADD_COMPANY,
     url: "/add-company",
     icon: HousePlus,
   },
@@ -38,6 +40,8 @@ const items = [
 const appName = "Directory App";
 
 const AppSidebar: React.FC = () => {
+  const { pageName } = usePageName();
+
   return (
     <Sidebar>
       <SidebarContent>
@@ -53,7 +57,7 @@ const AppSidebar: React.FC = () => {
             <SidebarMenu>
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
+                  <SidebarMenuButton asChild isActive={item.title === pageName}>
                     <a href={item.url}>
                       <item.icon />
                       <span>{item.title}</span>
