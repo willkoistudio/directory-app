@@ -24,21 +24,14 @@ const contactSlice = createSlice({
       state.contacts = await serviceContact.getContacts();
     },
 
-    addContact(state, action: PayloadAction<Contact>) {
-      state.contacts.push(action.payload);
+    async addContact(state, action: PayloadAction<Contact>) {
+      return serviceContact.addContact(action.payload);
     },
-    updateContact(state, action: PayloadAction<Contact>) {
-      const contactToUpdate = state.contacts.findIndex(
-        (contact) => contact.id === action.payload.id
-      );
-      if (contactToUpdate !== -1) {
-        state.contacts[contactToUpdate] = action.payload;
-      }
+    async updateContact(state, action: PayloadAction<Contact>) {
+      return serviceContact.updateContact(action.payload);
     },
-    removeContact(state, action: PayloadAction<string>) {
-      state.contacts = state.contacts.filter(
-        (contact) => contact.id !== action.payload
-      );
+    async removeContact(state, action: PayloadAction<string>) {
+      return serviceContact.removeContact(action.payload);
     },
   },
 });
