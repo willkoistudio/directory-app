@@ -3,6 +3,8 @@ import { createRoot } from "react-dom/client";
 import App from "./App";
 import "./assets/main.css";
 import "./assets/override.scss";
+import { Provider } from "react-redux"; // Ajouté
+import store from "./store/store";
 
 const container = document.getElementById("root");
 
@@ -13,7 +15,9 @@ if (!container) {
 const root = createRoot(container);
 
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+  <Provider store={store}>
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
+  </Provider>
 );

@@ -126,6 +126,13 @@ export const columns: ColumnDef<Company>[] = [
     cell: ({ row }) => <div className="lowercase">{row.getValue("note")}</div>,
   },
   {
+    accessorKey: "createdAt",
+    header: "Date creation",
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("createdAt")}</div>
+    ),
+  },
+  {
     id: "actions",
     enableHiding: false,
     cell: ({ row }) => {

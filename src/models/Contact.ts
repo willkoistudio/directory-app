@@ -14,8 +14,8 @@ export interface Contact {
   address: Address;
   keywords: string[];
   avatar?: string;
-  createdAt?: Date;
-  updatedAt?: Date;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export const CONTACT_MOCKS: Contact[] = [
@@ -38,8 +38,8 @@ export const CONTACT_MOCKS: Contact[] = [
     },
     keywords: ["keyword1", "keyword2", "keyword3"],
     avatar: "https://i.pravatar.cc/150?u=a042581f4e29026024d",
-    createdAt: new Date(),
-    updatedAt: new Date(),
+    createdAt: new Date().toDateString(),
+    updatedAt: new Date().toDateString(),
   },
   {
     id: "3c23d152",
@@ -60,8 +60,8 @@ export const CONTACT_MOCKS: Contact[] = [
     },
     keywords: ["keyword1"],
     avatar: "https://i.pravatar.cc/150?u=a042581f4e29026024d",
-    createdAt: new Date(),
-    updatedAt: new Date(),
+    createdAt: new Date().toDateString(),
+    updatedAt: new Date().toDateString(),
   },
   {
     id: "3c23d152",
@@ -82,7 +82,7 @@ export const CONTACT_MOCKS: Contact[] = [
     },
     keywords: ["keyword1"],
     avatar: "https://i.pravatar.cc/150?u=a042581f4e29026024d",
-    createdAt: new Date(),
-    updatedAt: new Date(),
+    createdAt: new Date().toDateString(),
+    updatedAt: new Date().toDateString(),
   },
 ];

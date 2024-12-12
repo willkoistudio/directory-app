@@ -15,7 +15,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { getContacts } from "../../store/contactSlice";
 import { getCompanies } from "../../store/companySlice";
 import { RootState } from "../../store/store";
-import { set } from "date-fns";
 
 const Search: FC = () => {
   const { setPageName } = usePageName();
