@@ -1,25 +1,52 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { User, LoginForm } from "../models/user";
+import { IS_API_MOCKED } from "../helpers/const/common";
+import { ServiceAuthMock } from "../services/auth/auth.service.mock";
+import { ServiceAuthHttp } from "../services/auth/auth.service.http";
+
+const serviceAuth = IS_API_MOCKED
+  ? new ServiceAuthMock()
+  : new ServiceAuthHttp();
+
+export const login = createAsyncThunk(
+  "auth/login",
+  async (loginForm: LoginForm) => {
+    return await serviceAuth.login(loginForm);
+  }
+);
+export const logout = createAsyncThunk("auth/logout", async () => {
+  return await serviceAuth.logout();
+});
 
 interface AuthState {
   loggedIn: boolean;
+  currentUser: User | null;
 }
 
 const initialState: AuthState = {
   loggedIn: false,
+  currentUser: null,
 };
 
 const authSlice = createSlice({
   name: "auth",
   initialState,
-  reducers: {
-    login(state, action: PayloadAction<LoginForm>) {},
-    logout(state) {},
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(login.fulfilled, (state, action) => {
+        state.loggedIn = true;
+        state.currentUser = action.payload;
+      })
+      .addCase(login.rejected, (state) => {
+        state.loggedIn = false;
+        state.currentUser = null;
+      })
+      .addCase(logout.fulfilled, (state) => {
+        state.loggedIn = false;
+        state.currentUser = null;
+      });
   },
 });
 
-// Export des actions
-export const { login } = authSlice.actions;
-
-// Export du réducteur
 export default authSlice.reducer;

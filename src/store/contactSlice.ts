@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { Contact } from "../models/contact";
 import { ServiceContactHttp } from "../services/contact/contact.service.http";
 import { ServiceContactMock } from "../services/contact/contact.service.mock";
@@ -9,35 +9,50 @@ interface ContactState {
 }
 
 const initialState: ContactState = {
-  contacts: [],
+  contacts: [] as Contact[],
 };
 
 const serviceContact: ServiceContactHttp | ServiceContactMock = IS_API_MOCKED
   ? new ServiceContactMock()
   : new ServiceContactHttp();
 
+export const getContacts = createAsyncThunk<Contact[], void>(
+  "contacts/getContacts",
+  async () => {
+    return await serviceContact.getContacts();
+  }
+);
+
+export const addContact = createAsyncThunk(
+  "contacts/addContact",
+  async (contact: Contact) => {
+    return await serviceContact.addContact(contact);
+  }
+);
+
+export const updateContact = createAsyncThunk(
+  "contacts/updateContact",
+  async (contact: Contact) => {
+    return await serviceContact.updateContact(contact);
+  }
+);
+
+export const removeContact = createAsyncThunk(
+  "contacts/removeContact",
+  async (id: string) => {
+    return await serviceContact.removeContact(id);
+  }
+);
+
 const contactSlice = createSlice({
   name: "contacts",
   initialState,
-  reducers: {
-    async getContacts(state) {
-      state.contacts = await serviceContact.getContacts();
-    },
-
-    async addContact(state, action: PayloadAction<Contact>) {
-      return serviceContact.addContact(action.payload);
-    },
-    async updateContact(state, action: PayloadAction<Contact>) {
-      return serviceContact.updateContact(action.payload);
-    },
-    async removeContact(state, action: PayloadAction<string>) {
-      return serviceContact.removeContact(action.payload);
-    },
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(getContacts.fulfilled, (state, action) => {
+      state.contacts = action.payload;
+    });
   },
 });
 
-// Export des actions
-export const { addContact, removeContact } = contactSlice.actions;
-
-// Export du réducteur
 export default contactSlice.reducer;

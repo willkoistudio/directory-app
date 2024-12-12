@@ -37,21 +37,6 @@ const Header: React.FC = () => {
           </DropdownMenu>
           <DropdownMenu>
             <DropdownMenuTrigger>
-              <BellDot className="cursor-pointer hover:text-gray" />
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="border-white/10">
-              <DropdownMenuLabel className="border-white/10 border-b">
-                Notifications
-              </DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem className="cursor-pointer hover:bg-white/5">
-                <span className="bg-red w-2 h-2 rounded-full"></span>
-                Vous avez recu 1 nouvelle notification
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-          <DropdownMenu>
-            <DropdownMenuTrigger>
               <Settings className="cursor-pointer hover:text-gray" />
             </DropdownMenuTrigger>
             <DropdownMenuContent className="border-white/10">
