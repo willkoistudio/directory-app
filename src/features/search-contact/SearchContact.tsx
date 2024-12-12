@@ -72,6 +72,7 @@ const contacts: Contact[] = [
       street: "Kulas Light",
       city: "Gwenborough",
       postalCode: "92998-3874",
+      state: "New York",
       country: "United States",
     },
     keywords: ["keyword1", "keyword2", "keyword3"],
@@ -91,6 +92,7 @@ const contacts: Contact[] = [
     website: "www.hildegard.org",
     address: {
       street: "1 GNX Drive",
+      state: "CA",
       city: "Oakland",
       postalCode: "12345",
       country: "Canada",
@@ -113,6 +115,7 @@ const contacts: Contact[] = [
     address: {
       street: "1 GNX Drive",
       city: "Oakland",
+      state: "CA",
       postalCode: "12345",
       country: "Canada",
     },

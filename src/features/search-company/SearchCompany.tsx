@@ -1,4 +1,3 @@
-import { Contact } from "../../models/contact";
 import { ArrowUpDown, Filter, MoreHorizontal } from "lucide-react";
 import {
   ColumnDef,
@@ -41,88 +40,62 @@ import {
 } from "../../components/ui/drawer";
 import { Label } from "../../components/ui/label";
 import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "../../components/ui/select";
-import {
   Avatar,
   AvatarFallback,
   AvatarImage,
 } from "../../components/ui/avatar";
 import { FC, useState } from "react";
+import { Company } from "../../models/company";
 
-const contacts: Contact[] = [
+const companies: Company[] = [
   {
-    id: "m5gr84i9",
-    name: "Leanne Graham",
-    companyId: "0",
-    email: "ken99@yahoo.com",
-    phone: "1-770-736-8031 x56442",
-    workPhone: "010-692-6593 x09125",
-    fax: "1-463-123-3447",
-    function: "Chief Executive Officer",
-    website: "www.hildegard.org",
+    id: "1",
+    name: "Company 1",
+    phone: "1234567890",
+    logo: "https://via.placeholder.com/150",
     address: {
-      street: "Kulas Light",
-      city: "Gwenborough",
-      postalCode: "92998-3874",
+      street: "123 Main St",
+      city: "Anytown",
+      state: "CA",
+      postalCode: "12345",
       country: "United States",
     },
-    keywords: ["keyword1", "keyword2", "keyword3"],
-    avatar: "https://i.pravatar.cc/150?u=a042581f4e29026024d",
-    createdAt: new Date(),
-    updatedAt: new Date(),
+    area: "Area 1",
+    note: "Note 1",
   },
   {
-    id: "3c23d152",
-    name: "Ervin Howell",
-    companyId: "0",
-    email: "shanna@yahoo.com",
-    phone: "010-692-6593 x09125",
-    workPhone: "1-463-123-3447",
-    fax: "1-463-123-3447",
-    function: "Chief Executive Officer",
-    website: "www.hildegard.org",
+    id: "2",
+    name: "Company 2",
+    phone: "1234567890",
+    logo: "https://via.placeholder.com/150",
     address: {
-      street: "1 GNX Drive",
-      city: "Oakland",
+      street: "123 Main St",
+      city: "Anytown",
+      state: "CA",
       postalCode: "12345",
-      country: "Canada",
+      country: "United States",
     },
-    keywords: ["keyword1"],
-    avatar: "https://i.pravatar.cc/150?u=a042581f4e29026024d",
-    createdAt: new Date(),
-    updatedAt: new Date(),
+    area: "Area 2",
+    note: "Note 2",
   },
   {
-    id: "3c23d152",
-    name: "Will Smirs",
-    companyId: "0",
-    email: "shanna@yahoo.com",
-    phone: "010-692-6593 x09125",
-    workPhone: "1-463-123-3447",
-    fax: "1-463-123-3447",
-    function: "Chief Executive Officer",
-    website: "www.hildegard.org",
+    id: "3",
+    name: "Company 3",
+    phone: "1234567890",
+    logo: "https://via.placeholder.com/150",
     address: {
-      street: "1 GNX Drive",
-      city: "Oakland",
+      street: "123 Main St",
+      city: "Anytown",
+      state: "CA",
       postalCode: "12345",
-      country: "Canada",
+      country: "United States",
     },
-    keywords: ["keyword1"],
-    avatar: "https://i.pravatar.cc/150?u=a042581f4e29026024d",
-    createdAt: new Date(),
-    updatedAt: new Date(),
+    area: "Area 3",
+    note: "Note 3",
   },
 ];
 
-export const columns: ColumnDef<Contact>[] = [
+export const columns: ColumnDef<Company>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -147,11 +120,11 @@ export const columns: ColumnDef<Contact>[] = [
   },
 
   {
-    accessorKey: "avatar",
-    header: "",
+    accessorKey: "logo",
+    header: "Logo",
     cell: ({ row }) => (
       <Avatar>
-        <AvatarImage src={row.getValue(`avatar`)} alt={row.getValue("name")} />
+        <AvatarImage src={row.getValue(`logo`)} alt={row.getValue("name")} />
         <AvatarFallback>{`${String(row.getValue("name"))?.[0]}${
           String(row.getValue("name"))?.[1]
         }`}</AvatarFallback>
@@ -164,19 +137,19 @@ export const columns: ColumnDef<Contact>[] = [
     cell: ({ row }) => <div className="capitalize">{row.getValue("name")}</div>,
   },
   {
-    accessorKey: "email",
+    accessorKey: "area",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Email
+          Area
           <ArrowUpDown />
         </Button>
       );
     },
-    cell: ({ row }) => <div className="lowercase">{row.getValue("email")}</div>,
+    cell: ({ row }) => <div className="lowercase">{row.getValue("area")}</div>,
   },
   {
     accessorKey: "phone",
@@ -184,45 +157,25 @@ export const columns: ColumnDef<Contact>[] = [
     cell: ({ row }) => <div className="lowercase">{row.getValue("phone")}</div>,
   },
   {
-    accessorKey: "companyId",
+    accessorKey: "note",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Company
+          Note
           <ArrowUpDown />
         </Button>
       );
     },
-    cell: ({ row }) => (
-      <div className="lowercase">{row.getValue("companyId")}</div>
-    ),
+    cell: ({ row }) => <div className="lowercase">{row.getValue("note")}</div>,
   },
-  {
-    accessorKey: "function",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Function
-          <ArrowUpDown />
-        </Button>
-      );
-    },
-    cell: ({ row }) => (
-      <div className="lowercase">{row.getValue("function")}</div>
-    ),
-  },
-
   {
     id: "actions",
     enableHiding: false,
     cell: ({ row }) => {
-      const contact = row.original;
+      const company = row.original;
 
       return (
         <DropdownMenu>
@@ -235,12 +188,14 @@ export const columns: ColumnDef<Contact>[] = [
           <DropdownMenuContent align="end">
             <DropdownMenuItem
               className="cursor-pointer hover:bg-white/5"
-              onClick={() => (window.location.href = `/contact/${contact.id}`)}
+              onClick={() =>
+                (window.location.href = `/edit-company/${company.id}`)
+              }
             >
-              View contact details
+              View company details
             </DropdownMenuItem>
             <DropdownMenuItem className="cursor-pointer hover:bg-white/5">
-              Remove contact
+              Remove company
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -256,7 +211,7 @@ const SearchCompany: FC = () => {
   const [rowSelection, setRowSelection] = useState({});
 
   const table = useReactTable({
-    data: contacts,
+    data: companies,
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -281,7 +236,7 @@ const SearchCompany: FC = () => {
           <Input
             className="px-6 h-12 w-1/2"
             type="search"
-            placeholder="Search a contact..."
+            placeholder="Search a company..."
             value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
             onChange={(event) =>
               table.getColumn("name")?.setFilterValue(event.target.value)
@@ -309,38 +264,16 @@ const SearchCompany: FC = () => {
                     <Input type="text"></Input>
                   </div>
                   <div>
-                    <Label htmlFor="city">City</Label>
+                    <Label htmlFor="city">Country</Label>
                     <Input type="text"></Input>
                   </div>
                   <div>
-                    <Label htmlFor="function">Function</Label>
+                    <Label htmlFor="area">Area</Label>
                     <Input type="text"></Input>
                   </div>
                   <div>
-                    <Label htmlFor="postal code">Postal Code</Label>
-                    <Input type="text"></Input>
-                  </div>
-                  <div>
-                    <Label htmlFor="keywords">Keywords</Label>
-                    <Input type="text"></Input>
-                  </div>
-                  <div>
-                    <Label htmlFor="company">Company</Label>
-                    <Select>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select a company" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectGroup>
-                          <SelectLabel>Companies</SelectLabel>
-                          <SelectItem value="apple">Apple</SelectItem>
-                          <SelectItem value="banana">Banana</SelectItem>
-                          <SelectItem value="blueberry">Blueberry</SelectItem>
-                          <SelectItem value="grapes">Grapes</SelectItem>
-                          <SelectItem value="pineapple">Pineapple</SelectItem>
-                        </SelectGroup>
-                      </SelectContent>
-                    </Select>
+                    <Label htmlFor="postal code">Phone</Label>
+                    <Input type="phone"></Input>
                   </div>
                 </section>
                 <DrawerFooter>
@@ -419,7 +352,7 @@ const SearchCompany: FC = () => {
                 !table.getIsSomeRowsSelected() && !table.getIsAllRowsSelected()
               }
             >
-              Supprimer les contacts selectionnés
+              Supprimer les companies selectionnés
             </Button>
             <Button
               variant="outline"

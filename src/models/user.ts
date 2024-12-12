@@ -11,3 +11,22 @@ export interface LoginForm {
   email: string;
   password: string;
 }
+
+export const USERS_MOCKS: User[] = [
+  {
+    id: 1,
+    name: "John Doe",
+    email: "t9TtT@example.com",
+    password: "password",
+    role: "admin",
+    language: "en",
+  },
+  {
+    id: 2,
+    name: "Jane Doe",
+    email: "jane@example",
+    password: "password",
+    role: "user",
+    language: "fr",
+  },
+];
