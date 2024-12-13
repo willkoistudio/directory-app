@@ -1,6 +1,6 @@
 import { FC } from "react";
-import { Label } from "../../components/ui/label";
-import { Button } from "../../components/ui/button";
+import { Label } from "../../../components/ui/label";
+import { Button } from "../../../components/ui/button";
 import { Save } from "lucide-react";
 
 const AddContactFifthStep: FC = () => {

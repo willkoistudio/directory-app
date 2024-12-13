@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { usePageName } from "../../context/PageNameContext";
 import {
   ChartConfig,
@@ -17,54 +17,43 @@ import { TrendingUp } from "lucide-react";
 import { Label, LabelProps, Pie, PieChart } from "recharts";
 import { ROUTE_NAMES } from "../../helpers/const/routes";
 import { useTranslation } from "react-i18next";
-
-const chartData = [
-  { browser: "chrome", visitors: 275, fill: "var(--color-chrome)" },
-  { browser: "safari", visitors: 200, fill: "var(--color-safari)" },
-  { browser: "firefox", visitors: 287, fill: "var(--color-firefox)" },
-  { browser: "edge", visitors: 173, fill: "var(--color-edge)" },
-  { browser: "other", visitors: 190, fill: "var(--color-other)" },
-];
-
-const chartConfig = {
-  visitors: {
-    label: "Visitors",
-  },
-  chrome: {
-    label: "Chrome",
-    color: "hsl(var(--chart-1))",
-  },
-  safari: {
-    label: "Safari",
-    color: "hsl(var(--chart-2))",
-  },
-  firefox: {
-    label: "Firefox",
-    color: "hsl(var(--chart-3))",
-  },
-  edge: {
-    label: "Edge",
-    color: "hsl(var(--chart-4))",
-  },
-  other: {
-    label: "Other",
-    color: "hsl(var(--chart-5))",
-  },
-} satisfies ChartConfig;
+import useChartData from "./hooks/useChartData";
+import { useDispatch, useSelector } from "react-redux";
+import { getContacts } from "../../store/contactSlice";
+import { getCompanies } from "../../store/companySlice";
+import { RootState } from "../../store/store";
+import { ChartData } from "../../models/common";
 
 const Home: React.FC = () => {
   const { setPageName } = usePageName();
   const { t } = useTranslation();
+  const dispatch = useDispatch();
 
-  const totalVisitors = React.useMemo(() => {
-    return chartData.reduce((acc, curr) => acc + curr.visitors, 0);
-  }, []);
+  const [loading, setLoading] = useState(false);
+  const { contacts } = useSelector((state: RootState) => state.contact);
+  const { companies } = useSelector((state: RootState) => state.company);
 
-  useEffect(() => {
-    setPageName(ROUTE_NAMES.HOME); // Mettre à jour le nom de la page
-  }, []);
+  const getUsersAndCompanies = async () => {
+    setLoading(true);
+    try {
+      await dispatch(getContacts() as any);
+      await dispatch(getCompanies() as any);
+    } catch (error) {
+      console.error("Error fetching contacts:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const { chartData, chartConfig } = useChartData(
+    contacts.length,
+    companies.length
+  );
 
   const handlerContent = ({ viewBox }: LabelProps) => {
+    const totalNbCreated = useMemo(() => {
+      return chartData.reduce((acc, curr) => acc + curr.nbCreated, 0);
+    }, []);
     if (viewBox && "cx" in viewBox && "cy" in viewBox) {
       return (
         <text
@@ -78,19 +67,24 @@ const Home: React.FC = () => {
             y={viewBox.cy}
             className="fill-foreground text-3xl font-bold"
           >
-            {totalVisitors.toLocaleString()}
+            {totalNbCreated.toLocaleString()}
           </tspan>
           <tspan
             x={viewBox.cx}
             y={(viewBox.cy || 0) + 24}
             className="fill-muted-foreground"
           >
-            Visitors
+            Number created
           </tspan>
         </text>
       );
     }
   };
+
+  useEffect(() => {
+    setPageName(ROUTE_NAMES.HOME); // Mettre à jour le nom de la page
+    getUsersAndCompanies();
+  }, []);
 
   return (
     <section className="flex h-full">
@@ -122,8 +116,8 @@ const Home: React.FC = () => {
                   />
                   <Pie
                     data={chartData}
-                    dataKey="visitors"
-                    nameKey="browser"
+                    dataKey="nbCreated"
+                    nameKey="type"
                     innerRadius={60}
                     strokeWidth={5}
                   >

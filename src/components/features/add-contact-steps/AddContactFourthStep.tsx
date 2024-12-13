@@ -1,7 +1,7 @@
 import { FC, useState } from "react";
-import { Input } from "../../components/ui/input";
+import { Input } from "../../../components/ui/input";
 import { X } from "lucide-react";
-import { Label } from "../../components/ui/label";
+import { Label } from "../../../components/ui/label";
 
 const AddContactFourthStep: FC = () => {
   const [keywords, setKeywords] = useState<string[]>([]);

@@ -2,9 +2,11 @@ import React, { useEffect } from "react";
 import { usePageName } from "../../context/PageNameContext";
 import { ROUTE_NAMES } from "../../helpers/const/routes";
 import { Button } from "../../components/ui/button";
+import { useTranslation } from "react-i18next";
 
 const NotFound: React.FC = () => {
   const { setPageName } = usePageName();
+  const { t } = useTranslation();
 
   useEffect(() => {
     setPageName(ROUTE_NAMES.NOT_FOUND); // Mettre à jour le nom de la page

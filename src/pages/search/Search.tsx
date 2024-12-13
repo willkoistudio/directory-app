@@ -8,18 +8,17 @@ import {
   TabsList,
   TabsTrigger,
 } from "../../components/ui/tabs";
-import { SearchContact } from "../../features/search-contact/SearchContact";
-import { SearchCompany } from "../../features/search-company/SearchCompany";
 import { APP_CONTEXT } from "../../helpers/const/features";
 import { useDispatch, useSelector } from "react-redux";
 import { getContacts } from "../../store/contactSlice";
 import { getCompanies } from "../../store/companySlice";
 import { RootState } from "../../store/store";
+import useTabs from "./hooks/useTabs";
 
 const Search: FC = () => {
   const { setPageName } = usePageName();
   useEffect(() => {
-    setPageName(ROUTE_NAMES.SEARCH); // Mettre à jour le nom de la page
+    setPageName(ROUTE_NAMES.SEARCH);
   }, []);
 
   const [loading, setLoading] = useState(false);
@@ -49,38 +48,17 @@ const Search: FC = () => {
       setLoading(false);
     }
   };
+  const { tabs, handleTabsChange } = useTabs(
+    fetchContacts,
+    fetchCompanies,
+    contacts,
+    companies,
+    loading
+  );
 
   useEffect(() => {
     fetchContacts();
   }, []);
-
-  const tabs = [
-    {
-      value: APP_CONTEXT.CONTACT,
-      label: "Contacts",
-      icon: <UserRoundSearch size={16} />,
-      content: <SearchContact {...{ contacts, loading }} />,
-    },
-    {
-      value: APP_CONTEXT.COMPANY,
-      label: "Companies",
-      icon: <Building2 size={16} />,
-      content: <SearchCompany {...{ companies, loading }} />,
-    },
-  ];
-
-  const handleTabsChange = async (value: APP_CONTEXT) => {
-    switch (value) {
-      case APP_CONTEXT.CONTACT:
-        await fetchContacts();
-        break;
-      case APP_CONTEXT.COMPANY:
-        await fetchCompanies();
-        break;
-      default:
-        break;
-    }
-  };
 
   return (
     <section>

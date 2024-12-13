@@ -1,14 +1,14 @@
 import { FC } from "react";
-import { Input } from "../../components/ui/input";
-import { Label } from "../../components/ui/label";
+import { Input } from "../../../components/ui/input";
+import { Label } from "../../../components/ui/label";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../../components/ui/select";
-import { Company } from "../../models/company";
+} from "../../../components/ui/select";
+import { Company } from "../../../models/company";
 
 const companiesList: Company[] = [
   {
@@ -21,11 +21,12 @@ const companiesList: Company[] = [
       city: "City 1",
       postalCode: "12345",
       country: "France",
+      state: "France",
     },
     area: "Area 1",
     note: "Note 1",
-    createdAt: new Date(),
-    updatedAt: new Date(),
+    createdAt: "new Date()",
+    updatedAt: "new Date()",
     updatedBy: "John Doe",
   },
   {
@@ -38,11 +39,12 @@ const companiesList: Company[] = [
       city: "City 1",
       postalCode: "12345",
       country: "France",
+      state: "France",
     },
     area: "Area 1",
     note: "Note 1",
-    createdAt: new Date(),
-    updatedAt: new Date(),
+    createdAt: "new Date()",
+    updatedAt: "new Date()",
     updatedBy: "Peysoh GNX",
   },
   {
@@ -55,29 +57,13 @@ const companiesList: Company[] = [
       city: "City 1",
       postalCode: "12345",
       country: "France",
+      state: "France",
     },
     area: "Area 1",
     note: "Note 1",
-    createdAt: new Date(),
-    updatedAt: new Date(),
+    createdAt: "new Date()",
+    updatedAt: "new Date()",
     updatedBy: "John Doe",
-  },
-  {
-    id: "4",
-    name: "Company 4",
-    phone: "+33 6 00 00 00 00",
-    logo: "https://media.idownloadblog.com/wp-content/uploads/2018/07/Apple-logo-black-and-white-429x500.png",
-    address: {
-      street: "Street 1",
-      city: "City 1",
-      postalCode: "12345",
-      country: "France",
-    },
-    area: "Area 1",
-    note: "Note 1",
-    createdAt: new Date(),
-    updatedAt: new Date(),
-    updatedBy: "Kendrick Morale",
   },
 ];
 

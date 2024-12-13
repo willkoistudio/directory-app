@@ -10,8 +10,8 @@ import { Badge } from "../../components/ui/badge";
 import { Check } from "lucide-react";
 import { Button } from "../../components/ui/button";
 import { Form } from "../../components/ui/form";
-import { AddCompanyFirstStep } from "../../features/add-company-steps/AddCompanyFirstStep";
-import { AddCompanySecondStep } from "../../features/add-company-steps/AddCompanySecondStep";
+import { AddCompanyFirstStep } from "../../components/features/add-company-steps/AddCompanyFirstStep";
+import { AddCompanySecondStep } from "../../components/features/add-company-steps/AddCompanySecondStep";
 
 const addCompanySteps: AddContactStep[] = [
   {
