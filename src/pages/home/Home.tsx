@@ -9,24 +9,14 @@ import {
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
 } from "../../components/ui/card";
 import { TrendingUp } from "lucide-react";
-import {
-  Label,
-  LabelProps,
-  Pie,
-  PieChart,
-  Bar,
-  BarChart,
-  CartesianGrid,
-  LabelList,
-  XAxis,
-} from "recharts";
+import { Label, LabelProps, Pie, PieChart } from "recharts";
 import { ROUTE_NAMES } from "../../helpers/const/routes";
+import { useTranslation } from "react-i18next";
 
 const chartData = [
   { browser: "chrome", visitors: 275, fill: "var(--color-chrome)" },
@@ -34,15 +24,6 @@ const chartData = [
   { browser: "firefox", visitors: 287, fill: "var(--color-firefox)" },
   { browser: "edge", visitors: 173, fill: "var(--color-edge)" },
   { browser: "other", visitors: 190, fill: "var(--color-other)" },
-];
-
-const chartData2 = [
-  { month: "January", desktop: 186 },
-  { month: "February", desktop: 305 },
-  { month: "March", desktop: 237 },
-  { month: "April", desktop: 73 },
-  { month: "May", desktop: 209 },
-  { month: "June", desktop: 214 },
 ];
 
 const chartConfig = {
@@ -71,15 +52,9 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-const chartConfig2 = {
-  desktop: {
-    label: "Desktop",
-    color: "hsl(var(--chart-1))",
-  },
-} satisfies ChartConfig;
-
 const Home: React.FC = () => {
   const { setPageName } = usePageName();
+  const { t } = useTranslation();
 
   const totalVisitors = React.useMemo(() => {
     return chartData.reduce((acc, curr) => acc + curr.visitors, 0);

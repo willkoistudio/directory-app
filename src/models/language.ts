@@ -1,5 +1,5 @@
 export interface Language {
   name: string;
-  abbreviation: string;
+  locale: string;
   code: string;
 }

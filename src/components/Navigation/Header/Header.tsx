@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { NavigationMenu } from "../../../components/ui/navigation-menu";
-import { Languages, BellDot, Settings } from "lucide-react";
+import { Languages, Settings } from "lucide-react";
 import { usePageName } from "../../../context/PageNameContext";
 import {
   DropdownMenu,
@@ -10,9 +10,23 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../../ui/dropdown-menu";
+import i18n from "i18next";
+import { LANGUAGES_APP } from "../../../helpers/const/locale";
 
 const Header: React.FC = () => {
   const { pageName } = usePageName();
+  const [currentLanguage, setCurrentLanguage] = useState(i18n.language);
+
+  useEffect(() => {
+    console.log("lang", currentLanguage);
+  }, [currentLanguage]);
+
+  const changeLanguage = (lang: string) => {
+    i18n.changeLanguage(lang);
+    setCurrentLanguage(lang);
+    console.log("lang", lang);
+  };
+
   return (
     <header className="w-full h-14 px-8 flex items-center border-b border-border/70">
       <NavigationMenu className="flex w-full justify-between">
@@ -27,12 +41,16 @@ const Header: React.FC = () => {
                 Languages
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem className="cursor-pointer hover:bg-white/5">
-                Français
-              </DropdownMenuItem>
-              <DropdownMenuItem className="cursor-pointer hover:bg-white/5">
-                English
-              </DropdownMenuItem>
+              {LANGUAGES_APP.map((lang) => (
+                <DropdownMenuItem
+                  className="cursor-pointer hover:bg-white/5"
+                  onClick={() => changeLanguage(lang.locale)}
+                  key={lang.code}
+                  disabled={lang.locale === currentLanguage}
+                >
+                  {lang.name}
+                </DropdownMenuItem>
+              ))}
             </DropdownMenuContent>
           </DropdownMenu>
           <DropdownMenu>

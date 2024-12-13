@@ -3,8 +3,9 @@ import { createRoot } from "react-dom/client";
 import App from "./App";
 import "./assets/main.css";
 import "./assets/override.scss";
-import { Provider } from "react-redux"; // Ajouté
+import { Provider } from "react-redux";
 import store from "./store/store";
+import "./i18n";
 
 const container = document.getElementById("root");
 
