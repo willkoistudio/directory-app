@@ -45,9 +45,6 @@ const Header: React.FC = () => {
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem className="cursor-pointer hover:bg-white/5">
-                Profile
-              </DropdownMenuItem>
-              <DropdownMenuItem className="cursor-pointer hover:bg-white/5">
                 Logout
               </DropdownMenuItem>
             </DropdownMenuContent>

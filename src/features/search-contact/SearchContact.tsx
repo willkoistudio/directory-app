@@ -57,7 +57,6 @@ import {
 } from "../../components/ui/avatar";
 import { FC, useState } from "react";
 import { Skeleton } from "../../components/ui/skeleton";
-import SkeletonTable from "../../components/ui/skeleton-table";
 
 interface SearchContactProps {
   contacts: Contact[];
@@ -235,11 +234,11 @@ const SearchContact: FC<SearchContactProps> = ({ contacts, loading }) => {
 
   return (
     <section>
-      <div className="mb-8">
+      <div className="mt-6 mb-8">
         {loading ? (
           <div className="flex justify-between">
-            <Skeleton className="bg-white/10 h-14 w-[500px]" />
-            <Skeleton className="bg-white/10 h-14 w-[250px]" />
+            <Skeleton className="bg-white/10 h-14 w-1/2" />
+            <Skeleton className="bg-white/10 h-14 w-[109px]" />
           </div>
         ) : (
           <div className="flex justify-between">
@@ -323,7 +322,13 @@ const SearchContact: FC<SearchContactProps> = ({ contacts, loading }) => {
         )}
       </div>
       {loading ? (
-        <SkeletonTable />
+        <div>
+          <Skeleton className="h-[400px]  bg-white/10" />
+          <div className="flex justify-between w-full mt-6">
+            <Skeleton className="bg-white/10 h-10 w-[500px]" />
+            <Skeleton className="bg-white/10 h-10 w-[250px]" />
+          </div>
+        </div>
       ) : (
         <div>
           <div className="rounded-md border">

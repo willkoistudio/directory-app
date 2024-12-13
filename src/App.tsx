@@ -11,6 +11,7 @@ import { NotFound } from "./pages/not-found/NotFound";
 import { Search } from "./pages/search/Search";
 import { PageNameProvider } from "./context/PageNameContext"; // Importer le provider
 import { CompanyDetail } from "./pages/company-detail/CompanyDetail";
+import "./assets/global.scss";
 
 const App: React.FC = () => {
   useEffect(() => {
@@ -23,7 +24,7 @@ const App: React.FC = () => {
         <AppSidebar />
         <div className="w-full ">
           <Header />
-          <main className="container mx-auto h-full">
+          <main className="container mx-auto main-app-container">
             <BrowserRouter>
               <Routes>
                 <Route path="/" element={<Home />} />
