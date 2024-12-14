@@ -3,3 +3,8 @@ export interface FormStep {
   stepNumber: number;
   isCompleted: boolean;
 }
+
+export interface FormArrayItemData {
+  id: string;
+  name: string;
+}

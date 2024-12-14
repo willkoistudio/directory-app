@@ -1,9 +1,9 @@
 import { FC, useState } from "react";
-import { Input } from "../../../components/ui/input";
+import { Input } from "../../../ui/input";
 import { X } from "lucide-react";
-import { Label } from "../../../components/ui/label";
+import { Label } from "../../../ui/label";
 import { UseFormReturn } from "react-hook-form";
-import { AddContactFormSchema } from "../../../pages/add-contact/hooks/useAddContactForm";
+import { AddContactFormSchema } from "../../../../pages/add-contact/hooks/useAddContactForm";
 
 const AddContactFourthStep: FC<UseFormReturn<AddContactFormSchema>> = () => {
   const [keywords, setKeywords] = useState<string[]>([]);

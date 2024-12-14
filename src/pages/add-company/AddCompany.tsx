@@ -1,7 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { usePageName } from "../../context/PageNameContext";
 import { ROUTE_NAMES } from "../../helpers/const/routes";
-import { AddContactStep } from "../add-contact/AddContact";
 import styles from "../add-contact/AddContact.module.scss";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
@@ -12,8 +11,12 @@ import { Button } from "../../components/ui/button";
 import { Form } from "../../components/ui/form";
 import { AddCompanyFirstStep } from "../../components/features/add-company-steps/AddCompanyFirstStep";
 import { AddCompanySecondStep } from "../../components/features/add-company-steps/AddCompanySecondStep";
+import { FormStep } from "../../models/form";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../store/store";
+import { getCountries } from "../../store/locationSlice";
 
-const addCompanySteps: AddContactStep[] = [
+const addCompanySteps: FormStep[] = [
   {
     name: "Logo",
     stepNumber: 1,
@@ -30,7 +33,25 @@ const AddCompany: React.FC = () => {
   const { setPageName } = usePageName();
   const [currentStep, setCurrentStep] = React.useState(1);
 
-  const stepsIconColor = (step: AddContactStep) => {
+  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+
+  const { countries, cities, states } = useSelector(
+    (state: RootState) => state.location
+  );
+
+  const fetchCountries = async () => {
+    setLoading(true);
+    try {
+      await dispatch(getCountries() as any);
+    } catch (error) {
+      console.error("Error fetching countries:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const stepsIconColor = (step: FormStep) => {
     if (step.isCompleted) {
       return `${styles["step-completed"]} bg-green border-green `;
     } else if (step.stepNumber === currentStep) {
@@ -60,10 +81,6 @@ const AddCompany: React.FC = () => {
       name: "",
     },
   });
-
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-  }
 
   useEffect(() => {
     setPageName(ROUTE_NAMES.ADD_COMPANY); // Mettre à jour le nom de la page

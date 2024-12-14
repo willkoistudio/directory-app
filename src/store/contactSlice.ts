@@ -1,15 +1,17 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { Contact } from "../models/contact";
+import { Contact, ContactData } from "../models/contact";
 import { ServiceContactHttp } from "../services/contact/contact.service.http";
 import { ServiceContactMock } from "../services/contact/contact.service.mock";
 import { IS_API_MOCKED } from "../helpers/const/common";
 
 interface ContactState {
   contacts: Contact[];
+  contactDetail: ContactData | null;
 }
 
 const initialState: ContactState = {
   contacts: [] as Contact[],
+  contactDetail: null,
 };
 
 const serviceContact: ServiceContactHttp | ServiceContactMock = IS_API_MOCKED
@@ -58,6 +60,10 @@ const contactSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(getContacts.fulfilled, (state, action) => {
       state.contacts = action.payload;
+    });
+
+    builder.addCase(getContactDetail.fulfilled, (state, action) => {
+      state.contactDetail = action.payload;
     });
   },
 });

@@ -1,9 +1,9 @@
 import { FC } from "react";
-import { Label } from "../../../components/ui/label";
-import { Input } from "../../../components/ui/input";
-import { Textarea } from "../../../components/ui/textarea";
+import { Label } from "../../../ui/label";
+import { Input } from "../../../ui/input";
+import { Textarea } from "../../../ui/textarea";
 import { UseFormReturn } from "react-hook-form";
-import { AddContactFormSchema } from "../../../pages/add-contact/hooks/useAddContactForm";
+import { AddContactFormSchema } from "../../../../pages/add-contact/hooks/useAddContactForm";
 
 const AddContactThirdStep: FC<UseFormReturn<AddContactFormSchema>> = () => {
   return (

@@ -1,9 +1,15 @@
-import { Contact, CONTACT_MOCKS } from "../../models/contact";
+import {
+  Contact,
+  CONTACT_DATA_MOCKS,
+  CONTACT_MOCKS,
+  ContactData,
+} from "../../models/contact";
 import { ServiceContact } from "./contact.service";
 
 export class ServiceContactMock implements ServiceContact {
   public constructor(
     private contacts: Contact[] = CONTACT_MOCKS,
+    private contactDetail: ContactData = CONTACT_DATA_MOCKS[0],
     private latence = 1000
   ) {}
 
@@ -13,9 +19,9 @@ export class ServiceContactMock implements ServiceContact {
     );
   }
 
-  public async getContactDetail(id: string): Promise<Contact> {
+  public async getContactDetail(id: string): Promise<ContactData> {
     return new Promise((resolve) =>
-      setTimeout(() => resolve(this.contacts[0]), this.latence)
+      setTimeout(() => resolve(this.contactDetail), this.latence)
     );
   }
 

@@ -1,9 +1,9 @@
-import { FC, useState } from "react";
-import { Card } from "../../../components/ui/card";
+import { ChangeEvent, FC, useState } from "react";
+import { Card } from "../../../ui/card";
 import { CircleX, ImageUp } from "lucide-react";
-import { Input } from "../../../components/ui/input";
+import { Input } from "../../../ui/input";
 import { UseFormReturn } from "react-hook-form";
-import { AddContactFormSchema } from "../../../pages/add-contact/hooks/useAddContactForm";
+import { AddContactFormSchema } from "../../../../pages/add-contact/hooks/useAddContactForm";
 
 const AddContactFirstStep: FC<UseFormReturn<AddContactFormSchema>> = ({
   getValues,
@@ -14,9 +14,7 @@ const AddContactFirstStep: FC<UseFormReturn<AddContactFormSchema>> = ({
 }) => {
   const [avatar, setAvatar] = useState<string>(getValues("avatar"));
 
-  const handleFileChange = async (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) {
       return;

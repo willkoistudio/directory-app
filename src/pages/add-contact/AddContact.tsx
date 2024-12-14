@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { usePageName } from "../../context/PageNameContext";
 import { Button } from "../../components/ui/button";
 import { Badge } from "../../components/ui/badge";
@@ -8,17 +8,71 @@ import { ROUTE_NAMES } from "../../helpers/const/routes";
 import { Form } from "../../components/ui/form";
 import { useAddContactForm } from "./hooks/useAddContactForm";
 import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../store/store";
+import { getCountries } from "../../store/locationSlice";
+import { getCompanies } from "../../store/companySlice";
+import { getContactDetail } from "../../store/contactSlice";
 
 const AddContact: React.FC = () => {
   const { setPageName } = usePageName();
-  useEffect(() => {
-    setPageName(ROUTE_NAMES.ADD_CONTACT); // Mettre à jour le nom de la page
-  }, []);
-
   const { id } = useParams<{ id: string }>();
+
+  const [loading, setLoading] = useState(false);
   const [currentStep, setCurrentStep] = React.useState(1);
-  const { dispatchCurrentStep, form, addContactSteps, stepsIconColor } =
-    useAddContactForm();
+
+  const dispatch = useDispatch();
+
+  const { countries, cities, states } = useSelector(
+    (state: RootState) => state.location
+  );
+  const { contactDetail } = useSelector((state: RootState) => state.contact);
+  const { companies } = useSelector((state: RootState) => state.company);
+  const {
+    dispatchCurrentStep,
+    form,
+    addContactSteps,
+    stepsIconColor,
+    onSubmit,
+  } = useAddContactForm();
+
+  const fetchRessources = async () => {
+    setLoading(true);
+    try {
+      await dispatch(getCountries() as any);
+      await dispatch(getCompanies() as any);
+      if (id) {
+        await dispatch(getContactDetail(id) as any);
+        if (contactDetail) {
+          form.setValue("name", contactDetail.name);
+          form.setValue("avatar", contactDetail.avatar);
+          form.setValue("companyId", contactDetail.company.id);
+          form.setValue("function", contactDetail.function);
+          form.setValue("email", contactDetail.email);
+          form.setValue("phone", contactDetail.phone);
+          form.setValue("workPhone", contactDetail.workPhone ?? "");
+          form.setValue("fax", contactDetail.fax ?? "");
+          form.setValue("website", contactDetail.website ?? "");
+          form.setValue("notes", contactDetail.notes ?? "");
+          form.setValue("address.street", contactDetail.address.street);
+          form.setValue("address.cityId", contactDetail.address.city);
+          form.setValue("address.postalCode", contactDetail.address.postalCode);
+          form.setValue("address.stateId", contactDetail.address.state);
+          form.setValue("address.countryId", contactDetail.address.country);
+          form.setValue("keywords", contactDetail.keywords);
+        }
+      }
+    } catch (error) {
+      console.error("Error fetching ressources:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    setPageName(ROUTE_NAMES.ADD_CONTACT);
+    fetchRessources();
+  }, []);
 
   return (
     <div>
@@ -57,7 +111,16 @@ const AddContact: React.FC = () => {
           </Button>
         </div>
       </nav>
-      <Form {...form}>{dispatchCurrentStep(currentStep)}</Form>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)}>
+          {dispatchCurrentStep(currentStep, {
+            companies,
+            states,
+            cities,
+            countries,
+          })}
+        </form>
+      </Form>
     </div>
   );
 };

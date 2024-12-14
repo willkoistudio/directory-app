@@ -1,6 +1,6 @@
 import axios from "axios";
 import { ServiceContact } from "./contact.service";
-import { Contact } from "../../models/contact";
+import { Contact, ContactData } from "../../models/contact";
 
 export class ServiceContactHttp implements ServiceContact {
   public async getContacts(): Promise<Contact[]> {
@@ -12,9 +12,9 @@ export class ServiceContactHttp implements ServiceContact {
     }
   }
 
-  public async getContactDetail(id: string): Promise<Contact> {
+  public async getContactDetail(id: string): Promise<ContactData> {
     try {
-      const { data } = await axios.get<Contact>(`contacts/${id}`);
+      const { data } = await axios.get<ContactData>(`contacts/${id}`);
       return data;
     } catch (erreur) {
       throw new Error("Error fetching contact");

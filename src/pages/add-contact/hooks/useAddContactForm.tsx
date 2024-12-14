@@ -1,10 +1,10 @@
 import { z } from "zod";
-import { AddContactFifthStep } from "../../../components/features/add-contact-steps/AddContactFifthStep";
-import { AddContactFirstStep } from "../../../components/features/add-contact-steps/AddContactFirstStep";
-import { AddContactFourthStep } from "../../../components/features/add-contact-steps/AddContactFourthStep";
-import { AddContactSecondStep } from "../../../components/features/add-contact-steps/AddContactSecondStep";
-import { AddContactThirdStep } from "../../../components/features/add-contact-steps/AddContactThirdStep";
-import { useForm } from "react-hook-form";
+import { AddContactFifthStep } from "../../../components/features/add-contact-steps/fifth-step/AddContactFifthStep";
+import { AddContactFirstStep } from "../../../components/features/add-contact-steps/first-step/AddContactFirstStep";
+import { AddContactFourthStep } from "../../../components/features/add-contact-steps/fourth-step/AddContactFourthStep";
+import { AddContactSecondStep } from "../../../components/features/add-contact-steps/second-step/AddContactSecondStep";
+import { AddContactThirdStep } from "../../../components/features/add-contact-steps/third-step/AddContactThirdStep";
+import { useForm, UseFormReturn } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormStep } from "../../../models/form";
 import styles from "../AddContact.module.scss";
@@ -13,7 +13,7 @@ export interface AddContactFormSchema {
   name: string;
   avatar: string;
   avatarFile?: File;
-  company: string;
+  companyId: string;
   function: string;
   email: string;
   phone: string;
@@ -23,10 +23,10 @@ export interface AddContactFormSchema {
   notes: string;
   address: {
     street: string;
-    city: string;
+    cityId: string;
     postalCode: string;
-    state: string;
-    country: string;
+    stateId: string;
+    countryId: string;
   };
   keywords: string[];
 }
@@ -53,7 +53,7 @@ export function useAddContactForm() {
     name: z.string().min(2).max(50),
     avatar: z.string().min(1),
     avatarFile: fileSchema.optional(),
-    company: z.string().min(1),
+    companyId: z.string().min(1),
     function: z.string().min(1),
     email: z.string().email(),
     phone: z.string().min(1),
@@ -63,20 +63,22 @@ export function useAddContactForm() {
     notes: z.string(),
     address: z.object({
       street: z.string().min(1),
-      city: z.string().min(1),
+      cityId: z.string().min(1),
       postalCode: z.string().min(1),
-      state: z.string().min(1),
-      country: z.string().min(1),
+      stateId: z.string().min(1),
+      countryId: z.string().min(1),
     }),
     keywords: z.array(z.string()),
   });
 
-  const form = useForm<z.infer<typeof formSchema>>({
+  const form: UseFormReturn<z.infer<typeof formSchema>> = useForm<
+    z.infer<typeof formSchema>
+  >({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
       avatar: "",
-      company: "",
+      companyId: "",
       function: "",
       email: "",
       phone: "",
@@ -86,10 +88,10 @@ export function useAddContactForm() {
       notes: "",
       address: {
         street: "",
-        city: "",
+        cityId: "",
         postalCode: "",
-        state: "",
-        country: "",
+        stateId: "",
+        countryId: "",
       },
       keywords: [],
     },
@@ -124,12 +126,23 @@ export function useAddContactForm() {
     },
   ];
 
-  const dispatchCurrentStep = (currentStep: number) => {
+  const dispatchCurrentStep = (
+    currentStep: number,
+    { companies, cities, countries, states }: any
+  ) => {
     switch (currentStep) {
       case 1:
         return <AddContactFirstStep {...form} />;
       case 2:
-        return <AddContactSecondStep {...form} />;
+        return (
+          <AddContactSecondStep
+            {...form}
+            companies={companies}
+            cities={cities}
+            countries={countries}
+            states={states}
+          />
+        );
       case 3:
         return <AddContactThirdStep {...form} />;
       case 4:

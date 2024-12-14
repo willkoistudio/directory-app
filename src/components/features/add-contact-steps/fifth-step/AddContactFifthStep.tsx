@@ -1,9 +1,9 @@
 import { FC } from "react";
-import { Label } from "../../../components/ui/label";
-import { Button } from "../../../components/ui/button";
+import { Label } from "../../../ui/label";
+import { Button } from "../../../ui/button";
 import { Save } from "lucide-react";
 import { UseFormReturn } from "react-hook-form";
-import { AddContactFormSchema } from "../../../pages/add-contact/hooks/useAddContactForm";
+import { AddContactFormSchema } from "../../../../pages/add-contact/hooks/useAddContactForm";
 
 const AddContactFifthStep: FC<UseFormReturn<AddContactFormSchema>> = () => {
   return (
