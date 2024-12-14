@@ -12,6 +12,15 @@ export class ServiceContactHttp implements ServiceContact {
     }
   }
 
+  public async getContactDetail(id: string): Promise<Contact> {
+    try {
+      const { data } = await axios.get<Contact>(`contacts/${id}`);
+      return data;
+    } catch (erreur) {
+      throw new Error("Error fetching contact");
+    }
+  }
+
   public async addContact(contact: Contact): Promise<void> {
     try {
       const { data } = await axios.post<void>(`contacts`, contact);

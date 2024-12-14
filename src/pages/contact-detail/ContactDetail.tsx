@@ -12,31 +12,9 @@ import {
 } from "lucide-react";
 import { Button } from "../../components/ui/button";
 import { useNavigate } from "react-router-dom";
-import { Contact } from "../../models/contact";
+import { CONTACT_DATA_MOCKS } from "../../models/contact";
 
-const contactDetail: Contact = {
-  id: "3c23d152",
-  name: "Will Smirs",
-  companyId: "0",
-  email: "shanna@yahoo.com",
-  phone: "010-692-6593 x09125",
-  workPhone: "1-463-123-3447",
-  fax: "1-463-123-3447",
-  function: "Chief Executive Officer",
-  website: "www.hildegard.org",
-  address: {
-    street: "1 GNX Drive",
-    city: "Oakland",
-    postalCode: "12345",
-    country: "Canada",
-  },
-  notes:
-    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis architecto recusandae distinctio quas! Recusandae soluta nostrum assumenda quis nobis dolores accusamus eius alias harum quae, rem delectus nulla quisquam tempore.",
-  keywords: ["keyword1", "keyword2", "keyword3"],
-  avatar: "https://i.pravatar.cc/150?u=a042581f4e29026024d",
-  createdAt: new Date(),
-  updatedAt: new Date(),
-};
+const contactDetail = CONTACT_DATA_MOCKS[0];
 
 const ContactDetail: React.FC = () => {
   const { setPageName } = usePageName();
@@ -117,7 +95,7 @@ const ContactDetail: React.FC = () => {
             </p>
             <Button
               className="bg-gray"
-              onClick={() => navigate(`company/${contactDetail.companyId}`)}
+              onClick={() => navigate(`company/${contactDetail.company.id}`)}
             >
               <SquareArrowOutUpRight /> View details
             </Button>

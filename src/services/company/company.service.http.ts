@@ -12,6 +12,15 @@ export class ServiceCompanyHttp implements ServiceCompany {
     }
   }
 
+  public async getCompanyDetail(id: string): Promise<Company> {
+    try {
+      const { data } = await axios.get<Company>(`companies/${id}`);
+      return data;
+    } catch (erreur) {
+      throw new Error("Error fetching company");
+    }
+  }
+
   public async addCompany(company: Company): Promise<void> {
     try {
       const { data } = await axios.post<void>(`companies`, company);

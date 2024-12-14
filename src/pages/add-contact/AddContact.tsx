@@ -3,102 +3,22 @@ import { usePageName } from "../../context/PageNameContext";
 import { Button } from "../../components/ui/button";
 import { Badge } from "../../components/ui/badge";
 import styles from "./AddContact.module.scss";
-import { AddContactFirstStep } from "../../components/features/add-contact-steps/AddContactFirstStep";
-import { AddContactSecondStep } from "../../components/features/add-contact-steps/AddContactSecondStep";
-import { AddContactThirdStep } from "../../components/features/add-contact-steps/AddContactThirdStep";
-import { AddContactFourthStep } from "../../components/features/add-contact-steps/AddContactFourthStep";
-import { AddContactFifthStep } from "../../components/features/add-contact-steps/AddContactFifthStep";
 import { Check } from "lucide-react";
 import { ROUTE_NAMES } from "../../helpers/const/routes";
 import { Form } from "../../components/ui/form";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-
-export interface AddContactStep {
-  name: string;
-  stepNumber: number;
-  isCompleted: boolean;
-}
-
-const addContactSteps: AddContactStep[] = [
-  {
-    name: "Photo",
-    stepNumber: 1,
-    isCompleted: false,
-  },
-
-  {
-    name: "Primary infos",
-    stepNumber: 2,
-    isCompleted: false,
-  },
-  {
-    name: "Secondary infos",
-    stepNumber: 3,
-    isCompleted: false,
-  },
-  {
-    name: "Keywords",
-    stepNumber: 4,
-    isCompleted: false,
-  },
-  {
-    name: "Summary",
-    stepNumber: 5,
-    isCompleted: false,
-  },
-];
+import { useAddContactForm } from "./hooks/useAddContactForm";
+import { useParams } from "react-router-dom";
 
 const AddContact: React.FC = () => {
   const { setPageName } = usePageName();
-  const [currentStep, setCurrentStep] = React.useState(1);
-
-  const stepsIconColor = (step: AddContactStep) => {
-    if (step.isCompleted) {
-      return `${styles["step-completed"]} bg-green border-green `;
-    } else if (step.stepNumber === currentStep) {
-      return "bg-red border-red";
-    } else {
-      return "";
-    }
-  };
-
-  const dispatchCurrentStep = () => {
-    switch (currentStep) {
-      case 1:
-        return <AddContactFirstStep />;
-      case 2:
-        return <AddContactSecondStep />;
-      case 3:
-        return <AddContactThirdStep />;
-      case 4:
-        return <AddContactFourthStep />;
-      case 5:
-        return <AddContactFifthStep />;
-      default:
-        return;
-    }
-  };
-
   useEffect(() => {
     setPageName(ROUTE_NAMES.ADD_CONTACT); // Mettre à jour le nom de la page
   }, []);
 
-  const formSchema = z.object({
-    name: z.string().min(2).max(50),
-  });
-
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      name: "",
-    },
-  });
-
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-  }
+  const { id } = useParams<{ id: string }>();
+  const [currentStep, setCurrentStep] = React.useState(1);
+  const { dispatchCurrentStep, form, addContactSteps, stepsIconColor } =
+    useAddContactForm();
 
   return (
     <div>
@@ -110,7 +30,7 @@ const AddContact: React.FC = () => {
             onClick={() => setCurrentStep(step.stepNumber)}
           >
             <div className="add-contact-steps-navigation-icon">
-              <Badge className={`${stepsIconColor(step)} py-1 `}>
+              <Badge className={`${stepsIconColor(step, currentStep)} py-1 `}>
                 {step.isCompleted ? <Check size={14} /> : step.stepNumber}
               </Badge>
             </div>
@@ -137,7 +57,7 @@ const AddContact: React.FC = () => {
           </Button>
         </div>
       </nav>
-      <Form {...form}>{dispatchCurrentStep()}</Form>
+      <Form {...form}>{dispatchCurrentStep(currentStep)}</Form>
     </div>
   );
 };

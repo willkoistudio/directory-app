@@ -9,6 +9,8 @@ import {
   SelectValue,
 } from "../../../components/ui/select";
 import { Company } from "../../../models/company";
+import { UseFormReturn } from "react-hook-form";
+import { AddContactFormSchema } from "../../../pages/add-contact/hooks/useAddContactForm";
 
 const companiesList: Company[] = [
   {
@@ -141,7 +143,7 @@ const countries = [
   },
 ];
 
-const AddContactSecondStep: FC = () => {
+const AddContactSecondStep: FC<UseFormReturn<AddContactFormSchema>> = () => {
   return (
     <>
       <section className="grid grid-cols-2 gap-8 mt-12 px-8">

@@ -2,8 +2,10 @@ import { FC } from "react";
 import { Label } from "../../../components/ui/label";
 import { Button } from "../../../components/ui/button";
 import { Save } from "lucide-react";
+import { UseFormReturn } from "react-hook-form";
+import { AddContactFormSchema } from "../../../pages/add-contact/hooks/useAddContactForm";
 
-const AddContactFifthStep: FC = () => {
+const AddContactFifthStep: FC<UseFormReturn<AddContactFormSchema>> = () => {
   return (
     <>
       <p className="text-2xl1 text-center pt-8 pb-8">

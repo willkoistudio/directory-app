@@ -1,13 +1,11 @@
 import React, { createContext, useContext, useState, ReactNode } from "react";
 import { ROUTE_NAMES } from "../helpers/const/routes";
 
-// Créer le contexte
 const PageNameContext = createContext<
   | { pageName: ROUTE_NAMES; setPageName: (name: ROUTE_NAMES) => void }
   | undefined
 >(undefined);
 
-// Créer un provider
 export const PageNameProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
@@ -20,7 +18,6 @@ export const PageNameProvider: React.FC<{ children: ReactNode }> = ({
   );
 };
 
-// Hook pour utiliser le contexte
 export const usePageName = () => {
   const context = useContext(PageNameContext);
   if (!context) {

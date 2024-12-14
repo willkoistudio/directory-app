@@ -13,6 +13,12 @@ export class ServiceContactMock implements ServiceContact {
     );
   }
 
+  public async getContactDetail(id: string): Promise<Contact> {
+    return new Promise((resolve) =>
+      setTimeout(() => resolve(this.contacts[0]), this.latence)
+    );
+  }
+
   public async addContact(contact: Contact): Promise<void> {
     return new Promise((resolve) =>
       setTimeout(() => {

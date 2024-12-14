@@ -13,6 +13,12 @@ export class ServiceCompanyMock implements ServiceCompany {
     );
   }
 
+  public async getCompanyDetail(id: string): Promise<Company> {
+    return new Promise((resolve) =>
+      setTimeout(() => resolve(this.companies[0]), this.latence)
+    );
+  }
+
   public async addCompany(contact: Company): Promise<void> {
     return new Promise((resolve) =>
       setTimeout(() => {
