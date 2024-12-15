@@ -6,6 +6,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { PageNameProvider } from "./context/PageNameContext"; // Importer le provider
 import { routes } from "./routes";
 import "./assets/global.scss";
+import { CscProvider } from "./context/CountryStateCityContext";
 
 const App: React.FC = () => {
   useEffect(() => {
@@ -15,23 +16,25 @@ const App: React.FC = () => {
   return (
     <SidebarProvider>
       <PageNameProvider>
-        <AppSidebar />
-        <div className="w-full">
-          <Header />
-          <main className="container mx-auto main-app-container">
-            <BrowserRouter>
-              <Routes>
-                {routes.map((route, index) => (
-                  <Route
-                    key={index}
-                    path={route.path}
-                    element={route.element}
-                  />
-                ))}
-              </Routes>
-            </BrowserRouter>
-          </main>
-        </div>
+        <CscProvider>
+          <AppSidebar />
+          <div className="w-full">
+            <Header />
+            <main className="container mx-auto main-app-container">
+              <BrowserRouter>
+                <Routes>
+                  {routes.map((route, index) => (
+                    <Route
+                      key={index}
+                      path={route.path}
+                      element={route.element}
+                    />
+                  ))}
+                </Routes>
+              </BrowserRouter>
+            </main>
+          </div>
+        </CscProvider>
       </PageNameProvider>
     </SidebarProvider>
   );

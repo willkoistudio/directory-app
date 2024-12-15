@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { usePageName } from "../../context/PageNameContext";
+import { useCountryStateCity } from "../../context/CountryStateCityContext";
 import { Button } from "../../components/ui/button";
 import { Badge } from "../../components/ui/badge";
 import styles from "./AddContact.module.scss";
@@ -10,12 +11,20 @@ import { useAddContactForm } from "./hooks/useAddContactForm";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
-import { getCountries } from "../../store/locationSlice";
 import { getCompanies } from "../../store/companySlice";
 import { getContactDetail } from "../../store/contactSlice";
 
 const AddContact: React.FC = () => {
   const { setPageName } = usePageName();
+  const {
+    fetchCountries,
+    getCities,
+    getStates,
+    selectCountry,
+    countries,
+    states,
+    cities,
+  } = useCountryStateCity();
   const { id } = useParams<{ id: string }>();
 
   const [loading, setLoading] = useState(false);
@@ -23,9 +32,6 @@ const AddContact: React.FC = () => {
 
   const dispatch = useDispatch();
 
-  const { countries, cities, states } = useSelector(
-    (state: RootState) => state.location
-  );
   const { contactDetail } = useSelector((state: RootState) => state.contact);
   const { companies } = useSelector((state: RootState) => state.company);
   const {
@@ -39,7 +45,7 @@ const AddContact: React.FC = () => {
   const fetchRessources = async () => {
     setLoading(true);
     try {
-      await dispatch(getCountries() as any);
+      await fetchCountries();
       await dispatch(getCompanies() as any);
       if (id) {
         await dispatch(getContactDetail(id) as any);

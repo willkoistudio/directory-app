@@ -3,14 +3,12 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import authReducer from "./authSlice";
 import companyReducer from "./companySlice";
 import contactReducer from "./contactSlice";
-import locationReducer from "./locationSlice";
 
 const store = configureStore({
   reducer: {
     auth: authReducer,
     company: companyReducer,
     contact: contactReducer,
-    location: locationReducer,
   },
 });
 

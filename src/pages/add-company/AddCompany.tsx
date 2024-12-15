@@ -14,7 +14,6 @@ import { AddCompanySecondStep } from "../../components/features/add-company-step
 import { FormStep } from "../../models/form";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
-import { getCountries } from "../../store/locationSlice";
 
 const addCompanySteps: FormStep[] = [
   {
@@ -34,22 +33,6 @@ const AddCompany: React.FC = () => {
   const [currentStep, setCurrentStep] = React.useState(1);
 
   const [loading, setLoading] = useState(false);
-  const dispatch = useDispatch();
-
-  const { countries, cities, states } = useSelector(
-    (state: RootState) => state.location
-  );
-
-  const fetchCountries = async () => {
-    setLoading(true);
-    try {
-      await dispatch(getCountries() as any);
-    } catch (error) {
-      console.error("Error fetching countries:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const stepsIconColor = (step: FormStep) => {
     if (step.isCompleted) {

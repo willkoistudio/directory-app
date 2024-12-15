@@ -160,7 +160,7 @@ export function useAddContactForm() {
     } else if (step.stepNumber === currentStep) {
       return "bg-red border-red";
     } else {
-      return "";
+      return "bg-gray/20 border-gray/20";
     }
   };
 

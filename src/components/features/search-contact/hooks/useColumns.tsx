@@ -35,7 +35,6 @@ export default function useColomns() {
       enableSorting: false,
       enableHiding: false,
     },
-
     {
       accessorKey: "avatar",
       header: "",

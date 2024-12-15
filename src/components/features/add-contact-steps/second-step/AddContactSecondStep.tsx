@@ -1,12 +1,5 @@
 import { FC, useState } from "react";
 import { Input } from "../../../ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "../../../ui/select";
 import { Company } from "../../../../models/company";
 import { ControllerRenderProps, UseFormReturn } from "react-hook-form";
 import { AddContactFormSchema } from "../../../../pages/add-contact/hooks/useAddContactForm";
@@ -18,7 +11,9 @@ import {
   FormLabel,
   FormMessage,
 } from "../../../ui/form";
-import { FormArrayItemData } from "../../../../models/form";
+import Autocomplete from "../../../ui/autocomplete/autocomplete";
+import { CSC_City, CSC_Country, CSC_State } from "../../../../models/location";
+import { AutoCompleteItem } from "../../../ui/autocomplete/AutoComplete.def";
 
 interface AddContactSecondStepForm {
   name: string;
@@ -38,9 +33,9 @@ interface AddContactSecondStepForm {
 interface AddContactSecondStepProps
   extends UseFormReturn<AddContactFormSchema> {
   companies: Company[];
-  cities: FormArrayItemData[];
-  countries: FormArrayItemData[];
-  states: FormArrayItemData[];
+  cities: CSC_City[];
+  countries: CSC_Country[];
+  states: CSC_State[];
 }
 
 const AddContactSecondStep: FC<AddContactSecondStepProps> = ({
@@ -79,16 +74,44 @@ const AddContactSecondStep: FC<AddContactSecondStepProps> = ({
     trigger(field.name);
   };
 
-  const getItems = (name: string) => {
+  const getItems = (name: string): AutoCompleteItem[] => {
     switch (name) {
       case "companyId":
-        return companies;
+        return (
+          companies.map((company) => {
+            return {
+              label: company.name,
+              value: company.id,
+            };
+          }) ?? []
+        );
       case "address.cityId":
-        return cities;
+        return (
+          cities.map((city) => {
+            return {
+              label: city.name,
+              value: String(city.id),
+            };
+          }) ?? []
+        );
       case "address.stateId":
-        return states;
+        return (
+          states.map((state) => {
+            return {
+              label: state.name,
+              value: String(state.id),
+            };
+          }) ?? []
+        );
       case "address.countryId":
-        return countries;
+        return (
+          countries.map((country) => {
+            return {
+              label: country.name,
+              value: String(country.id),
+            };
+          }) ?? []
+        );
       default:
         return [];
     }
@@ -125,7 +148,7 @@ const AddContactSecondStep: FC<AddContactSecondStepProps> = ({
     <>
       <section className="grid grid-cols-2 gap-8 mt-12 px-8">
         {fieldsData.map((fieldData, idFieldData) =>
-          fieldData.type === "text" ? (
+          fieldData.type !== "select" ? (
             <FormField
               key={idFieldData}
               control={control}
@@ -153,23 +176,11 @@ const AddContactSecondStep: FC<AddContactSecondStepProps> = ({
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>{fieldData.label}</FormLabel>
-                  <Select
-                    onValueChange={(value) => {
-                      onFormChange(value, field);
-                    }}
-                    defaultValue={getLocalStateValue(field.name)}
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder={fieldData.placeholder} />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {getItems(field.name)?.map((item) => (
-                        <SelectItem key={item.id} value={item.id}>
-                          {item.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                  <Autocomplete
+                    options={getItems(field.name)}
+                    value={getLocalStateValue(field.name)}
+                    onChange={(value) => onFormChange(value, field)}
+                  />
                   <FormMessage className="text-red" />
                 </FormItem>
               )}
