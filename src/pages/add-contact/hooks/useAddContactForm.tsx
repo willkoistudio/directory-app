@@ -17,10 +17,10 @@ export interface AddContactFormSchema {
   function: string;
   email: string;
   phone: string;
-  workPhone: string;
-  fax: string;
-  website: string;
-  notes: string;
+  workPhone?: string;
+  fax?: string;
+  website?: string;
+  notes?: string;
   address: {
     street: string;
     cityId: string;
@@ -57,10 +57,10 @@ export function useAddContactForm() {
     function: z.string().min(1),
     email: z.string().email(),
     phone: z.string().min(1),
-    workPhone: z.string(),
-    fax: z.string(),
-    website: z.string(),
-    notes: z.string(),
+    workPhone: z.string().optional(),
+    fax: z.string().optional(),
+    website: z.string().optional(),
+    notes: z.string().optional(),
     address: z.object({
       street: z.string().min(1),
       cityId: z.string().min(1),

@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-
 import { AutoCompleteItem } from "./AutoComplete.def";
 import { Input } from "../../ui/input";
 

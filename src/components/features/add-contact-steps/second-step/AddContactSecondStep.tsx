@@ -12,8 +12,8 @@ import {
   FormMessage,
 } from "../../../ui/form";
 import Autocomplete from "../../../ui/autocomplete/autocomplete";
-import { CSC_City, CSC_Country, CSC_State } from "../../../../models/location";
 import { AutoCompleteItem } from "../../../ui/autocomplete/AutoComplete.def";
+import { CSC_City, CSC_Country, CSC_State } from "../../../../models/location";
 
 interface AddContactSecondStepForm {
   name: string;
@@ -174,7 +174,9 @@ const AddContactSecondStep: FC<AddContactSecondStepProps> = ({
                       type="text"
                       {...field}
                       value={getLocalStateValue(field.name)}
-                      onChange={(e) => onFormChange(e.target.value, field)}
+                      onInput={(e) =>
+                        onFormChange(e.currentTarget.value, field)
+                      }
                     />
                   </FormControl>
                   <FormMessage className="text-red" />
