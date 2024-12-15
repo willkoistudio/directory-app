@@ -33,6 +33,18 @@ export const fieldsData: FormFieldData[] = [
     type: "text",
   },
   {
+    name: "address.countryId",
+    label: "Country",
+    type: "select",
+    placeholder: "Select a country",
+  },
+  {
+    name: "address.stateId",
+    label: "State",
+    type: "select",
+    placeholder: "Select a state",
+  },
+  {
     name: "address.cityId",
     label: "City",
     type: "select",
@@ -42,17 +54,5 @@ export const fieldsData: FormFieldData[] = [
     name: "address.postalCode",
     label: "Postal Code",
     type: "text",
-  },
-  {
-    name: "address.stateId",
-    label: "State",
-    type: "select",
-    placeholder: "Select a state",
-  },
-  {
-    name: "address.countryId",
-    label: "Country",
-    type: "select",
-    placeholder: "Select a country",
   },
 ];

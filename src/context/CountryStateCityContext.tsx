@@ -44,12 +44,10 @@ export const CscProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   const selectCountry = async (countryCode: string) => {
-    setLoadingLocations(true);
     setSelectedCountryCode(countryCode);
     setStates([]);
     setCities([]);
     await getStates();
-    setLoadingLocations(false);
   };
 
   const getStates = async () => {
@@ -58,8 +56,8 @@ export const CscProvider: React.FC<{ children: React.ReactNode }> = ({
     }
     setLoadingLocations(true);
     const data = await serviceLocation.getStates(selectedCountryCode);
-    setStates(data);
     setLoadingLocations(false);
+    setStates(data);
   };
 
   const getCities = async (stateCode: string) => {
@@ -71,8 +69,8 @@ export const CscProvider: React.FC<{ children: React.ReactNode }> = ({
       selectedCountryCode,
       stateCode
     );
-    setCities(data);
     setLoadingLocations(false);
+    setCities(data);
   };
 
   return (
