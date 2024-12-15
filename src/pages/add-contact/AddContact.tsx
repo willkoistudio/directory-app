@@ -24,6 +24,7 @@ const AddContact: React.FC = () => {
     countries,
     states,
     cities,
+    loadingLocations,
   } = useCountryStateCity();
   const { id } = useParams<{ id: string }>();
 
@@ -124,6 +125,10 @@ const AddContact: React.FC = () => {
             states,
             cities,
             countries,
+            selectCountry,
+            getStates,
+            getCities,
+            loadingLocations,
           })}
         </form>
       </Form>

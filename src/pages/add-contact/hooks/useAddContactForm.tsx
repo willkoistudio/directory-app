@@ -128,7 +128,15 @@ export function useAddContactForm() {
 
   const dispatchCurrentStep = (
     currentStep: number,
-    { companies, cities, countries, states }: any
+    {
+      companies,
+      cities,
+      countries,
+      states,
+      selectCountry,
+      getCities,
+      loadingLocations,
+    }: any
   ) => {
     switch (currentStep) {
       case 1:
@@ -141,6 +149,9 @@ export function useAddContactForm() {
             cities={cities}
             countries={countries}
             states={states}
+            selectCountry={selectCountry}
+            getCities={getCities}
+            loadingLocations={loadingLocations}
           />
         );
       case 3:

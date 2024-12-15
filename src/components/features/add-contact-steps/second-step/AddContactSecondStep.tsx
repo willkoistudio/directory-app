@@ -36,16 +36,22 @@ interface AddContactSecondStepProps
   cities: CSC_City[];
   countries: CSC_Country[];
   states: CSC_State[];
+  selectCountry: (countryCode: string) => void;
+  getCities: (stateCode: string) => CSC_City[];
+  loadingLocations: boolean;
 }
 
 const AddContactSecondStep: FC<AddContactSecondStepProps> = ({
-  getValues,
   control,
+  getValues,
   trigger,
   companies,
   cities,
   countries,
   states,
+  selectCountry,
+  getCities,
+  loadingLocations,
 }) => {
   const [formLocal, setFormLocal] = useState<AddContactSecondStepForm>({
     name: getValues("name"),
@@ -72,6 +78,13 @@ const AddContactSecondStep: FC<AddContactSecondStepProps> = ({
     }));
     field.onChange(value);
     trigger(field.name);
+    if (field.name === "address.countryId") {
+      const country = countries.find((c) => c.id === Number(value));
+      if (country) selectCountry(country.iso2);
+    } else if (field.name === "address.stateId") {
+      const state = states.find((s) => s.id === Number(value));
+      if (state) getCities(state.iso2);
+    }
   };
 
   const getItems = (name: string): AutoCompleteItem[] => {
@@ -177,6 +190,7 @@ const AddContactSecondStep: FC<AddContactSecondStepProps> = ({
                 <FormItem>
                   <FormLabel>{fieldData.label}</FormLabel>
                   <Autocomplete
+                    disabled={loadingLocations}
                     options={getItems(field.name)}
                     value={getLocalStateValue(field.name)}
                     onChange={(value) => onFormChange(value, field)}

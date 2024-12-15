@@ -10,6 +10,7 @@ interface CountryStateCityContext {
   selectCountry: (countryCode: string) => void;
   getStates: () => Promise<void>;
   getCities: (stateCode: string) => Promise<void>;
+  loadingLocations: boolean;
 }
 
 const CscContext = createContext<CountryStateCityContext>({
@@ -20,6 +21,7 @@ const CscContext = createContext<CountryStateCityContext>({
   selectCountry: () => {},
   getStates: () => Promise.resolve(),
   getCities: () => Promise.resolve(),
+  loadingLocations: false,
 });
 
 export const CscProvider: React.FC<{ children: React.ReactNode }> = ({
@@ -29,38 +31,48 @@ export const CscProvider: React.FC<{ children: React.ReactNode }> = ({
   const [countries, setCountries] = useState<CSC_Country[]>([]);
   const [states, setStates] = useState<CSC_State[]>([]);
   const [cities, setCities] = useState<CSC_City[]>([]);
+  const [loadingLocations, setLoadingLocations] = useState<boolean>(false);
   const [selectedCountryCode, setSelectedCountryCode] = useState<string | null>(
     null
   );
 
   const fetchCountries = async () => {
+    setLoadingLocations(true);
     const data = await serviceLocation.getCountries();
     setCountries(data);
+    setLoadingLocations(false);
   };
 
-  const selectCountry = (countryCode: string) => {
+  const selectCountry = async (countryCode: string) => {
+    setLoadingLocations(true);
     setSelectedCountryCode(countryCode);
     setStates([]);
     setCities([]);
+    await getStates();
+    setLoadingLocations(false);
   };
 
   const getStates = async () => {
     if (!selectedCountryCode) {
       throw new Error("A country must be selected before fetching states.");
     }
+    setLoadingLocations(true);
     const data = await serviceLocation.getStates(selectedCountryCode);
     setStates(data);
+    setLoadingLocations(false);
   };
 
   const getCities = async (stateCode: string) => {
     if (!selectedCountryCode) {
       throw new Error("A country must be selected before fetching cities.");
     }
+    setLoadingLocations(true);
     const data = await serviceLocation.getCities(
       selectedCountryCode,
       stateCode
     );
     setCities(data);
+    setLoadingLocations(false);
   };
 
   return (
@@ -73,6 +85,7 @@ export const CscProvider: React.FC<{ children: React.ReactNode }> = ({
         selectCountry,
         getStates,
         getCities,
+        loadingLocations,
       }}
     >
       {children}

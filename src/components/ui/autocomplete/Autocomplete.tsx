@@ -7,12 +7,14 @@ interface AutocompleteProps {
   options: AutoCompleteItem[];
   value: string;
   onChange: (value: string) => void;
+  disabled?: boolean;
 }
 
 const Autocomplete: React.FC<AutocompleteProps> = ({
   options,
   value,
   onChange,
+  disabled,
 }) => {
   const [query, setQuery] = useState("");
   const [isOpen, setIsOpen] = useState(false);
@@ -45,10 +47,11 @@ const Autocomplete: React.FC<AutocompleteProps> = ({
       <Input
         type="text"
         placeholder="Search..."
+        disabled={disabled}
         value={query}
+        onFocus={() => setIsOpen(true)}
         onChange={(e) => {
           setQuery(e.target.value);
-          setIsOpen(true);
         }}
       />
       {isOpen && (
