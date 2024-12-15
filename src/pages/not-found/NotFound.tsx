@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { usePageName } from "../../context/PageNameContext";
-import { ROUTE_NAMES } from "../../helpers/const/routes";
+import { ROUTE_NAMES } from "../../const/routes";
 import { Button } from "../../components/ui/button";
 import { useTranslation } from "react-i18next";
 

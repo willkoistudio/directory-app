@@ -5,7 +5,7 @@ import { Button } from "../../components/ui/button";
 import { Badge } from "../../components/ui/badge";
 import styles from "./AddContact.module.scss";
 import { Check } from "lucide-react";
-import { ROUTE_NAMES } from "../../helpers/const/routes";
+import { ROUTE_NAMES } from "../../const/routes";
 import { Form } from "../../components/ui/form";
 import { useAddContactForm } from "./hooks/useAddContactForm";
 import { useParams } from "react-router-dom";

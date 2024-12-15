@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { Contact, ContactData } from "../models/contact";
 import { ServiceContactHttp } from "../services/contact/contact.service.http";
 import { ServiceContactMock } from "../services/contact/contact.service.mock";
-import { IS_API_MOCKED } from "../helpers/const/common";
+import { IS_API_MOCKED } from "../const/common";
 
 interface ContactState {
   contacts: Contact[];

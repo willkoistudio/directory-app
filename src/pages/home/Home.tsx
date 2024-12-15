@@ -15,7 +15,7 @@ import {
 } from "../../components/ui/card";
 import { TrendingUp } from "lucide-react";
 import { Label, LabelProps, Pie, PieChart } from "recharts";
-import { ROUTE_NAMES } from "../../helpers/const/routes";
+import { ROUTE_NAMES } from "../../const/routes";
 import { useTranslation } from "react-i18next";
 import useChartData from "./hooks/useChartData";
 import { useDispatch, useSelector } from "react-redux";

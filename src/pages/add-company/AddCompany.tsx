@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { usePageName } from "../../context/PageNameContext";
-import { ROUTE_NAMES } from "../../helpers/const/routes";
+import { ROUTE_NAMES } from "../../const/routes";
 import styles from "../add-contact/AddContact.module.scss";
 import { z } from "zod";
 import { useForm } from "react-hook-form";

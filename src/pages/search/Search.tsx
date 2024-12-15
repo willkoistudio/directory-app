@@ -1,14 +1,14 @@
 import { FC, useEffect, useState } from "react";
 import { usePageName } from "../../context/PageNameContext";
 import { Building2, UserRoundSearch } from "lucide-react";
-import { ROUTE_NAMES } from "../../helpers/const/routes";
+import { ROUTE_NAMES } from "../../const/routes";
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
 } from "../../components/ui/tabs";
-import { APP_CONTEXT } from "../../helpers/const/features";
+import { APP_CONTEXT } from "../../const/features";
 import { useDispatch, useSelector } from "react-redux";
 import { getContacts } from "../../store/contactSlice";
 import { getCompanies } from "../../store/companySlice";

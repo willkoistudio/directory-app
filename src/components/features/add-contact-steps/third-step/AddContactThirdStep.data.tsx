@@ -1,4 +1,4 @@
-import { FormFieldData } from "../../../../helpers/const/form";
+import { FormFieldData } from "../../../../const/form";
 
 export const fieldsData: FormFieldData[] = [
   {

@@ -11,9 +11,9 @@ import {
   FormLabel,
   FormMessage,
 } from "../../../ui/form";
-import Autocomplete from "../../../ui/autocomplete/autocomplete";
 import { AutoCompleteItem } from "../../../ui/autocomplete/AutoComplete.def";
 import { CSC_City, CSC_Country, CSC_State } from "../../../../models/location";
+import Autocomplete from "../../../ui/autocomplete/Autocomplete";
 
 interface AddContactSecondStepForm {
   name: string;

@@ -11,7 +11,7 @@ import {
 } from "../../ui/sidebar";
 import { Home, Search, UserRoundPlus, HousePlus } from "lucide-react";
 import styles from "./Sidebar.module.scss";
-import { ROUTE_NAMES } from "../../../helpers/const/routes";
+import { ROUTE_NAMES } from "../../../const/routes";
 import { usePageName } from "../../../context/PageNameContext";
 
 const items = [

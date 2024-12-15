@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { APP_CONTEXT } from "../../../helpers/const/features";
+import { APP_CONTEXT } from "../../../const/features";
 import { Building2, UserRoundSearch } from "lucide-react";
 import { SearchContact } from "../../../components/features/search-contact/SearchContact";
 import { SearchCompany } from "../../../components/features/search-company/SearchCompany";

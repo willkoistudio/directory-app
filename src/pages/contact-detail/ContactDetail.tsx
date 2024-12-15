@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { usePageName } from "../../context/PageNameContext";
-import { ROUTE_NAMES } from "../../helpers/const/routes";
+import { ROUTE_NAMES } from "../../const/routes";
 import { Card } from "../../components/ui/card";
 import {
   Building2,

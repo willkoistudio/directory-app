@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { User, LoginForm } from "../models/user";
-import { IS_API_MOCKED } from "../helpers/const/common";
+import { IS_API_MOCKED } from "../const/common";
 import { ServiceAuthMock } from "../services/auth/auth.service.mock";
 import { ServiceAuthHttp } from "../services/auth/auth.service.http";
 

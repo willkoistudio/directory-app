@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { Company } from "../models/company";
 import { ServiceCompanyHttp } from "../services/company/company.service.http";
 import { ServiceCompanyMock } from "../services/company/company.service.mock";
-import { IS_API_MOCKED } from "../helpers/const/common";
+import { IS_API_MOCKED } from "../const/common";
 
 const serviceCompany = IS_API_MOCKED
   ? new ServiceCompanyMock()

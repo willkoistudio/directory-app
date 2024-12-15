@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, ReactNode } from "react";
-import { ROUTE_NAMES } from "../helpers/const/routes";
+import { ROUTE_NAMES } from "../const/routes";
 
 const PageNameContext = createContext<
   | { pageName: ROUTE_NAMES; setPageName: (name: ROUTE_NAMES) => void }

@@ -1,9 +1,9 @@
 import { useMemo, useState } from "react";
 import { Languages, Settings, SunMoon } from "lucide-react";
 import { DropdownMenuItem } from "../../../ui/dropdown-menu";
-import { LANGUAGES_APP } from "../../../../helpers/const/locale";
+import { LANGUAGES_APP } from "../../../../const/locale";
 import i18n from "../../../../i18n";
-import { APP_THEME } from "../../../../helpers/const/theme";
+import { APP_THEME } from "../../../../const/theme";
 
 const useDropdownMenuElements = () => {
   const [currentLanguage, setCurrentLanguage] = useState(i18n.language);
