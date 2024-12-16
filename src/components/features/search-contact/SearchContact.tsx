@@ -3,6 +3,7 @@ import { Contact } from "../../../models/contact";
 import { Filter } from "lucide-react";
 import {
   ColumnFiltersState,
+  Row,
   SortingState,
   VisibilityState,
   flexRender,
@@ -45,6 +46,8 @@ import {
 
 import { Skeleton } from "../../../components/ui/skeleton";
 import useColumns from "./hooks/useColumns";
+import { removeContact } from "../../../store/contactSlice";
+import { tab } from "@testing-library/user-event/dist/tab";
 
 interface SearchContactProps {
   contacts: Contact[];
@@ -240,6 +243,13 @@ const SearchContact: FC<SearchContactProps> = ({ contacts, loading }) => {
                 disabled={
                   !table.getIsSomeRowsSelected() &&
                   !table.getIsAllRowsSelected()
+                }
+                onClick={() =>
+                  removeContact(
+                    table
+                      .getSelectedRowModel()
+                      .rows.map((contact: Row<Contact>) => contact.id)
+                  )
                 }
               >
                 Delete selected contacts

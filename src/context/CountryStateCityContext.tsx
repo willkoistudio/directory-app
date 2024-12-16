@@ -1,6 +1,7 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { ServiceLocationHttp } from "../services/location/location.service.http";
 import { CSC_Country, CSC_State, CSC_City } from "../models/location";
+import { get } from "http";
 
 interface CountryStateCityContext {
   countries: CSC_Country[];
@@ -47,12 +48,11 @@ export const CscProvider: React.FC<{ children: React.ReactNode }> = ({
     setSelectedCountryCode(countryCode);
     setStates([]);
     setCities([]);
-    await getStates();
   };
 
   const getStates = async () => {
     if (!selectedCountryCode) {
-      throw new Error("A country must be selected before fetching states.");
+      return;
     }
     setLoadingLocations(true);
     const data = await serviceLocation.getStates(selectedCountryCode);
@@ -62,7 +62,7 @@ export const CscProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const getCities = async (stateCode: string) => {
     if (!selectedCountryCode) {
-      throw new Error("A country must be selected before fetching cities.");
+      return;
     }
     setLoadingLocations(true);
     const data = await serviceLocation.getCities(
@@ -72,6 +72,10 @@ export const CscProvider: React.FC<{ children: React.ReactNode }> = ({
     setLoadingLocations(false);
     setCities(data);
   };
+
+  useEffect(() => {
+    getStates();
+  }, [selectedCountryCode]);
 
   return (
     <CscContext.Provider

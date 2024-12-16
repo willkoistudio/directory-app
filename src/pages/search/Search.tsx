@@ -10,7 +10,7 @@ import {
 } from "../../components/ui/tabs";
 import { APP_CONTEXT } from "../../const/features";
 import { useDispatch, useSelector } from "react-redux";
-import { getContacts } from "../../store/contactSlice";
+import { getContacts, removeContact } from "../../store/contactSlice";
 import { getCompanies } from "../../store/companySlice";
 import { RootState } from "../../store/store";
 import useTabs from "./hooks/useTabs";
@@ -53,7 +53,8 @@ const Search: FC = () => {
     fetchCompanies,
     contacts,
     companies,
-    loading
+    loading,
+    removeContact
   );
 
   useEffect(() => {

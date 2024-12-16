@@ -34,7 +34,7 @@ export const getContactDetail = createAsyncThunk(
 
 export const addContact = createAsyncThunk(
   "contacts/addContact",
-  async (contact: Contact) => {
+  async (contact: ContactData) => {
     return await serviceContact.addContact(contact);
   }
 );
@@ -48,7 +48,7 @@ export const updateContact = createAsyncThunk(
 
 export const removeContact = createAsyncThunk(
   "contacts/removeContact",
-  async (id: string) => {
+  async (id: string | string[]) => {
     return await serviceContact.removeContact(id);
   }
 );

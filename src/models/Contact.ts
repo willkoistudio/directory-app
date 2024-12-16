@@ -15,7 +15,7 @@ export interface Contact {
 }
 
 export interface ContactData {
-  id: string;
+  id?: string;
   name: string;
   company: Company;
   email: string;

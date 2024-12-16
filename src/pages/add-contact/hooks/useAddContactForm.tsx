@@ -45,10 +45,6 @@ const fileSchema = z
   });
 
 export function useAddContactForm() {
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-  }
-
   const formSchema = z.object({
     name: z.string().min(2).max(50),
     avatar: z.string().min(1),
@@ -68,7 +64,7 @@ export function useAddContactForm() {
       stateId: z.string().min(1),
       countryId: z.string().min(1),
     }),
-    keywords: z.array(z.string()),
+    keywords: z.array(z.string()).min(1),
   });
 
   const form: UseFormReturn<z.infer<typeof formSchema>> = useForm<
@@ -97,35 +93,6 @@ export function useAddContactForm() {
     },
   });
 
-  const addContactSteps: FormStep[] = [
-    {
-      name: "Photo",
-      stepNumber: 1,
-      isCompleted: false,
-    },
-
-    {
-      name: "Primary infos",
-      stepNumber: 2,
-      isCompleted: false,
-    },
-    {
-      name: "Secondary infos",
-      stepNumber: 3,
-      isCompleted: false,
-    },
-    {
-      name: "Keywords",
-      stepNumber: 4,
-      isCompleted: false,
-    },
-    {
-      name: "Summary",
-      stepNumber: 5,
-      isCompleted: false,
-    },
-  ];
-
   const dispatchCurrentStep = (
     currentStep: number,
     {
@@ -136,6 +103,7 @@ export function useAddContactForm() {
       selectCountry,
       getCities,
       loadingLocations,
+      onSubmit,
     }: any
   ) => {
     switch (currentStep) {
@@ -159,7 +127,13 @@ export function useAddContactForm() {
       case 4:
         return <AddContactFourthStep {...form} />;
       case 5:
-        return <AddContactFifthStep {...form} />;
+        return (
+          <AddContactFifthStep
+            {...form}
+            onSubmit={onSubmit}
+            companies={companies}
+          />
+        );
       default:
         return;
     }
@@ -177,9 +151,7 @@ export function useAddContactForm() {
 
   return {
     dispatchCurrentStep,
-    onSubmit,
     stepsIconColor,
     form,
-    addContactSteps,
   };
 }

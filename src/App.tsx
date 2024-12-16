@@ -7,6 +7,7 @@ import { PageNameProvider } from "./context/PageNameContext"; // Importer le pro
 import { routes } from "./routes";
 import "./assets/global.scss";
 import { CscProvider } from "./context/CountryStateCityContext";
+import { Toaster } from "./components/ui/toaster";
 
 const App: React.FC = () => {
   useEffect(() => {
@@ -33,6 +34,7 @@ const App: React.FC = () => {
                 </Routes>
               </BrowserRouter>
             </main>
+            <Toaster />
           </div>
         </CscProvider>
       </PageNameProvider>

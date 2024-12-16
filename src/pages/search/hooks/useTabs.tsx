@@ -11,14 +11,15 @@ const useTabs = (
   fetchCompanies: Function,
   contacts: Contact[],
   companies: Company[],
-  loading: boolean
+  loading: boolean,
+  removeContact: Function
 ) => {
   const tabs = [
     {
       value: APP_CONTEXT.CONTACT,
       label: "Contacts",
       icon: <UserRoundSearch size={16} />,
-      content: <SearchContact {...{ contacts, loading }} />,
+      content: <SearchContact {...{ contacts, loading, removeContact }} />,
     },
     {
       value: APP_CONTEXT.COMPANY,

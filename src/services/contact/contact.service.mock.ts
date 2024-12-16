@@ -25,10 +25,9 @@ export class ServiceContactMock implements ServiceContact {
     );
   }
 
-  public async addContact(contact: Contact): Promise<void> {
+  public async addContact(contact: ContactData): Promise<void> {
     return new Promise((resolve) =>
       setTimeout(() => {
-        this.contacts.push(contact);
         resolve();
       }, this.latence)
     );
@@ -45,7 +44,7 @@ export class ServiceContactMock implements ServiceContact {
     );
   }
 
-  public async removeContact(id: string): Promise<void> {
+  public async removeContact(id: string | string[]): Promise<void> {
     return new Promise((resolve) =>
       setTimeout(() => {
         this.contacts = this.contacts.filter((c) => c.id !== id);

@@ -21,7 +21,7 @@ export class ServiceContactHttp implements ServiceContact {
     }
   }
 
-  public async addContact(contact: Contact): Promise<void> {
+  public async addContact(contact: ContactData): Promise<void> {
     try {
       const { data } = await axios.post<void>(`contacts`, contact);
       return data;
@@ -39,9 +39,10 @@ export class ServiceContactHttp implements ServiceContact {
     }
   }
 
-  public async removeContact(id: string): Promise<void> {
+  public async removeContact(id: string | string[]): Promise<void> {
+    const ids = Array.isArray(id) ? id.join(",") : id;
     try {
-      const { data } = await axios.delete<void>(`contacts/${id}`);
+      const { data } = await axios.delete<void>(`contacts/${ids}`);
       return data;
     } catch (erreur) {
       throw new Error("Error removing contact");

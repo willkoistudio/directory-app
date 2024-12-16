@@ -61,8 +61,8 @@ const AddContactSecondStep: FC<AddContactSecondStepProps> = ({
     phone: getValues("phone"),
     address: {
       street: getValues("address.street"),
-      cityId: getValues("address.cityId"),
       postalCode: getValues("address.postalCode"),
+      cityId: getValues("address.cityId"),
       stateId: getValues("address.stateId"),
       countryId: getValues("address.countryId"),
     },
@@ -72,10 +72,23 @@ const AddContactSecondStep: FC<AddContactSecondStepProps> = ({
     value: string,
     field: ControllerRenderProps<AddContactFormSchema>
   ) => {
-    setFormLocal((prev) => ({
-      ...prev,
-      [field.name]: value,
-    }));
+    setFormLocal((prev) => {
+      if (field.name.startsWith("address.")) {
+        const addressField = field.name.split(".")[1];
+        return {
+          ...prev,
+          address: {
+            ...prev.address,
+            [addressField]: value,
+          },
+        };
+      }
+
+      return {
+        ...prev,
+        [field.name]: value,
+      };
+    });
     field.onChange(value);
     trigger(field.name);
     if (field.name === "address.countryId") {
@@ -158,53 +171,55 @@ const AddContactSecondStep: FC<AddContactSecondStepProps> = ({
   };
 
   return (
-    <>
-      <section className="grid grid-cols-2 gap-8 mt-12 px-8">
-        {fieldsData.map((fieldData, idFieldData) =>
-          fieldData.type !== "select" ? (
-            <FormField
-              key={idFieldData}
-              control={control}
-              name={fieldData.name as keyof AddContactFormSchema}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>{fieldData.label}</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="text"
-                      {...field}
-                      value={getLocalStateValue(field.name)}
-                      onInput={(e) =>
-                        onFormChange(e.currentTarget.value, field)
-                      }
-                    />
-                  </FormControl>
-                  <FormMessage className="text-red" />
-                </FormItem>
-              )}
-            />
-          ) : (
-            <FormField
-              control={control}
-              key={idFieldData}
-              name={fieldData.name as keyof AddContactFormSchema}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>{fieldData.label}</FormLabel>
-                  <Autocomplete
-                    disabled={loadingLocations}
-                    options={getItems(field.name)}
+    <section className="grid grid-cols-2 gap-8 mt-12 px-8">
+      {fieldsData.map((fieldData, idFieldData) =>
+        fieldData.type === "autocomplete" ? (
+          <FormField
+            control={control}
+            key={idFieldData}
+            name={fieldData.name as keyof AddContactFormSchema}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>
+                  {fieldData.label}{" "}
+                  {fieldData.required && <span className="text-red">*</span>}
+                </FormLabel>
+                <Autocomplete
+                  disabled={loadingLocations}
+                  options={getItems(field.name)}
+                  value={getLocalStateValue(field.name)}
+                  onChange={(value) => onFormChange(value, field)}
+                />
+                <FormMessage className="text-red" />
+              </FormItem>
+            )}
+          />
+        ) : (
+          <FormField
+            key={idFieldData}
+            control={control}
+            name={fieldData.name as keyof AddContactFormSchema}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>
+                  {fieldData.label}{" "}
+                  {fieldData.required && <span className="text-red">*</span>}
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    type="text"
+                    {...field}
                     value={getLocalStateValue(field.name)}
-                    onChange={(value) => onFormChange(value, field)}
+                    onInput={(e) => onFormChange(e.currentTarget.value, field)}
                   />
-                  <FormMessage className="text-red" />
-                </FormItem>
-              )}
-            />
-          )
-        )}
-      </section>
-    </>
+                </FormControl>
+                <FormMessage className="text-red" />
+              </FormItem>
+            )}
+          />
+        )
+      )}
+    </section>
   );
 };
 

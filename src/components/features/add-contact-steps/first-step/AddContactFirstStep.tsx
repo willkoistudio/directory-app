@@ -36,6 +36,7 @@ const AddContactFirstStep: FC<UseFormReturn<AddContactFormSchema>> = ({
     setValue("avatar", "");
     setValue("avatarFile", undefined);
     setAvatar("https://via.placeholder.com/350");
+    trigger("avatar");
   };
 
   return (
@@ -64,7 +65,9 @@ const AddContactFirstStep: FC<UseFormReturn<AddContactFormSchema>> = ({
         </Card>
         <Card className="text-center border-2 border-dashed py-12 px-8 w-1/2 relative mx-auto">
           <ImageUp className="mx-auto h-12 w-12" />
-          <p className="text-xl my-4 font-bold">Import a profile picture</p>
+          <p className="text-xl my-4 font-bold">
+            Import a profile picture <span className="text-red"> *</span>
+          </p>
           <p className="text-gray">Maximum file size: 10MB</p>
           <p className="text-gray">Supported formats: .jpg, .jpeg, .png</p>
           {errors.avatarFile && (

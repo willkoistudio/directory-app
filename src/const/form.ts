@@ -3,6 +3,7 @@ export interface FormFieldData {
   label: string;
   type: string;
   placeholder?: string;
+  required?: boolean;
 }
 
 export interface FormFieldDataItem {
