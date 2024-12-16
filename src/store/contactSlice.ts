@@ -25,7 +25,7 @@ export const getContacts = createAsyncThunk<Contact[], void>(
   }
 );
 
-export const getContactDetail = createAsyncThunk(
+export const getContactDetail = createAsyncThunk<ContactData, string>(
   "contacts/getContactDetail",
   async (id: string) => {
     return await serviceContact.getContactDetail(id);

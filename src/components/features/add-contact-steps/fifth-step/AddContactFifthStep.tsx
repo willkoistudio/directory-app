@@ -6,18 +6,28 @@ import { UseFormReturn } from "react-hook-form";
 import { AddContactFormSchema } from "../../../../pages/add-contact/hooks/useAddContactForm";
 import { Card } from "../../../ui/card";
 import { Company } from "../../../../models/company";
+import { CSC_City, CSC_Country, CSC_State } from "../../../../models/location";
 
 interface AddContactFifthStepProps extends UseFormReturn<AddContactFormSchema> {
   companies: Company[];
   onSubmit: () => void;
+  countries: CSC_Country[];
+  states: CSC_State[];
+  cities: CSC_City[];
 }
 
 const AddContactFifthStep: FC<AddContactFifthStepProps> = ({
   getValues,
   companies,
   onSubmit,
+  countries,
+  states,
+  cities,
 }) => {
   const [companyName, setCompanyName] = useState<string>("");
+  const [countryName, setCountryName] = useState<string>("");
+  const [stateName, setStateName] = useState<string>("");
+  const [cityName, setCityName] = useState<string>("");
 
   const getCompanyName = () => {
     const company = companies.find(
@@ -25,10 +35,42 @@ const AddContactFifthStep: FC<AddContactFifthStepProps> = ({
     );
     setCompanyName(company?.name ?? "");
   };
+  const getCountryName = () => {
+    const country = countries.find(
+      (country) => String(country.id) === String(getValues("address.countryId"))
+    );
+    setCountryName(country?.name ?? "");
+  };
+
+  const getStateName = () => {
+    const state = states.find(
+      (state) => String(state.id) === String(getValues("address.stateId"))
+    );
+    setStateName(state?.name ?? "");
+  };
+
+  const getCityName = () => {
+    const city = cities.find(
+      (city) => String(city.id) === String(getValues("address.cityId"))
+    );
+    setCityName(city?.name ?? "");
+  };
 
   useEffect(() => {
     getCompanyName();
   }, [companies]);
+
+  useEffect(() => {
+    getCountryName();
+  }, [countries]);
+
+  useEffect(() => {
+    getStateName();
+  }, [states]);
+
+  useEffect(() => {
+    getCityName();
+  }, [cities]);
 
   return (
     <>
@@ -107,21 +149,21 @@ const AddContactFifthStep: FC<AddContactFifthStepProps> = ({
               <p className="text-gray">{getValues("notes") || "N/A"}</p>
             </div>
             <div className="pb-4">
-              <Label className="font-bold">Street</Label>
-              <p className="text-gray">
-                {getValues("address.street") || "N/A"}
-              </p>
+              <Label className="font-bold">Country</Label>
+              <p className="text-gray">{countryName || "N/A"}</p>
+            </div>
+            <div className="pb-4">
+              <Label className="font-bold">State</Label>
+              <p className="text-gray">{stateName || "N/A"}</p>
             </div>
             <div className="pb-4">
               <Label className="font-bold">City</Label>
-              <p className="text-gray">
-                {getValues("address.cityId") || "N/A"}
-              </p>
+              <p className="text-gray">{cityName || "N/A"}</p>
             </div>
             <div className="pb-4">
-              <Label className="font-bold">Country</Label>
+              <Label className="font-bold">Street</Label>
               <p className="text-gray">
-                {getValues("address.countryId") || "N/A"}
+                {getValues("address.street") || "N/A"}
               </p>
             </div>
             <div>

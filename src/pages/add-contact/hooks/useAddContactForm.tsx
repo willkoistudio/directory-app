@@ -132,6 +132,9 @@ export function useAddContactForm() {
             {...form}
             onSubmit={onSubmit}
             companies={companies}
+            countries={countries}
+            states={states}
+            cities={cities}
           />
         );
       default:

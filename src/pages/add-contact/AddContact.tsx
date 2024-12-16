@@ -72,7 +72,6 @@ const AddContact: FC = () => {
   const dispatch = useDispatch();
   const { toast } = useToast();
 
-  const { contactDetail } = useSelector((state: RootState) => state.contact);
   const { companies } = useSelector((state: RootState) => state.company);
   const { dispatchCurrentStep, form, stepsIconColor } = useAddContactForm();
 
@@ -82,7 +81,9 @@ const AddContact: FC = () => {
       await fetchCountries();
       await dispatch(getCompanies() as any);
       if (id) {
-        await dispatch(getContactDetail(id) as any);
+        const { payload: contactDetail } = await dispatch(
+          getContactDetail(id) as any
+        );
         if (contactDetail) {
           form.setValue("name", contactDetail.name);
           form.setValue("avatar", contactDetail.avatar);
@@ -94,12 +95,12 @@ const AddContact: FC = () => {
           form.setValue("fax", contactDetail.fax ?? "");
           form.setValue("website", contactDetail.website ?? "");
           form.setValue("notes", contactDetail.notes ?? "");
-          form.setValue("address.street", contactDetail.address.street);
-          form.setValue("address.cityId", contactDetail.address.city);
-          form.setValue("address.postalCode", contactDetail.address.postalCode);
-          form.setValue("address.stateId", contactDetail.address.state);
-          form.setValue("address.countryId", contactDetail.address.country);
           form.setValue("keywords", contactDetail.keywords);
+          form.setValue("address.street", contactDetail.address.street);
+          form.setValue("address.countryId", contactDetail.address.countryId);
+          form.setValue("address.cityId", contactDetail.address.cityID);
+          form.setValue("address.postalCode", contactDetail.address.postalCode);
+          form.setValue("address.stateId", contactDetail.address.stateId);
         }
       }
     } catch (error) {
@@ -128,10 +129,10 @@ const AddContact: FC = () => {
         notes: String(values.notes),
         address: {
           street: String(values.address.street),
-          city: String(values.address.cityId),
+          cityId: String(values.address.cityId),
           postalCode: String(values.address.postalCode),
-          state: String(values.address.stateId),
-          country: String(values.address.countryId),
+          stateId: String(values.address.stateId),
+          countryId: String(values.address.countryId),
         },
         keywords: Array.isArray(values.keywords)
           ? (values.keywords as string[])
@@ -273,6 +274,11 @@ const AddContact: FC = () => {
         "There is some errors in the current step. Please check the form before submitting",
     });
   };
+
+  useEffect(() => {
+    setPageName(ROUTE_NAMES.ADD_CONTACT);
+    fetchRessources();
+  }, []);
 
   useEffect(() => {
     setPageName(ROUTE_NAMES.ADD_CONTACT);

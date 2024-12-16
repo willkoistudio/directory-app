@@ -1,38 +1,38 @@
 export interface Address {
   street: string;
-  city: string;
-  state: string;
   postalCode: string;
-  country: string;
+  cityId: string;
+  stateId: string;
+  countryId: string;
 }
 
 export const ADDRESS_MOCKS: Address[] = [
   {
     street: "123 Main St",
-    city: "Anytown",
-    state: "CA",
+    cityId: "Anytown",
+    stateId: "3870",
     postalCode: "12345",
-    country: "United States",
+    countryId: "1",
   },
   {
     street: "456 Elm St",
-    city: "Anytown",
-    state: "CA",
+    cityId: "71",
+    stateId: "CA",
     postalCode: "67890",
-    country: "United States",
+    countryId: "United States",
   },
   {
     street: "789 Oak St",
-    city: "Anytown",
-    state: "CA",
+    cityId: "Anytown",
+    stateId: "CA",
     postalCode: "98765",
-    country: "United States",
+    countryId: "United States",
   },
   {
     street: "321 Pine St",
-    city: "Anytown",
-    state: "CA",
+    cityId: "Anytown",
+    stateId: "CA",
     postalCode: "54321",
-    country: "United States",
+    countryId: "United States",
   },
 ];

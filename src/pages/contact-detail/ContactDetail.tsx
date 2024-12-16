@@ -75,7 +75,7 @@ const ContactDetail: React.FC = () => {
             </div>
             <div className="border-r border-gray pr-4">
               <p>Country</p>
-              <p className="text-gray">{contactDetail.address.country} 🇺🇸</p>
+              <p className="text-gray">{contactDetail.address.countryId} 🇺🇸</p>
             </div>
             <div>
               <p>Date created</p>
@@ -153,7 +153,7 @@ const ContactDetail: React.FC = () => {
             </div>
             <div className="mb-2">
               <p>City</p>
-              <p className="text-gray">{contactDetail.address.city}</p>
+              <p className="text-gray">{contactDetail.address.cityId}</p>
             </div>
             <div className="mb-2">
               <p>Postal Code</p>
@@ -161,7 +161,7 @@ const ContactDetail: React.FC = () => {
             </div>
             <div className="mb-2">
               <p>Country</p>
-              <p className="text-gray">{contactDetail.address.country}</p>
+              <p className="text-gray">{contactDetail.address.countryId}</p>
             </div>
           </div>
         </Card>
