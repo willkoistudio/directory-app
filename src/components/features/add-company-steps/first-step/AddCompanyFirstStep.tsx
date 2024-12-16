@@ -1,7 +1,7 @@
 import { FC } from "react";
-import { Card } from "../../../components/ui/card";
+import { Card } from "../../../ui/card";
 import { CircleX, ImageUp } from "lucide-react";
-import { Input } from "../../../components/ui/input";
+import { Input } from "../../../ui/input";
 
 const AddCompanyFirstStep: FC = () => {
   return (

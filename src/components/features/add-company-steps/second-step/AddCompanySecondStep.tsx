@@ -1,15 +1,15 @@
 import { FC } from "react";
-import { Input } from "../../../components/ui/input";
-import { Label } from "../../../components/ui/label";
+import { Input } from "../../../ui/input";
+import { Label } from "../../../ui/label";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../../../components/ui/select";
-import { Textarea } from "../../../components/ui/textarea";
-import { Button } from "../../../components/ui/button";
+} from "../../../ui/select";
+import { Textarea } from "../../../ui/textarea";
+import { Button } from "../../../ui/button";
 import { Save } from "lucide-react";
 
 const cities = [

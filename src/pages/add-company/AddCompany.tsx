@@ -9,8 +9,8 @@ import { Badge } from "../../components/ui/badge";
 import { Check } from "lucide-react";
 import { Button } from "../../components/ui/button";
 import { Form } from "../../components/ui/form";
-import { AddCompanyFirstStep } from "../../components/features/add-company-steps/AddCompanyFirstStep";
-import { AddCompanySecondStep } from "../../components/features/add-company-steps/AddCompanySecondStep";
+import { AddCompanyFirstStep } from "../../components/features/add-company-steps/first-step/AddCompanyFirstStep";
+import { AddCompanySecondStep } from "../../components/features/add-company-steps/second-step/AddCompanySecondStep";
 import { FormStep } from "../../models/form";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
@@ -76,7 +76,6 @@ const AddCompany: React.FC = () => {
           <div
             className="add-contact-steps-navigation flex gap-2 items-center cursor-pointer"
             key={step.stepNumber}
-            onClick={() => setCurrentStep(step.stepNumber)}
           >
             <div className="add-contact-steps-navigation-icon">
               <Badge className={`${stepsIconColor(step)} py-1 `}>
