@@ -280,11 +280,6 @@ const AddContact: FC = () => {
     fetchRessources();
   }, []);
 
-  useEffect(() => {
-    setPageName(ROUTE_NAMES.ADD_CONTACT);
-    fetchRessources();
-  }, []);
-
   return (
     <div>
       {!loading ? (

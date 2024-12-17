@@ -1,6 +1,6 @@
 import axios from "axios";
 import { ServiceCompany } from "./company.service";
-import { Company } from "../../models/company";
+import { Company, CompanyData } from "../../models/company";
 
 export class ServiceCompanyHttp implements ServiceCompany {
   public async getCompanies(): Promise<Company[]> {
@@ -12,16 +12,16 @@ export class ServiceCompanyHttp implements ServiceCompany {
     }
   }
 
-  public async getCompanyDetail(id: string): Promise<Company> {
+  public async getCompanyDetail(id: string): Promise<CompanyData> {
     try {
-      const { data } = await axios.get<Company>(`companies/${id}`);
+      const { data } = await axios.get<CompanyData>(`companies/${id}`);
       return data;
     } catch (erreur) {
       throw new Error("Error fetching company");
     }
   }
 
-  public async addCompany(company: Company): Promise<void> {
+  public async addCompany(company: CompanyData): Promise<void> {
     try {
       const { data } = await axios.post<void>(`companies`, company);
       return data;

@@ -1,155 +1,233 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import { Input } from "../../../ui/input";
-import { Label } from "../../../ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "../../../ui/select";
 import { Textarea } from "../../../ui/textarea";
 import { Button } from "../../../ui/button";
 import { Save } from "lucide-react";
+import { ControllerRenderProps, UseFormReturn } from "react-hook-form";
+import { fieldsData } from "./AddCompanySecondStep.data";
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "../../../ui/form";
+import { AutoCompleteItem } from "../../../ui/autocomplete/AutoComplete.def";
+import { CSC_City, CSC_Country, CSC_State } from "../../../../models/location";
+import Autocomplete from "../../../ui/autocomplete/Autocomplete";
+import { AddCompanyFormSchema } from "../../../../pages/add-company/hooks/useAddCompanyForm";
 
-const cities = [
-  {
-    id: "1",
-    name: "New York",
-  },
-  {
-    id: "2",
-    name: "London",
-  },
-  {
-    id: "3",
-    name: "Paris",
-  },
-  {
-    id: "4",
-    name: "Tokyo",
-  },
-  {
-    id: "5",
-    name: "Sydney",
-  },
-  {
-    id: "6",
-    name: "Berlin",
-  },
-  {
-    id: "7",
-    name: "New York",
-  },
-  {
-    id: "8",
-    name: "London",
-  },
-  {
-    id: "9",
-    name: "Paris",
-  },
-  {
-    id: "10",
-    name: "Tokyo",
-  },
-  {
-    id: "11",
-    name: "Sydney",
-  },
-];
+interface AddCompanySecondStepForm {
+  name: string;
+  phone: string;
+  fax?: string;
+  website?: string;
+  area?: string;
+  notes?: string;
+  address: {
+    street: string;
+    cityId: string;
+    postalCode: string;
+    stateId: string;
+    countryId: string;
+  };
+}
 
-const countries = [
-  {
-    id: "1",
-    name: "United States",
-  },
-  {
-    id: "2",
-    name: "United Kingdom",
-  },
-  {
-    id: "3",
-    name: "France",
-  },
-  {
-    id: "4",
-    name: "Japan",
-  },
-  {
-    id: "5",
-    name: "Australia",
-  },
-  {
-    id: "6",
-    name: "Germany",
-  },
-];
+interface AddCompanySecondStepProps
+  extends UseFormReturn<AddCompanyFormSchema> {
+  cities: CSC_City[];
+  countries: CSC_Country[];
+  states: CSC_State[];
+  selectCountry: (countryCode: string) => void;
+  getCities: (stateCode: string) => CSC_City[];
+  loadingLocations: boolean;
+}
 
-const AddCompanySecondStep: FC = () => {
+const AddCompanySecondStep: FC<AddCompanySecondStepProps> = ({
+  control,
+  getValues,
+  trigger,
+  cities,
+  countries,
+  states,
+  selectCountry,
+  getCities,
+  loadingLocations,
+}) => {
+  const [formLocal, setFormLocal] = useState<AddCompanySecondStepForm>({
+    name: getValues("name"),
+    phone: getValues("phone"),
+    fax: getValues("fax"),
+    website: getValues("website"),
+    area: getValues("area"),
+    notes: getValues("notes"),
+    address: {
+      street: getValues("address.street"),
+      postalCode: getValues("address.postalCode"),
+      cityId: getValues("address.cityId"),
+      stateId: getValues("address.stateId"),
+      countryId: getValues("address.countryId"),
+    },
+  });
+
+  const onFormChange = (
+    value: string,
+    field: ControllerRenderProps<AddCompanyFormSchema>
+  ) => {
+    setFormLocal((prev) => {
+      if (field.name.startsWith("address.")) {
+        const addressField = field.name.split(".")[1];
+        return {
+          ...prev,
+          address: {
+            ...prev.address,
+            [addressField]: value,
+          },
+        };
+      }
+
+      return {
+        ...prev,
+        [field.name]: value,
+      };
+    });
+    field.onChange(value);
+    trigger(field.name);
+    if (field.name === "address.countryId") {
+      const country = countries.find((c) => c.id === Number(value));
+      if (country) selectCountry(country.iso2);
+    } else if (field.name === "address.stateId") {
+      const state = states.find((s) => s.id === Number(value));
+      if (state) getCities(state.iso2);
+    }
+  };
+
+  const getItems = (name: string): AutoCompleteItem[] => {
+    switch (name) {
+      case "address.cityId":
+        return (
+          cities.map((city) => {
+            return {
+              label: city.name,
+              value: String(city.id),
+            };
+          }) ?? []
+        );
+      case "address.stateId":
+        return (
+          states.map((state) => {
+            return {
+              label: state.name,
+              value: String(state.id),
+            };
+          }) ?? []
+        );
+      case "address.countryId":
+        return (
+          countries.map((country) => {
+            return {
+              label: country.name,
+              value: String(country.id),
+            };
+          }) ?? []
+        );
+      default:
+        return [];
+    }
+  };
+
+  const getLocalStateValue = (name: string) => {
+    switch (name) {
+      case "name":
+        return formLocal.name;
+      case "phone":
+        return formLocal.phone;
+      case "fax":
+        return formLocal.fax ?? "";
+      case "website":
+        return formLocal.website ?? "";
+      case "area":
+        return formLocal.area ?? "";
+      case "notes":
+        return formLocal.notes ?? "";
+      case "address.street":
+        return formLocal.address.street;
+      case "address.postalCode":
+        return formLocal.address.postalCode;
+      case "address.cityId":
+        return formLocal.address.cityId;
+      case "address.stateId":
+        return formLocal.address.stateId;
+      case "address.countryId":
+        return formLocal.address.countryId;
+      default:
+        return "";
+    }
+  };
+
   return (
     <>
       <section className="grid grid-cols-2 gap-8 px-8 mt-12">
-        <div>
-          <Label>Name</Label>
-          <Input type="text" />
-        </div>
-        <div>
-          <Label>Phone</Label>
-          <Input type="phone" />
-        </div>
-        <div>
-          <Label>Street</Label>
-          <Input type="text" />
-        </div>
-        <div>
-          <Label>Postal Code</Label>
-          <Input type="text" />
-        </div>
-        <div>
-          <Label>Area</Label>
-          <Input type="text" />
-        </div>
-        <div>
-          <Label>City</Label>
-          <Select>
-            <SelectTrigger>
-              <SelectValue placeholder="Select a city" />
-            </SelectTrigger>
-            <SelectContent>
-              {cities.map((city) => (
-                <SelectItem key={city.id} value={city.name}>
-                  {city.name}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-        <div>
-          <Label>Country</Label>
-          <Select>
-            <SelectTrigger>
-              <SelectValue placeholder="Select a country" />
-            </SelectTrigger>
-            <SelectContent>
-              {countries.map((country) => (
-                <SelectItem key={country.id} value={country.name}>
-                  {country.name}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-        <div>
-          <Label>Note</Label>
-          <Textarea />
-        </div>
+        {fieldsData.map((fieldData, idFieldData) =>
+          fieldData.type === "autocomplete" ? (
+            <FormField
+              control={control}
+              key={idFieldData}
+              name={fieldData.name as keyof AddCompanyFormSchema}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>
+                    {fieldData.label}{" "}
+                    {fieldData.required && <span className="text-red">*</span>}
+                  </FormLabel>
+                  <Autocomplete
+                    disabled={loadingLocations}
+                    options={getItems(field.name)}
+                    value={getLocalStateValue(field.name)}
+                    onChange={(value) => onFormChange(value, field)}
+                  />
+                  <FormMessage className="text-red" />
+                </FormItem>
+              )}
+            />
+          ) : (
+            <FormField
+              key={idFieldData}
+              control={control}
+              name={fieldData.name as keyof AddCompanyFormSchema}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>
+                    {fieldData.label}{" "}
+                    {fieldData.required && <span className="text-red">*</span>}
+                  </FormLabel>
+                  <FormControl>
+                    {fieldData.type === "textarea" ? (
+                      <Textarea
+                        {...field}
+                        value={getLocalStateValue(field.name)}
+                        onInput={(e) =>
+                          onFormChange(e.currentTarget.value, field)
+                        }
+                      />
+                    ) : (
+                      <Input
+                        type="text"
+                        {...field}
+                        value={getLocalStateValue(field.name)}
+                        onInput={(e) =>
+                          onFormChange(e.currentTarget.value, field)
+                        }
+                      />
+                    )}
+                  </FormControl>
+                  <FormMessage className="text-red" />
+                </FormItem>
+              )}
+            />
+          )
+        )}
       </section>
-      <div className="flex justify-center px-8 mt-12">
-        <Button className="bg-red h-14 px-8">
-          <Save /> Save company infos
-        </Button>
-      </div>
     </>
   );
 };

@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { Company } from "../models/company";
+import { Company, CompanyData } from "../models/company";
 import { ServiceCompanyHttp } from "../services/company/company.service.http";
 import { ServiceCompanyMock } from "../services/company/company.service.mock";
 import { IS_API_MOCKED } from "../const/common";
@@ -15,9 +15,16 @@ export const getCompanies = createAsyncThunk(
   }
 );
 
+export const getCompanyDetail = createAsyncThunk(
+  "companies/getCompanyDetail",
+  async (id: string) => {
+    return await serviceCompany.getCompanyDetail(id);
+  }
+);
+
 export const addCompany = createAsyncThunk(
   "companies/addCompany",
-  async (company: Company) => {
+  async (company: CompanyData) => {
     return await serviceCompany.addCompany(company);
   }
 );
@@ -45,7 +52,7 @@ const initialState: CompanyState = {
 };
 
 const companySlice = createSlice({
-  name: "companies",
+  name: "company",
   initialState,
   reducers: {},
   extraReducers: (builder) => {

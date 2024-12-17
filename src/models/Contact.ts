@@ -36,7 +36,7 @@ export const CONTACT_MOCKS: Contact[] = [
   {
     id: "m5gr84i9",
     name: "Leanne Graham",
-    companyId: "0",
+    companyId: "1",
     email: "ken99@yahoo.com",
     phone: "1-770-736-8031 x56442",
     workPhone: "010-692-6593 x09125",
@@ -48,7 +48,7 @@ export const CONTACT_MOCKS: Contact[] = [
   {
     id: "3c23d152",
     name: "Ervin Howell",
-    companyId: "0",
+    companyId: "2",
     email: "shanna@yahoo.com",
     phone: "010-692-6593 x09125",
     workPhone: "1-463-123-3447",
@@ -60,7 +60,7 @@ export const CONTACT_MOCKS: Contact[] = [
   {
     id: "3c23d152",
     name: "Will Smirs",
-    companyId: "0",
+    companyId: "3",
     email: "shanna@yahoo.com",
     phone: "010-692-6593 x09125",
     workPhone: "1-463-123-3447",

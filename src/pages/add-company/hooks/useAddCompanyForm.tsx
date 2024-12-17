@@ -5,6 +5,7 @@ import { useForm, UseFormReturn } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormStep } from "../../../models/form";
 import styles from "../AddCompany.module.scss";
+import { AddCompanyThirdStep } from "../../../components/features/add-company-steps/third-step/AddCompanyThirdStep";
 
 export interface AddCompanyFormSchema {
   logo: string;
@@ -54,7 +55,6 @@ export function useAddCompanyForm() {
       stateId: z.string().min(1),
       countryId: z.string().min(1),
     }),
-    keywords: z.array(z.string()).min(1),
   });
 
   const form: UseFormReturn<z.infer<typeof formSchema>> = useForm<
@@ -104,6 +104,16 @@ export function useAddCompanyForm() {
             selectCountry={selectCountry}
             getCities={getCities}
             loadingLocations={loadingLocations}
+          />
+        );
+      case 3:
+        return (
+          <AddCompanyThirdStep
+            {...form}
+            onSubmit={onSubmit}
+            countries={countries}
+            states={states}
+            cities={cities}
           />
         );
       default:

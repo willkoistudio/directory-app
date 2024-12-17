@@ -14,6 +14,7 @@ import {
 import { AutoCompleteItem } from "../../../ui/autocomplete/AutoComplete.def";
 import { CSC_City, CSC_Country, CSC_State } from "../../../../models/location";
 import Autocomplete from "../../../ui/autocomplete/Autocomplete";
+import { Textarea } from "../../../ui/textarea";
 
 interface AddContactSecondStepForm {
   name: string;
@@ -206,12 +207,24 @@ const AddContactSecondStep: FC<AddContactSecondStepProps> = ({
                   {fieldData.required && <span className="text-red">*</span>}
                 </FormLabel>
                 <FormControl>
-                  <Input
-                    type="text"
-                    {...field}
-                    value={getLocalStateValue(field.name)}
-                    onInput={(e) => onFormChange(e.currentTarget.value, field)}
-                  />
+                  {fieldData.type === "textarea" ? (
+                    <Textarea
+                      {...field}
+                      value={getLocalStateValue(field.name)}
+                      onInput={(e) =>
+                        onFormChange(e.currentTarget.value, field)
+                      }
+                    />
+                  ) : (
+                    <Input
+                      type="text"
+                      {...field}
+                      value={getLocalStateValue(field.name)}
+                      onInput={(e) =>
+                        onFormChange(e.currentTarget.value, field)
+                      }
+                    />
+                  )}
                 </FormControl>
                 <FormMessage className="text-red" />
               </FormItem>

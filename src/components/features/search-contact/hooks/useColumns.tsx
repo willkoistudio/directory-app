@@ -10,8 +10,9 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "../../../ui/dropdown-menu";
+import { Company } from "../../../../models/company";
 
-export default function useColomns() {
+export default function useColomns(companies: Company[]) {
   const columns: ColumnDef<Contact>[] = [
     {
       id: "select",
@@ -94,9 +95,13 @@ export default function useColomns() {
           </Button>
         );
       },
-      cell: ({ row }) => (
-        <div className="lowercase">{row.getValue("companyId")}</div>
-      ),
+      cell: ({ row }) => {
+        const companyName = companies.find(
+          (company) => company.id === row.getValue("companyId")
+        )?.name;
+        console.log(companies, companyName, row.getValue("companyId"));
+        return <div className="lowercase">{companyName}</div>;
+      },
     },
     {
       accessorKey: "function",

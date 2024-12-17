@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { Contact } from "../../../models/contact";
 import { Filter } from "lucide-react";
 import {
@@ -47,7 +47,10 @@ import {
 import { Skeleton } from "../../../components/ui/skeleton";
 import useColumns from "./hooks/useColumns";
 import { removeContact } from "../../../store/contactSlice";
-import { tab } from "@testing-library/user-event/dist/tab";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../../store/store";
+import { getCompanies } from "../../../store/companySlice";
+import { Company } from "../../../models/company";
 
 interface SearchContactProps {
   contacts: Contact[];
@@ -60,7 +63,22 @@ const SearchContact: FC<SearchContactProps> = ({ contacts, loading }) => {
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = useState({});
 
-  const { columns } = useColumns();
+  const dispatch = useDispatch();
+  const { companies } = useSelector((state: RootState) => state.company);
+  const [localCompanies, setLocalCompanies] = useState<Company[]>([]);
+
+  useEffect(() => {
+    setLocalCompanies(companies);
+    console.log(localCompanies);
+  }, [companies]);
+
+  useEffect(() => {
+    if (!companies || companies.length === 0) {
+      dispatch(getCompanies() as any);
+    }
+  }, []);
+
+  const { columns } = useColumns(localCompanies);
 
   const table = useReactTable({
     data: contacts,

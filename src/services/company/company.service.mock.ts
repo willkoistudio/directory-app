@@ -1,9 +1,15 @@
-import { COMPANIES_MOCKS, Company } from "../../models/company";
+import {
+  COMPANIES_DATA_MOCKS,
+  COMPANIES_MOCKS,
+  Company,
+  CompanyData,
+} from "../../models/company";
 import { ServiceCompany } from "./company.service";
 
 export class ServiceCompanyMock implements ServiceCompany {
   public constructor(
     private companies: Company[] = COMPANIES_MOCKS,
+    private companiesData: CompanyData[] = COMPANIES_DATA_MOCKS,
     private latence = 1000
   ) {}
 
@@ -13,16 +19,15 @@ export class ServiceCompanyMock implements ServiceCompany {
     );
   }
 
-  public async getCompanyDetail(id: string): Promise<Company> {
+  public async getCompanyDetail(id: string): Promise<CompanyData> {
     return new Promise((resolve) =>
-      setTimeout(() => resolve(this.companies[0]), this.latence)
+      setTimeout(() => resolve(this.companiesData[0]), this.latence)
     );
   }
 
-  public async addCompany(contact: Company): Promise<void> {
+  public async addCompany(company: CompanyData): Promise<void> {
     return new Promise((resolve) =>
       setTimeout(() => {
-        this.companies.push(contact);
         resolve();
       }, this.latence)
     );

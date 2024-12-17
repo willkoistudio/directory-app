@@ -27,28 +27,26 @@ import { ChartData } from "../../models/common";
 const Home: React.FC = () => {
   const { setPageName } = usePageName();
   const { t } = useTranslation();
-  const dispatch = useDispatch();
 
-  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
   const { contacts } = useSelector((state: RootState) => state.contact);
   const { companies } = useSelector((state: RootState) => state.company);
 
-  const getUsersAndCompanies = async () => {
-    setLoading(true);
-    try {
-      await dispatch(getContacts() as any);
-      await dispatch(getCompanies() as any);
-    } catch (error) {
-      console.error("Error fetching contacts:", error);
-    } finally {
-      setLoading(false);
+  useEffect(() => {
+    if (!contacts || contacts.length === 0) {
+      dispatch(getContacts() as any);
     }
-  };
+    if (!companies || companies.length === 0) {
+      dispatch(getCompanies() as any);
+    }
+  }, [dispatch, contacts, companies]);
 
   const { chartData, chartConfig } = useChartData(
     contacts.length,
     companies.length
   );
+
+  const [loading, setLoading] = useState(false);
 
   const handlerContent = ({ viewBox }: LabelProps) => {
     const totalNbCreated = useMemo(() => {
@@ -83,7 +81,6 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     setPageName(ROUTE_NAMES.HOME); // Mettre à jour le nom de la page
-    getUsersAndCompanies();
   }, []);
 
   return (
