@@ -8,6 +8,7 @@ import { useForm, UseFormReturn } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormStep } from "../../../models/form";
 import styles from "../AddContact.module.scss";
+import { t } from "i18next";
 
 export interface AddContactFormSchema {
   name: string;
@@ -40,8 +41,7 @@ const fileSchema = z
     message: "Please upload a file smaller than 10 Mo.",
   })
   .refine((file) => SUPPORTED_FORMATS.includes(file.type), {
-    message:
-      "Please upload a valid image with the following formats : .jpg, .jpeg, .png, .webp.",
+    message: t("addContact.formErrorAvatar"),
   });
 
 export function useAddContactForm() {

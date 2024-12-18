@@ -4,11 +4,13 @@ import { DropdownMenuItem } from "../../../ui/dropdown-menu";
 import { LANGUAGES_APP } from "../../../../const/locale";
 import i18n from "../../../../i18n";
 import { APP_THEME } from "../../../../const/theme";
+import { useTranslation } from "react-i18next";
 
 const useDropdownMenuElements = () => {
   const [currentLanguage, setCurrentLanguage] = useState(i18n.language);
   const [currentTheme, setCurrentTheme] = useState(APP_THEME.DARK);
   const themes = [APP_THEME.LIGHT, APP_THEME.DARK];
+  const { t } = useTranslation();
 
   const changeLanguage = (lang: string) => {
     i18n.changeLanguage(lang);
@@ -29,20 +31,20 @@ const useDropdownMenuElements = () => {
 
   return useMemo(
     () => [
-      {
-        label: "Theme",
-        icon: <SunMoon className="cursor-pointer hover:text-gray " />,
-        content: themes.map((theme) => (
-          <DropdownMenuItem
-            className="cursor-pointer hover:bg-white/5"
-            onClick={() => changeTheme(theme)}
-            key={theme}
-            disabled={theme === currentTheme}
-          >
-            {theme}
-          </DropdownMenuItem>
-        )),
-      },
+      // {
+      //   label: "Theme",
+      //   icon: <SunMoon className="cursor-pointer hover:text-gray " />,
+      //   content: themes.map((theme) => (
+      //     <DropdownMenuItem
+      //       className="cursor-pointer hover:bg-white/5"
+      //       onClick={() => changeTheme(theme)}
+      //       key={theme}
+      //       disabled={theme === currentTheme}
+      //     >
+      //       {theme}
+      //     </DropdownMenuItem>
+      //   )),
+      // },
       {
         label: "Languages",
         icon: <Languages className="cursor-pointer hover:text-gray " />,
@@ -62,7 +64,7 @@ const useDropdownMenuElements = () => {
         icon: <Settings className="cursor-pointer hover:text-gray " />,
         content: (
           <DropdownMenuItem className="cursor-pointer hover:bg-white/5">
-            Logout
+            {t("login.logout")}
           </DropdownMenuItem>
         ),
       },

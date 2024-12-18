@@ -10,6 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "../../../ui/dropdown-menu";
 import { Company } from "../../../../models/company";
+import { t } from "i18next";
 
 export default function useColomns() {
   const columns: ColumnDef<Company>[] = [
@@ -59,7 +60,7 @@ export default function useColomns() {
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            Name
+            {t("search.company.name")}
             <ArrowUpDown />
           </Button>
         );
@@ -86,7 +87,7 @@ export default function useColomns() {
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            Area
+            {t("search.company.area")}
             <ArrowUpDown />
           </Button>
         );
@@ -98,7 +99,11 @@ export default function useColomns() {
     {
       accessorKey: "createdAt",
       header: () => {
-        return <span className="pl-0 font-bold">Creation date</span>;
+        return (
+          <span className="pl-0 font-bold">
+            {t("search.company.creationDate")}
+          </span>
+        );
       },
       cell: ({ row }) => (
         <div className="capitalize">{row.getValue("createdAt")}</div>
@@ -114,7 +119,7 @@ export default function useColomns() {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="h-8 w-8 p-0 mr-0 ml-auto">
-                <span className="sr-only">Open menu</span>
+                <span className="sr-only">{t("search.company.openMenu")}</span>
                 <MoreHorizontal />
               </Button>
             </DropdownMenuTrigger>
@@ -125,10 +130,10 @@ export default function useColomns() {
                   (window.location.href = `/company-detail/${company.id}`)
                 }
               >
-                View company details
+                {t("search.company.viewCompanyDetails")}
               </DropdownMenuItem>
               <DropdownMenuItem className="cursor-pointer hover:bg-white/5">
-                Remove company
+                {t("search.company.removeCompany")}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

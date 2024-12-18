@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import { FC, useEffect, useMemo, useState } from "react";
 import { usePageName } from "../../context/PageNameContext";
 import {
   ChartConfig,
@@ -22,14 +22,13 @@ import { RootState } from "../../store/store";
 import { ChartData } from "../../models/common";
 import { Skeleton } from "../../components/ui/skeleton";
 
-const Home: React.FC = () => {
+const Home: FC = () => {
   const { setPageName } = usePageName();
-  const { t } = useTranslation();
-  const [loading, setLoading] = useState(false);
-
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const { contacts } = useSelector((state: RootState) => state.contact);
   const { companies } = useSelector((state: RootState) => state.company);
+  const [loading, setLoading] = useState(false);
 
   const fetchResources = async () => {
     setLoading(true);
@@ -48,22 +47,22 @@ const Home: React.FC = () => {
   }, []);
 
   const chartData: ChartData[] = [
-    { type: "users", nbCreated: contacts.length, fill: "#aaa" },
+    { type: "users", nbCreated: contacts.length, fill: "#f54263" },
     {
       type: "companies",
       nbCreated: companies.length,
-      fill: "#fff",
+      fill: "#4290f5",
     },
   ];
 
   const chartConfig: ChartConfig = {
     users: {
       label: "Users",
-      color: "#aaa",
+      color: "#f54263",
     },
     companies: {
       label: "Companies",
-      color: "#fff",
+      color: "#4290f5",
     },
   } satisfies ChartConfig;
 
@@ -86,13 +85,6 @@ const Home: React.FC = () => {
           >
             {totalNbCreated.toLocaleString()}
           </tspan>
-          <tspan
-            x={viewBox.cx}
-            y={(viewBox.cy || 0) + 24}
-            className="fill-muted-foreground"
-          >
-            Number created
-          </tspan>
         </text>
       );
     }
@@ -106,19 +98,15 @@ const Home: React.FC = () => {
     <section className="flex h-full">
       <div className="mx-auto my-auto w-full">
         <div className="text-center mt-8 mb-12">
-          <h1 className="text-3xl font-bold mb-4">
-            Welcome to my directory app !
-          </h1>
-          <p>This is a simple app to manage your contacts. </p>
-          <p>It uses React and Tailwind CSS.</p>
-          <p>Have fun !</p>
+          <h1 className="text-3xl font-bold mb-4">{t("home.title")}</h1>
+          <p>{t("home.description")}</p>
+          <p>{t("home.description2")}</p>
+          <p>{t("home.description3")}</p>
         </div>
         <div className="flex ">
           <Card className="mx-auto w-1/2">
             <CardHeader className="text-center">
-              <CardTitle>
-                Number of contacts registered in the database
-              </CardTitle>
+              <CardTitle>{t("home.numberOfContacts")}</CardTitle>
             </CardHeader>
             <CardContent className="flex-1 pb-0">
               {loading ? (

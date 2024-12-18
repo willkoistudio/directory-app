@@ -51,6 +51,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 import { getCompanies } from "../../../store/companySlice";
 import { Company } from "../../../models/company";
+import { useTranslation } from "react-i18next";
+import Autocomplete from "../../ui/autocomplete/Autocomplete";
 
 interface SearchContactProps {
   contacts: Contact[];
@@ -58,26 +60,17 @@ interface SearchContactProps {
 }
 
 const SearchContact: FC<SearchContactProps> = ({ contacts, loading }) => {
+  const dispatch = useDispatch();
+
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = useState({});
-
-  const dispatch = useDispatch();
-  const { companies } = useSelector((state: RootState) => state.company);
   const [localCompanies, setLocalCompanies] = useState<Company[]>([]);
 
-  useEffect(() => {
-    setLocalCompanies(companies);
-  }, [companies]);
-
-  useEffect(() => {
-    if (!companies || companies.length === 0) {
-      dispatch(getCompanies() as any);
-    }
-  }, []);
-
+  const { companies } = useSelector((state: RootState) => state.company);
   const { columns } = useColumns(localCompanies);
+  const { t } = useTranslation();
 
   const table = useReactTable({
     data: contacts,
@@ -97,6 +90,16 @@ const SearchContact: FC<SearchContactProps> = ({ contacts, loading }) => {
       rowSelection,
     },
   });
+
+  useEffect(() => {
+    setLocalCompanies(companies);
+  }, [companies]);
+
+  useEffect(() => {
+    if (!companies || companies.length === 0) {
+      dispatch(getCompanies() as any);
+    }
+  }, []);
 
   return (
     <section>
@@ -123,62 +126,69 @@ const SearchContact: FC<SearchContactProps> = ({ contacts, loading }) => {
               <DrawerTrigger asChild>
                 <Button size="sm" className="h-12 bg-red px-6">
                   <Filter className="mr-1 h-4" />
-                  <span>Filters</span>
+                  <span>{t("search.contact.filters")}</span>
                 </Button>
               </DrawerTrigger>
               <DrawerContent>
                 <div className="mx-auto w-full px-8">
                   <DrawerHeader>
-                    <DrawerTitle>Advanced search</DrawerTitle>
+                    <DrawerTitle>
+                      {t("search.contact.advancedSearch")}
+                    </DrawerTitle>
                     <DrawerDescription>
-                      Set the filters you want to apply to the search.
+                      {t("search.contact.advancedSearchDescription")}
                     </DrawerDescription>
                   </DrawerHeader>
 
                   <section className="grid grid-cols-3 gap-4 py-4">
                     <div>
-                      <Label htmlFor="name">Name</Label>
+                      <Label htmlFor="name">{t("search.contact.name")}</Label>
                       <Input type="text"></Input>
                     </div>
                     <div>
-                      <Label htmlFor="city">City</Label>
+                      <Label htmlFor="city">{t("search.contact.city")}</Label>
                       <Input type="text"></Input>
                     </div>
                     <div>
-                      <Label htmlFor="function">Function</Label>
+                      <Label htmlFor="function">
+                        {t("search.contact.function")}
+                      </Label>
                       <Input type="text"></Input>
                     </div>
                     <div>
-                      <Label htmlFor="postal code">Postal Code</Label>
+                      <Label htmlFor="postal code">
+                        {t("search.contact.postalCode")}
+                      </Label>
                       <Input type="text"></Input>
                     </div>
                     <div>
-                      <Label htmlFor="keywords">Keywords</Label>
+                      <Label htmlFor="keywords">
+                        {t("search.contact.keywords")}
+                      </Label>
                       <Input type="text"></Input>
                     </div>
                     <div>
-                      <Label htmlFor="company">Company</Label>
-                      <Select>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select a company" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectGroup>
-                            <SelectLabel>Companies</SelectLabel>
-                            <SelectItem value="apple">Apple</SelectItem>
-                            <SelectItem value="banana">Banana</SelectItem>
-                            <SelectItem value="blueberry">Blueberry</SelectItem>
-                            <SelectItem value="grapes">Grapes</SelectItem>
-                            <SelectItem value="pineapple">Pineapple</SelectItem>
-                          </SelectGroup>
-                        </SelectContent>
-                      </Select>
+                      <Label htmlFor="company">
+                        {t("search.contact.company")}
+                      </Label>
+                      <Autocomplete
+                        options={localCompanies.map((company) => ({
+                          label: company.name,
+                          value: company.id,
+                        }))}
+                        onChange={(value) => {
+                          console.log(value);
+                        }}
+                        value={""}
+                      />
                     </div>
                   </section>
                   <DrawerFooter>
-                    <Button>Submit</Button>
+                    <Button>{t("search.contact.search")}</Button>
                     <DrawerClose asChild>
-                      <Button variant="outline">Cancel</Button>
+                      <Button variant="outline">
+                        {t("search.contact.cancel")}
+                      </Button>
                     </DrawerClose>
                   </DrawerFooter>
                 </div>
@@ -241,7 +251,7 @@ const SearchContact: FC<SearchContactProps> = ({ contacts, loading }) => {
                       colSpan={columns.length}
                       className="h-24 text-center"
                     >
-                      No results.
+                      {t("search.contact.noResults")}
                     </TableCell>
                   </TableRow>
                 )}
@@ -251,7 +261,8 @@ const SearchContact: FC<SearchContactProps> = ({ contacts, loading }) => {
           <div className="flex items-center justify-end space-x-2 py-4">
             <div className="flex-1 text-sm text-muted-foreground">
               {table.getFilteredSelectedRowModel().rows.length} of{" "}
-              {table.getFilteredRowModel().rows.length} row(s) selected.
+              {table.getFilteredRowModel().rows.length}{" "}
+              {t("search.contact.rows")}.
             </div>
             <div className="space-x-2">
               <Button
@@ -269,7 +280,7 @@ const SearchContact: FC<SearchContactProps> = ({ contacts, loading }) => {
                   )
                 }
               >
-                Delete selected contacts
+                {t("search.contact.deleteSelectedContacts")}
               </Button>
               <Button
                 variant="outline"
@@ -277,7 +288,7 @@ const SearchContact: FC<SearchContactProps> = ({ contacts, loading }) => {
                 onClick={() => table.previousPage()}
                 disabled={!table.getCanPreviousPage()}
               >
-                Previous
+                {t("search.contact.previous")}
               </Button>
               <Button
                 variant="outline"
@@ -285,7 +296,7 @@ const SearchContact: FC<SearchContactProps> = ({ contacts, loading }) => {
                 onClick={() => table.nextPage()}
                 disabled={!table.getCanNextPage()}
               >
-                Next
+                {t("search.contact.next")}
               </Button>
             </div>
           </div>

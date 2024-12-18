@@ -1,6 +1,5 @@
 import { FC, useEffect, useState } from "react";
 import { usePageName } from "../../context/PageNameContext";
-import { Building2, UserRoundSearch } from "lucide-react";
 import { ROUTE_NAMES } from "../../const/routes";
 import {
   Tabs,
@@ -17,15 +16,11 @@ import useTabs from "./hooks/useTabs";
 
 const Search: FC = () => {
   const { setPageName } = usePageName();
-  useEffect(() => {
-    setPageName(ROUTE_NAMES.SEARCH);
-  }, []);
-
-  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
 
   const { contacts } = useSelector((state: RootState) => state.contact);
   const { companies } = useSelector((state: RootState) => state.company);
+  const [loading, setLoading] = useState(false);
 
   const fetchContacts = async () => {
     setLoading(true);
@@ -59,6 +54,7 @@ const Search: FC = () => {
 
   useEffect(() => {
     fetchContacts();
+    setPageName(ROUTE_NAMES.SEARCH);
   }, []);
 
   return (

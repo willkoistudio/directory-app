@@ -35,6 +35,7 @@ import { FC, useState } from "react";
 import { Company } from "../../../models/company";
 import { Skeleton } from "../../../components/ui/skeleton";
 import useColumns from "./hooks/useColumns";
+import { useTranslation } from "react-i18next";
 
 interface SearchContactProps {
   companies: Company[];
@@ -47,6 +48,7 @@ const SearchCompany: FC<SearchContactProps> = ({ companies, loading }) => {
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = useState({});
 
+  const { t } = useTranslation();
   const { columns } = useColumns();
 
   const table = useReactTable({
@@ -93,40 +95,46 @@ const SearchCompany: FC<SearchContactProps> = ({ companies, loading }) => {
               <DrawerTrigger asChild>
                 <Button size="sm" className="h-12 bg-red px-6">
                   <Filter className="mr-1 h-4" />
-                  <span>Filters</span>
+                  <span>{t("search.company.filters")}</span>
                 </Button>
               </DrawerTrigger>
               <DrawerContent>
                 <div className="mx-auto w-full px-8">
                   <DrawerHeader>
-                    <DrawerTitle>Advanced search</DrawerTitle>
+                    <DrawerTitle>
+                      {t("search.company.advancedSearch")}
+                    </DrawerTitle>
                     <DrawerDescription>
-                      Set the filters you want to apply to the search.
+                      {t("search.company.advancedSearchDescription")}
                     </DrawerDescription>
                   </DrawerHeader>
 
                   <section className="grid grid-cols-3 gap-4 py-4">
                     <div>
-                      <Label htmlFor="name">Name</Label>
+                      <Label htmlFor="name">{t("search.company.name")}</Label>
                       <Input type="text"></Input>
                     </div>
                     <div>
-                      <Label htmlFor="city">Country</Label>
+                      <Label htmlFor="city">{t("search.company.city")}</Label>
                       <Input type="text"></Input>
                     </div>
                     <div>
-                      <Label htmlFor="area">Area</Label>
+                      <Label htmlFor="area">{t("search.company.area")}</Label>
                       <Input type="text"></Input>
                     </div>
                     <div>
-                      <Label htmlFor="postal code">Phone</Label>
+                      <Label htmlFor="postal code">
+                        {t("search.company.postalCode")}
+                      </Label>
                       <Input type="phone"></Input>
                     </div>
                   </section>
                   <DrawerFooter>
-                    <Button>Submit</Button>
+                    <Button>{t("search.company.search")}</Button>
                     <DrawerClose asChild>
-                      <Button variant="outline">Cancel</Button>
+                      <Button variant="outline">
+                        {t("search.company.cancel")}
+                      </Button>
                     </DrawerClose>
                   </DrawerFooter>
                 </div>
@@ -189,7 +197,7 @@ const SearchCompany: FC<SearchContactProps> = ({ companies, loading }) => {
                       colSpan={columns.length}
                       className="h-24 text-center"
                     >
-                      No results.
+                      {t("search.company.noResults")}
                     </TableCell>
                   </TableRow>
                 )}
@@ -199,7 +207,8 @@ const SearchCompany: FC<SearchContactProps> = ({ companies, loading }) => {
           <div className="flex items-center justify-end space-x-2 py-4">
             <div className="flex-1 text-sm text-muted-foreground">
               {table.getFilteredSelectedRowModel().rows.length} of{" "}
-              {table.getFilteredRowModel().rows.length} row(s) selected.
+              {table.getFilteredRowModel().rows.length}{" "}
+              {t("search.company.rows")}.
             </div>
             <div className="space-x-2">
               <Button
@@ -210,7 +219,7 @@ const SearchCompany: FC<SearchContactProps> = ({ companies, loading }) => {
                   !table.getIsAllRowsSelected()
                 }
               >
-                Delete selected companies
+                {t("search.company.deleteSelectedCompanies")}
               </Button>
               <Button
                 variant="outline"
@@ -218,7 +227,7 @@ const SearchCompany: FC<SearchContactProps> = ({ companies, loading }) => {
                 onClick={() => table.previousPage()}
                 disabled={!table.getCanPreviousPage()}
               >
-                Previous
+                {t("search.company.previous")}
               </Button>
               <Button
                 variant="outline"
@@ -226,7 +235,7 @@ const SearchCompany: FC<SearchContactProps> = ({ companies, loading }) => {
                 onClick={() => table.nextPage()}
                 disabled={!table.getCanNextPage()}
               >
-                Next
+                {t("search.company.next")}
               </Button>
             </div>
           </div>

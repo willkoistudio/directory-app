@@ -3,7 +3,6 @@ import { usePageName } from "../../context/PageNameContext";
 import { useCountryStateCity } from "../../context/CountryStateCityContext";
 import { Button } from "../../components/ui/button";
 import { Badge } from "../../components/ui/badge";
-import styles from "./AddContact.module.scss";
 import { Check } from "lucide-react";
 import { ROUTE_NAMES } from "../../const/routes";
 import { Form } from "../../components/ui/form";
@@ -23,6 +22,8 @@ import { ContactData } from "../../models/contact";
 import { Company } from "../../models/company";
 import { Skeleton } from "../../components/ui/skeleton";
 import { FormStep } from "../../models/form";
+import styles from "./AddContact.module.scss";
+import { useTranslation } from "react-i18next";
 
 const AddContact: FC = () => {
   const { setPageName } = usePageName();
@@ -37,43 +38,42 @@ const AddContact: FC = () => {
     loadingLocations,
   } = useCountryStateCity();
   const { id } = useParams<{ id: string }>();
+  const dispatch = useDispatch();
+  const { toast } = useToast();
+  const { t } = useTranslation();
+  const { companies } = useSelector((state: RootState) => state.company);
+  const { dispatchCurrentStep, form, stepsIconColor } = useAddContactForm();
 
   const [loading, setLoading] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
   const [addContactSteps, setAddContactSteps] = useState<FormStep[]>([
     {
-      name: "Photo",
+      name: t("addContact.avatar"),
       stepNumber: 1,
       isCompleted: false,
     },
 
     {
-      name: "Primary infos",
+      name: t("addContact.primaryInfos"),
       stepNumber: 2,
       isCompleted: false,
     },
     {
-      name: "Secondary infos",
+      name: t("addContact.secondaryInfos"),
       stepNumber: 3,
       isCompleted: false,
     },
     {
-      name: "Keywords",
+      name: t("addContact.keywords"),
       stepNumber: 4,
       isCompleted: false,
     },
     {
-      name: "Summary",
+      name: t("addContact.summary"),
       stepNumber: 5,
       isCompleted: false,
     },
   ]);
-
-  const dispatch = useDispatch();
-  const { toast } = useToast();
-
-  const { companies } = useSelector((state: RootState) => state.company);
-  const { dispatchCurrentStep, form, stepsIconColor } = useAddContactForm();
 
   const fetchRessources = async () => {
     setLoading(true);
@@ -183,7 +183,7 @@ const AddContact: FC = () => {
     // Show the errors using toast
     toast({
       variant: "destructive",
-      title: "Form Error. Please fix the fields before submit",
+      title: t("addContact.formError"),
       description: (
         <ul className="list-disc pl-3 mt-2  ml-2">
           {errorMessages.map(({ field, message }, index) => (
@@ -269,9 +269,8 @@ const AddContact: FC = () => {
 
     toast({
       variant: "destructive",
-      title: "Form error",
-      description:
-        "There is some errors in the current step. Please check the form before submitting",
+      title: t("addContact.formErrorStepTitle"),
+      description: t("addContact.formErrorStep"),
     });
   };
 
@@ -311,14 +310,14 @@ const AddContact: FC = () => {
                 disabled={currentStep === 1}
                 onClick={() => setCurrentStep(currentStep - 1)}
               >
-                Back
+                {t("addContact.back")}
               </Button>
               <Button
                 className="bg-red"
                 disabled={currentStep === 5}
                 onClick={handleNextStep}
               >
-                Next
+                {t("addContact.next")}
               </Button>
             </div>
           </nav>

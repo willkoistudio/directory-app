@@ -11,6 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "../../../ui/dropdown-menu";
 import { Company } from "../../../../models/company";
+import { t } from "i18next";
 
 export default function useColomns(companies: Company[]) {
   const columns: ColumnDef<Contact>[] = [
@@ -60,7 +61,7 @@ export default function useColomns(companies: Company[]) {
             className="pl-0 font-bold"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            Name
+            {t("search.contact.name")}
             <ArrowUpDown />
           </Button>
         );
@@ -78,7 +79,7 @@ export default function useColomns(companies: Company[]) {
             className="pl-0 font-bold"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            Email
+            {t("search.contact.email")}
             <ArrowUpDown />
           </Button>
         );
@@ -90,7 +91,9 @@ export default function useColomns(companies: Company[]) {
     {
       accessorKey: "phone",
       header: () => {
-        return <span className="pl-0 font-bold">Phone</span>;
+        return (
+          <span className="pl-0 font-bold">{t("search.contact.phone")}</span>
+        );
       },
       cell: ({ row }) => (
         <div className="lowercase">{row.getValue("phone")}</div>
@@ -105,7 +108,7 @@ export default function useColomns(companies: Company[]) {
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            Company
+            {t("search.contact.company")}
             <ArrowUpDown />
           </Button>
         );
@@ -127,7 +130,7 @@ export default function useColomns(companies: Company[]) {
             className="pl-0 font-bold"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            Function
+            {t("search.contact.function")}
             <ArrowUpDown />
           </Button>
         );
@@ -139,7 +142,11 @@ export default function useColomns(companies: Company[]) {
     {
       accessorKey: "createdAt",
       header: () => {
-        return <span className="pl-0 font-bold">Creation date</span>;
+        return (
+          <span className="pl-0 font-bold">
+            {t("search.contact.creationDate")}
+          </span>
+        );
       },
       cell: ({ row }) => (
         <div className="capitalize">{row.getValue("createdAt")}</div>
@@ -155,7 +162,7 @@ export default function useColomns(companies: Company[]) {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="h-8 w-8 p-0">
-                <span className="sr-only">Open menu</span>
+                <span className="sr-only">{t("search.contact.openMenu")}</span>
                 <MoreHorizontal />
               </Button>
             </DropdownMenuTrigger>
@@ -166,10 +173,10 @@ export default function useColomns(companies: Company[]) {
                   (window.location.href = `/contact/${contact.id}`)
                 }
               >
-                View contact details
+                {t("search.contact.viewContactDetails")}
               </DropdownMenuItem>
               <DropdownMenuItem className="cursor-pointer hover:bg-white/5">
-                Remove contact
+                {t("search.contact.removeContact")}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

@@ -10,6 +10,7 @@ import {
   FormLabel,
   FormMessage,
 } from "../../../ui/form";
+import { t } from "i18next";
 
 const AddContactFourthStep: FC<UseFormReturn<AddContactFormSchema>> = ({
   control,
@@ -53,13 +54,14 @@ const AddContactFourthStep: FC<UseFormReturn<AddContactFormSchema>> = ({
           render={({ field }) => (
             <FormItem>
               <FormLabel>
-                Keywords <span className="text-red">*</span>
+                {t("addContact.step4.keywords")}{" "}
+                <span className="text-red">*</span>
               </FormLabel>
               <FormControl>
                 <Input
                   type="text"
                   className=" h-14"
-                  placeholder="Add a keyword and press enter"
+                  placeholder={t("addContact.step4.formInfoKeywords")}
                   value={inputValue}
                   onChange={(e) => setInputValue(e.target.value)}
                   onKeyDown={(e) => onFormChange(e, field)}

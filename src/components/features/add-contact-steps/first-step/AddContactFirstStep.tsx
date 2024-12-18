@@ -4,6 +4,7 @@ import { CircleX, ImageUp } from "lucide-react";
 import { Input } from "../../../ui/input";
 import { UseFormReturn } from "react-hook-form";
 import { AddContactFormSchema } from "../../../../pages/add-contact/hooks/useAddContactForm";
+import { t } from "i18next";
 
 const AddContactFirstStep: FC<UseFormReturn<AddContactFormSchema>> = ({
   getValues,
@@ -66,10 +67,11 @@ const AddContactFirstStep: FC<UseFormReturn<AddContactFormSchema>> = ({
         <Card className="text-center border-2 border-dashed py-12 px-8 w-1/2 relative mx-auto">
           <ImageUp className="mx-auto h-12 w-12" />
           <p className="text-xl my-4 font-bold">
-            Import a profile picture <span className="text-red"> *</span>
+            {t("addContact.formInfoAvatar")}{" "}
+            <span className="text-red"> *</span>
           </p>
-          <p className="text-gray">Maximum file size: 10MB</p>
-          <p className="text-gray">Supported formats: .jpg, .jpeg, .png</p>
+          <p className="text-gray">{t("addContact.formInfoAvatarFile")}</p>
+          <p className="text-gray">{t("addContact.formInfoAvatarFormat")}</p>
           {errors.avatarFile && (
             <p className="text-red mt-6 text-sm">{errors.avatarFile.message}</p>
           )}

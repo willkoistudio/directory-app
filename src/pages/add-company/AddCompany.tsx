@@ -1,14 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { usePageName } from "../../context/PageNameContext";
 import { ROUTE_NAMES } from "../../const/routes";
-import styles from "../add-contact/AddContact.module.scss";
 import { Badge } from "../../components/ui/badge";
 import { Check } from "lucide-react";
 import { Button } from "../../components/ui/button";
 import { Form } from "../../components/ui/form";
 import { FormStep } from "../../models/form";
 import { useDispatch } from "react-redux";
-
 import {
   AddCompanyFormSchema,
   useAddCompanyForm,
@@ -20,23 +18,26 @@ import { CompanyData } from "../../models/company";
 import { addCompany, getCompanyDetail } from "../../store/companySlice";
 import { FieldErrors } from "react-hook-form";
 import { Skeleton } from "../../components/ui/skeleton";
+import styles from "../add-contact/AddContact.module.scss";
+import { useTranslation } from "react-i18next";
+import { t } from "i18next";
 
-const AddCompany: React.FC = () => {
+const AddCompany: FC = () => {
   const { setPageName } = usePageName();
-  const [currentStep, setCurrentStep] = React.useState(1);
+  const [currentStep, setCurrentStep] = useState(1);
   const [addCompanySteps, setAddCompanySteps] = useState<FormStep[]>([
     {
-      name: "Logo",
+      name: t("addCompany.logo"),
       stepNumber: 1,
       isCompleted: false,
     },
     {
-      name: "Company infos",
+      name: t("addCompany.companyInfos"),
       stepNumber: 2,
       isCompleted: false,
     },
     {
-      name: "Summary",
+      name: t("addCompany.summary"),
       stepNumber: 3,
       isCompleted: false,
     },
@@ -155,7 +156,7 @@ const AddCompany: React.FC = () => {
     // Show the errors using toast
     toast({
       variant: "destructive",
-      title: "Form Error. Please fix the fields before submit",
+      title: t("addCompany.formError"),
       description: (
         <ul className="list-disc pl-3 mt-2  ml-2">
           {errorMessages.map(({ field, message }, index) => (
@@ -228,9 +229,8 @@ const AddCompany: React.FC = () => {
 
     toast({
       variant: "destructive",
-      title: "Form error",
-      description:
-        "There is some errors in the current step. Please check the form before submitting",
+      title: t("addCompany.formErrorStepTitle"),
+      description: t("addCompany.formErrorStep"),
     });
   };
 
@@ -270,14 +270,14 @@ const AddCompany: React.FC = () => {
                 disabled={currentStep === 1}
                 onClick={() => setCurrentStep(currentStep - 1)}
               >
-                Back
+                {t("addCompany.back")}
               </Button>
               <Button
                 className="bg-red"
                 disabled={currentStep === 3}
                 onClick={handleNextStep}
               >
-                Next
+                {t("addCompany.next")}
               </Button>
             </div>
           </nav>

@@ -6,6 +6,7 @@ import { UseFormReturn } from "react-hook-form";
 import { Card } from "../../../ui/card";
 import { CSC_City, CSC_Country, CSC_State } from "../../../../models/location";
 import { AddCompanyFormSchema } from "../../../../pages/add-company/hooks/useAddCompanyForm";
+import { t } from "i18next";
 
 interface AddCompanyThirdStepProps extends UseFormReturn<AddCompanyFormSchema> {
   onSubmit: () => void;
@@ -60,7 +61,7 @@ const AddCompanyThirdStep: FC<AddCompanyThirdStepProps> = ({
 
   return (
     <>
-      <p className="text-2xl  mt-8">Summary</p>
+      <p className="text-2xl  mt-8">{t("addCompany.step3.summary")}</p>
       <div className="py-12 flex gap-8 flex-row">
         <div className="basis-1/4">
           <div
@@ -71,31 +72,35 @@ const AddCompanyThirdStep: FC<AddCompanyThirdStepProps> = ({
               })`,
             }}
           >
-            <Label className="font-bold mb-2 block">Company logo</Label>
+            <Label className="font-bold mb-2 block">
+              {t("addCompany.step3.companyLogo")}
+            </Label>
           </div>
         </div>
         <Card className="px-8 py-8 basis-1/2">
           <div>
             <div className="pb-4">
-              <Label className="font-bold">Name</Label>
+              <Label className="font-bold">{t("addCompany.step2.name")}</Label>
               <p className="text-gray">{getValues("name") || "N/A"}</p>
             </div>
 
             <div className="pb-4">
-              <Label className="font-bold">Phone</Label>
+              <Label className="font-bold">{t("addCompany.step2.phone")}</Label>
               <p className="text-gray">{getValues("phone") || "N/A"}</p>
             </div>
 
             <div className="pb-4">
-              <Label className="font-bold">Area</Label>
+              <Label className="font-bold">{t("addCompany.step2.area")}</Label>
               <p className="text-gray">{getValues("area") || "N/A"}</p>
             </div>
             <div className="pb-4">
-              <Label className="font-bold">Fax</Label>
+              <Label className="font-bold">{t("addCompany.step2.fax")}</Label>
               <p className="text-gray">{getValues("fax") || "N/A"}</p>
             </div>
             <div>
-              <Label className="font-bold">Website</Label>
+              <Label className="font-bold">
+                {t("addCompany.step2.website")}
+              </Label>
               <p className="text-gray">{getValues("website") || "N/A"}</p>
             </div>
           </div>
@@ -103,29 +108,35 @@ const AddCompanyThirdStep: FC<AddCompanyThirdStepProps> = ({
         <Card className="px-8 py-8 basis-1/2">
           <div>
             <div className="pb-4">
-              <Label className="font-bold">Notes</Label>
+              <Label className="font-bold">{t("addCompany.step2.notes")}</Label>
               <p className="text-gray">{getValues("notes") || "N/A"}</p>
             </div>
             <div className="pb-4">
-              <Label className="font-bold">Country</Label>
+              <Label className="font-bold">
+                {t("addCompany.step2.country")}
+              </Label>
               <p className="text-gray">{countryName || "N/A"}</p>
             </div>
             <div className="pb-4">
-              <Label className="font-bold">State</Label>
+              <Label className="font-bold">{t("addCompany.step2.state")}</Label>
               <p className="text-gray">{stateName || "N/A"}</p>
             </div>
             <div className="pb-4">
-              <Label className="font-bold">City</Label>
+              <Label className="font-bold">{t("addCompany.step2.city")}</Label>
               <p className="text-gray">{cityName || "N/A"}</p>
             </div>
             <div className="pb-4">
-              <Label className="font-bold">Street</Label>
+              <Label className="font-bold">
+                {t("addCompany.step2.street")}
+              </Label>
               <p className="text-gray">
                 {getValues("address.street") || "N/A"}
               </p>
             </div>
             <div>
-              <Label className="font-bold">Postal Code</Label>
+              <Label className="font-bold">
+                {t("addCompany.step2.postalCode")}
+              </Label>
               <p className="text-gray">
                 {getValues("address.postalCode") || "N/A"}
               </p>
@@ -135,7 +146,7 @@ const AddCompanyThirdStep: FC<AddCompanyThirdStepProps> = ({
       </div>
       <div className="flex justify-center px-8 w-full">
         <Button className="bg-red hover:bg-red/90 h-14 px-8" onClick={onSubmit}>
-          <Save /> Save company
+          <Save /> {t("addCompany.step3.saveCompany")}
         </Button>
       </div>
     </>

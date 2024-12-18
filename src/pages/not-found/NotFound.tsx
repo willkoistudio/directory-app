@@ -14,15 +14,14 @@ const NotFound: React.FC = () => {
   return (
     <div className="text-center h-full flex">
       <div className="my-auto mx-auto">
-        <h1 className="text-9xl font-bold ">404</h1>
-        <p>The page you are looking for does not exist.</p>
-        <p>Sorry for the inconvenience.</p>
+        <h1 className="text-9xl font-bold ">{t("notFound.title")}</h1>
+        <p>{t("notFound.description")}</p>
         <div className="flex">
           <Button
             onClick={() => (window.location.href = "/")}
             className="bg-red mx-auto mt-12"
           >
-            Back to home
+            {t("notFound.backToHome")}
           </Button>
         </div>
       </div>

@@ -7,6 +7,7 @@ import { AddContactFormSchema } from "../../../../pages/add-contact/hooks/useAdd
 import { Card } from "../../../ui/card";
 import { Company } from "../../../../models/company";
 import { CSC_City, CSC_Country, CSC_State } from "../../../../models/location";
+import { t } from "i18next";
 
 interface AddContactFifthStepProps extends UseFormReturn<AddContactFormSchema> {
   companies: Company[];
@@ -35,6 +36,7 @@ const AddContactFifthStep: FC<AddContactFifthStepProps> = ({
     );
     setCompanyName(company?.name ?? "");
   };
+
   const getCountryName = () => {
     const country = countries.find(
       (country) => String(country.id) === String(getValues("address.countryId"))
@@ -74,7 +76,7 @@ const AddContactFifthStep: FC<AddContactFifthStepProps> = ({
 
   return (
     <>
-      <p className="text-2xl  mt-8">Summary</p>
+      <p className="text-2xl  mt-8">{t("addContact.step5.summary")}</p>
       <div className="py-12 flex gap-8 flex-row">
         <div className="basis-1/4">
           <div
@@ -85,42 +87,52 @@ const AddContactFifthStep: FC<AddContactFifthStepProps> = ({
               })`,
             }}
           >
-            <Label className="font-bold mb-2 block">Profile picture</Label>
+            <Label className="font-bold mb-2 block">
+              {t("addContact.step5.formInfoAvatar")}
+            </Label>
           </div>
         </div>
         <Card className="px-8 py-8 basis-1/2">
           <div>
             <div className="pb-4">
-              <Label className="font-bold">Name</Label>
+              <Label className="font-bold">{t("addContact.step2.name")}</Label>
               <p className="text-gray">{getValues("name") || "N/A"}</p>
             </div>
             <div className="pb-4">
-              <Label className="font-bold">Company</Label>
+              <Label className="font-bold">
+                {t("addContact.step2.company")}
+              </Label>
               <p className="text-gray">{companyName || "N/A"}</p>
             </div>
             <div className="pb-4">
-              <Label className="font-bold">Function</Label>
+              <Label className="font-bold">
+                {t("addContact.step2.function")}
+              </Label>
               <p className="text-gray">{getValues("function") || "N/A"}</p>
             </div>
             <div className="pb-4">
-              <Label className="font-bold">Email</Label>
+              <Label className="font-bold">{t("addContact.step2.email")}</Label>
               <p className="text-gray">{getValues("email") || "N/A"}</p>
             </div>
             <div className="pb-4">
-              <Label className="font-bold">Phone</Label>
+              <Label className="font-bold">{t("addContact.step2.phone")}</Label>
               <p className="text-gray">{getValues("phone") || "N/A"}</p>
             </div>
             <div className="pb-4">
-              <Label className="font-bold">Work Phone</Label>
+              <Label className="font-bold">
+                {t("addContact.step3.workPhone")}
+              </Label>
               <p className="text-gray">{getValues("workPhone") || "N/A"}</p>
             </div>
 
             <div className="pb-4">
-              <Label className="font-bold">Fax</Label>
+              <Label className="font-bold">{t("addContact.step3.fax")}</Label>
               <p className="text-gray">{getValues("fax") || "N/A"}</p>
             </div>
             <div>
-              <Label className="font-bold">Website</Label>
+              <Label className="font-bold">
+                {t("addContact.step3.website")}
+              </Label>
               <p className="text-gray">{getValues("website") || "N/A"}</p>
             </div>
           </div>
@@ -128,7 +140,9 @@ const AddContactFifthStep: FC<AddContactFifthStepProps> = ({
         <Card className="px-8 py-8 basis-1/2">
           <div>
             <div className="pb-4">
-              <Label className="font-bold">Keywords</Label>
+              <Label className="font-bold">
+                {t("addContact.step4.keywords")}
+              </Label>
               {getValues("keywords")?.length > 0 ? (
                 <p className="flex gap-2">
                   {getValues("keywords").map((keyword, index) => (
@@ -145,29 +159,35 @@ const AddContactFifthStep: FC<AddContactFifthStepProps> = ({
               )}
             </div>
             <div className="pb-4">
-              <Label className="font-bold">Notes</Label>
+              <Label className="font-bold">{t("addContact.step3.notes")}</Label>
               <p className="text-gray">{getValues("notes") || "N/A"}</p>
             </div>
             <div className="pb-4">
-              <Label className="font-bold">Country</Label>
+              <Label className="font-bold">
+                {t("addContact.step2.country")}
+              </Label>
               <p className="text-gray">{countryName || "N/A"}</p>
             </div>
             <div className="pb-4">
-              <Label className="font-bold">State</Label>
+              <Label className="font-bold">{t("addContact.step2.state")}</Label>
               <p className="text-gray">{stateName || "N/A"}</p>
             </div>
             <div className="pb-4">
-              <Label className="font-bold">City</Label>
+              <Label className="font-bold">{t("addContact.step2.city")}</Label>
               <p className="text-gray">{cityName || "N/A"}</p>
             </div>
             <div className="pb-4">
-              <Label className="font-bold">Street</Label>
+              <Label className="font-bold">
+                {t("addContact.step2.street")}
+              </Label>
               <p className="text-gray">
                 {getValues("address.street") || "N/A"}
               </p>
             </div>
             <div>
-              <Label className="font-bold">Postal Code</Label>
+              <Label className="font-bold">
+                {t("addContact.step2.postalCode")}
+              </Label>
               <p className="text-gray">
                 {getValues("address.postalCode") || "N/A"}
               </p>
@@ -177,7 +197,7 @@ const AddContactFifthStep: FC<AddContactFifthStepProps> = ({
       </div>
       <div className="flex justify-center px-8 w-full">
         <Button className="bg-red hover:bg-red/90 h-14 px-8" onClick={onSubmit}>
-          <Save /> Save contact
+          <Save /> {t("addContact.step5.saveContact")}
         </Button>
       </div>
     </>
