@@ -173,26 +173,19 @@ export default {
     backToHome: "Retour à l'accueil",
   },
   login: {
-    title: "Login",
-    username: "Username",
-    password: "Password",
-    login: "Login",
+    title: "Application de répertoire",
+    password: "Mot de passe",
+    login: "Connexion",
     logout: "Déconnexion",
-  },
-  notifications: {
-    title: "Centre de notifications",
-    empty: "Aucune notification",
-    timeAgo: "Il y a {{time}}",
-    markAllRead: "Tout marquer comme lu",
-    clear: "Effacer tout",
-  },
-  dialog: {
-    confirmation: {
-      title: "Confirmation",
-      description: "Êtes-vous sûr de vouloir effectuer cette action ?",
-      confirm: "Confirmer",
-      cancel: "Annuler",
-    },
+    formError: "Erreur de formulaire",
+    formErrorStepTitle: "Erreur de formulaire",
+    formErrorStep:
+      "Il y a des erreurs dans le formulaire. Veuillez corriger les champs avant de soumettre",
+    email: "Email",
+    loading: "Chargement...",
+    submit: "Connexion",
+    emailPlaceholder: "Email",
+    passwordPlaceholder: "Mot de passe",
   },
   errors: {
     unexpected: {

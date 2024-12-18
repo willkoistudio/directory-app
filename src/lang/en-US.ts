@@ -172,19 +172,19 @@ export default {
     backToHome: "Back to home",
   },
   login: {
-    title: "Login",
-    username: "Username",
+    title: "Directory App",
     password: "Password",
     login: "Login",
     logout: "Logout",
-  },
-  dialog: {
-    confirmation: {
-      title: "Confirmation",
-      description: "Êtes-vous sûr de vouloir effectuer cette action ?",
-      confirm: "Confirmer",
-      cancel: "Annuler",
-    },
+    formError: "Form Error. Please fix the fields before submit",
+    formErrorStepTitle: "Form error",
+    formErrorStep:
+      "There is some errors in the current step. Please check the form before submitting",
+    email: "Email",
+    loading: "Loading...",
+    submit: "Login",
+    emailPlaceholder: "Email",
+    passwordPlaceholder: "Password",
   },
   errors: {
     unexpected: {
