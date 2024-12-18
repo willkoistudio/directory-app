@@ -53,7 +53,18 @@ export default function useColomns(companies: Company[]) {
     },
     {
       accessorKey: "name",
-      header: "Name",
+      header: ({ column }) => {
+        return (
+          <Button
+            variant="ghost"
+            className="pl-0 font-bold"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Name
+            <ArrowUpDown />
+          </Button>
+        );
+      },
       cell: ({ row }) => (
         <div className="capitalize">{row.getValue("name")}</div>
       ),
@@ -64,6 +75,7 @@ export default function useColomns(companies: Company[]) {
         return (
           <Button
             variant="ghost"
+            className="pl-0 font-bold"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
             Email
@@ -77,7 +89,9 @@ export default function useColomns(companies: Company[]) {
     },
     {
       accessorKey: "phone",
-      header: "Phone",
+      header: () => {
+        return <span className="pl-0 font-bold">Phone</span>;
+      },
       cell: ({ row }) => (
         <div className="lowercase">{row.getValue("phone")}</div>
       ),
@@ -87,6 +101,7 @@ export default function useColomns(companies: Company[]) {
       header: ({ column }) => {
         return (
           <Button
+            className="pl-0 font-bold"
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
@@ -109,6 +124,7 @@ export default function useColomns(companies: Company[]) {
         return (
           <Button
             variant="ghost"
+            className="pl-0 font-bold"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
             Function
@@ -122,7 +138,9 @@ export default function useColomns(companies: Company[]) {
     },
     {
       accessorKey: "createdAt",
-      header: "Date creation",
+      header: () => {
+        return <span className="pl-0 font-bold">Creation date</span>;
+      },
       cell: ({ row }) => (
         <div className="capitalize">{row.getValue("createdAt")}</div>
       ),

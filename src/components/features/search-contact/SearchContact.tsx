@@ -69,7 +69,6 @@ const SearchContact: FC<SearchContactProps> = ({ contacts, loading }) => {
 
   useEffect(() => {
     setLocalCompanies(companies);
-    console.log(localCompanies);
   }, [companies]);
 
   useEffect(() => {

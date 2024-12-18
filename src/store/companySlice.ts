@@ -45,10 +45,12 @@ export const removeCompany = createAsyncThunk(
 
 interface CompanyState {
   companies: Company[];
+  companyDetail: CompanyData | null;
 }
 
 const initialState: CompanyState = {
   companies: [],
+  companyDetail: null,
 };
 
 const companySlice = createSlice({
@@ -58,6 +60,9 @@ const companySlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(getCompanies.fulfilled, (state, action) => {
       state.companies = action.payload;
+    });
+    builder.addCase(getCompanyDetail.fulfilled, (state, action) => {
+      state.companyDetail = action.payload;
     });
   },
 });

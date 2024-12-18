@@ -74,7 +74,7 @@ const Search: FC = () => {
                 handleTabsChange(tab.value);
               }}
             >
-              {tab.icon} {tab.label}
+              <span className="mr-2">{tab.icon}</span> <span>{tab.label}</span>
             </TabsTrigger>
           ))}
         </TabsList>

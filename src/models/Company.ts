@@ -4,6 +4,7 @@ export interface Company {
   id: string;
   name: string;
   phone: string;
+  area: string;
   logo: string;
   address: Address;
   createdAt?: string;
@@ -30,6 +31,7 @@ export const COMPANIES_MOCKS: Company[] = [
     phone: "1234567890",
     logo: "https://banner2.cleanpng.com/20180622/oi/aazfi7cqm.webp",
     address: ADDRESS_MOCKS[0],
+    area: "Area 1",
     createdAt: new Date().toDateString(),
   },
   {
@@ -38,6 +40,7 @@ export const COMPANIES_MOCKS: Company[] = [
     phone: "1234567890",
     logo: "https://via.placeholder.com/150",
     address: ADDRESS_MOCKS[1],
+    area: "Area 2",
     createdAt: new Date().toDateString(),
   },
   {
@@ -46,6 +49,7 @@ export const COMPANIES_MOCKS: Company[] = [
     phone: "1234567890",
     logo: "https://via.placeholder.com/150",
     address: ADDRESS_MOCKS[2],
+    area: "Area 3",
     createdAt: new Date().toDateString(),
   },
 ];

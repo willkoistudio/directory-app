@@ -9,44 +9,63 @@ import {
 import {
   Card,
   CardContent,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "../../components/ui/card";
-import { TrendingUp } from "lucide-react";
 import { Label, LabelProps, Pie, PieChart } from "recharts";
 import { ROUTE_NAMES } from "../../const/routes";
 import { useTranslation } from "react-i18next";
-import useChartData from "./hooks/useChartData";
 import { useDispatch, useSelector } from "react-redux";
 import { getContacts } from "../../store/contactSlice";
 import { getCompanies } from "../../store/companySlice";
 import { RootState } from "../../store/store";
 import { ChartData } from "../../models/common";
+import { Skeleton } from "../../components/ui/skeleton";
 
 const Home: React.FC = () => {
   const { setPageName } = usePageName();
   const { t } = useTranslation();
+  const [loading, setLoading] = useState(false);
 
   const dispatch = useDispatch();
   const { contacts } = useSelector((state: RootState) => state.contact);
   const { companies } = useSelector((state: RootState) => state.company);
 
+  const fetchResources = async () => {
+    setLoading(true);
+    try {
+      await dispatch(getContacts() as any);
+      await dispatch(getCompanies() as any);
+    } catch (error) {
+      console.error("Error fetching resources:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    if (!contacts || contacts.length === 0) {
-      dispatch(getContacts() as any);
-    }
-    if (!companies || companies.length === 0) {
-      dispatch(getCompanies() as any);
-    }
-  }, [dispatch, contacts, companies]);
+    fetchResources();
+  }, []);
 
-  const { chartData, chartConfig } = useChartData(
-    contacts.length,
-    companies.length
-  );
+  const chartData: ChartData[] = [
+    { type: "users", nbCreated: contacts.length, fill: "#aaa" },
+    {
+      type: "companies",
+      nbCreated: companies.length,
+      fill: "#fff",
+    },
+  ];
 
-  const [loading, setLoading] = useState(false);
+  const chartConfig: ChartConfig = {
+    users: {
+      label: "Users",
+      color: "#aaa",
+    },
+    companies: {
+      label: "Companies",
+      color: "#fff",
+    },
+  } satisfies ChartConfig;
 
   const handlerContent = ({ viewBox }: LabelProps) => {
     const totalNbCreated = useMemo(() => {
@@ -102,36 +121,31 @@ const Home: React.FC = () => {
               </CardTitle>
             </CardHeader>
             <CardContent className="flex-1 pb-0">
-              <ChartContainer
-                config={chartConfig}
-                className="mx-auto aspect-square max-h-[250px]"
-              >
-                <PieChart>
-                  <ChartTooltip
-                    cursor={false}
-                    content={<ChartTooltipContent hideLabel />}
-                  />
-                  <Pie
-                    data={chartData}
-                    dataKey="nbCreated"
-                    nameKey="type"
-                    innerRadius={60}
-                    strokeWidth={5}
-                  >
-                    <Label content={handlerContent} />
-                  </Pie>
-                </PieChart>
-              </ChartContainer>
+              {loading ? (
+                <Skeleton className="bg-white/10 h-[200px] w-[200px] mx-auto mt-4 mb-10 rounded-full" />
+              ) : (
+                <ChartContainer
+                  config={chartConfig}
+                  className="mx-auto aspect-square max-h-[250px]"
+                >
+                  <PieChart>
+                    <ChartTooltip
+                      cursor={false}
+                      content={<ChartTooltipContent hideLabel />}
+                    />
+                    <Pie
+                      data={chartData}
+                      dataKey="nbCreated"
+                      nameKey="type"
+                      innerRadius={60}
+                      strokeWidth={5}
+                    >
+                      <Label content={handlerContent} />
+                    </Pie>
+                  </PieChart>
+                </ChartContainer>
+              )}
             </CardContent>
-            <CardFooter className="flex-col gap-2 text-sm">
-              <div className="flex items-center gap-2 font-medium leading-none">
-                Trending up by 5.2% this month{" "}
-                <TrendingUp className="h-4 w-4" />
-              </div>
-              <div className="leading-none text-muted-foreground">
-                Showing total visitors for the last 6 months
-              </div>
-            </CardFooter>
           </Card>
         </div>
       </div>

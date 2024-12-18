@@ -38,7 +38,9 @@ export default function useColomns() {
 
     {
       accessorKey: "logo",
-      header: "Logo",
+      header: () => {
+        return <span className="pl-0 font-bold">Logo</span>;
+      },
       cell: ({ row }) => (
         <Avatar>
           <AvatarImage src={row.getValue(`logo`)} alt={row.getValue("name")} />
@@ -50,9 +52,29 @@ export default function useColomns() {
     },
     {
       accessorKey: "name",
-      header: "Name",
+      header: ({ column }) => {
+        return (
+          <Button
+            className="pl-0 font-bold"
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Name
+            <ArrowUpDown />
+          </Button>
+        );
+      },
       cell: ({ row }) => (
         <div className="capitalize">{row.getValue("name")}</div>
+      ),
+    },
+    {
+      accessorKey: "phone",
+      header: () => {
+        return <span className="pl-0 font-bold">Phone</span>;
+      },
+      cell: ({ row }) => (
+        <div className="lowercase">{row.getValue("phone")}</div>
       ),
     },
     {
@@ -60,6 +82,7 @@ export default function useColomns() {
       header: ({ column }) => {
         return (
           <Button
+            className="pl-0 font-bold"
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
@@ -73,32 +96,10 @@ export default function useColomns() {
       ),
     },
     {
-      accessorKey: "phone",
-      header: "Phone",
-      cell: ({ row }) => (
-        <div className="lowercase">{row.getValue("phone")}</div>
-      ),
-    },
-    {
-      accessorKey: "note",
-      header: ({ column }) => {
-        return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
-            Note
-            <ArrowUpDown />
-          </Button>
-        );
-      },
-      cell: ({ row }) => (
-        <div className="lowercase">{row.getValue("note")}</div>
-      ),
-    },
-    {
       accessorKey: "createdAt",
-      header: "Date creation",
+      header: () => {
+        return <span className="pl-0 font-bold">Creation date</span>;
+      },
       cell: ({ row }) => (
         <div className="capitalize">{row.getValue("createdAt")}</div>
       ),
@@ -112,7 +113,7 @@ export default function useColomns() {
         return (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="h-8 w-8 p-0">
+              <Button variant="ghost" className="h-8 w-8 p-0 mr-0 ml-auto">
                 <span className="sr-only">Open menu</span>
                 <MoreHorizontal />
               </Button>
@@ -121,7 +122,7 @@ export default function useColomns() {
               <DropdownMenuItem
                 className="cursor-pointer hover:bg-white/5"
                 onClick={() =>
-                  (window.location.href = `/edit-company/${company.id}`)
+                  (window.location.href = `/company-detail/${company.id}`)
                 }
               >
                 View company details
