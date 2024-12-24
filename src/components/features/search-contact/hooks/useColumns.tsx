@@ -117,7 +117,6 @@ export default function useColomns(companies: Company[]) {
         const companyName = companies.find(
           (company) => company.id === row.getValue("companyId")
         )?.name;
-        console.log(companies, companyName, row.getValue("companyId"));
         return <div className="lowercase">{companyName}</div>;
       },
     },
