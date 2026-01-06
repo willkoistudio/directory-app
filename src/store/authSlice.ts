@@ -1,5 +1,7 @@
+/** @format */
+
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { User, LoginForm } from "../models/user";
+import { User, LoginForm, SignupForm } from "../models/user";
 import { IS_API_MOCKED } from "../const/common";
 import { ServiceAuthMock } from "../services/auth/auth.service.mock";
 import { ServiceAuthHttp } from "../services/auth/auth.service.http";
@@ -14,6 +16,14 @@ export const login = createAsyncThunk(
     return await serviceAuth.login(loginForm);
   }
 );
+
+export const signup = createAsyncThunk(
+  "auth/signup",
+  async (signupForm: SignupForm) => {
+    return await serviceAuth.signup(signupForm);
+  }
+);
+
 export const logout = createAsyncThunk("auth/logout", async () => {
   return await serviceAuth.logout();
 });
@@ -39,6 +49,14 @@ const authSlice = createSlice({
         state.currentUser = action.payload;
       })
       .addCase(login.rejected, (state) => {
+        state.loggedIn = false;
+        state.currentUser = null;
+      })
+      .addCase(signup.fulfilled, (state, action) => {
+        state.loggedIn = true;
+        state.currentUser = action.payload;
+      })
+      .addCase(signup.rejected, (state) => {
         state.loggedIn = false;
         state.currentUser = null;
       })

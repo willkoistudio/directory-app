@@ -1,8 +1,8 @@
 /** @format */
 
 import React, { useEffect } from "react";
-import { Header } from "./components/navigation/header/Header";
-import { AppSidebar } from "./components/navigation/Sidebar/Sidebar";
+import { Header } from "./components/Navigation/Header/Header";
+import { AppSidebar } from "./components/Navigation/Sidebar/Sidebar";
 import { SidebarProvider } from "./components/ui/sidebar";
 import {
   BrowserRouter,
@@ -17,6 +17,8 @@ import "./assets/global.scss";
 import { CscProvider } from "./context/CountryStateCityContext";
 import { Toaster } from "./components/ui/toaster";
 import Login from "./pages/auth/Login";
+import Signup from "./pages/auth/Signup";
+import AuthCallback from "./pages/auth/AuthCallback";
 import { useAppSelector } from "./store/store";
 
 // Composant pour protéger les routes
@@ -37,19 +39,23 @@ const AppContent: React.FC = () => {
   const isLoggedIn = useAppSelector((state) => state.auth.loggedIn);
   const location = useLocation();
   const isLoginPage = location.pathname === "/login";
+  const isSignupPage = location.pathname === "/signup";
+  const isAuthCallbackPage = location.pathname === "/auth/callback";
 
-  // Si l'utilisateur est déjà connecté et essaie d'accéder à /login, rediriger vers la home
-  if (isLoggedIn && isLoginPage) {
+  // Si l'utilisateur est déjà connecté et essaie d'accéder à /login ou /signup, rediriger vers la home
+  if (isLoggedIn && (isLoginPage || isSignupPage)) {
     return <Navigate to="/" replace />;
   }
 
-  // Si c'est la page de login, afficher uniquement la page de login
-  if (isLoginPage) {
+  // Si c'est la page de login, signup ou callback, afficher uniquement la page d'authentification
+  if (isLoginPage || isSignupPage || isAuthCallbackPage) {
     return (
       <PageNameProvider>
         <main className="w-full mx-auto">
           <Routes>
             <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/auth/callback" element={<AuthCallback />} />
           </Routes>
         </main>
         <Toaster />

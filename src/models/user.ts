@@ -1,3 +1,5 @@
+/** @format */
+
 export interface User {
   id: number;
   name: string;
@@ -10,6 +12,12 @@ export interface User {
 export interface LoginForm {
   email: string;
   password: string;
+}
+
+export interface SignupForm {
+  email: string;
+  password: string;
+  name?: string;
 }
 
 export const USERS_MOCKS: User[] = [

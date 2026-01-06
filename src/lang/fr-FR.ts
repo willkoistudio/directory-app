@@ -1,3 +1,5 @@
+/** @format */
+
 export default {
   home: {
     title: "Bienvenue dans mon application de répertoire !",
@@ -186,6 +188,30 @@ export default {
     submit: "Connexion",
     emailPlaceholder: "Email",
     passwordPlaceholder: "Mot de passe",
+    dontHaveAccount: "Vous n'avez pas de compte ?",
+    signup: "S'inscrire",
+    orContinueWith: "Ou continuer avec",
+    error: "Erreur de connexion",
+    errorDescription: "Une erreur s'est produite lors de la connexion",
+    success: "Connexion réussie",
+    successDescription: "Vous êtes maintenant connecté",
+    processing: "Traitement de votre authentification...",
+  },
+  signup: {
+    title: "Créer un compte",
+    name: "Nom",
+    namePlaceholder: "Votre nom",
+    email: "Email",
+    emailPlaceholder: "votre@email.com",
+    password: "Mot de passe",
+    passwordPlaceholder: "Minimum 8 caractères",
+    loading: "Inscription en cours...",
+    submit: "S'inscrire",
+    formError: "Erreur de formulaire",
+    error: "Erreur d'inscription",
+    errorDescription: "Une erreur s'est produite lors de l'inscription",
+    alreadyHaveAccount: "Vous avez déjà un compte ?",
+    login: "Se connecter",
   },
   errors: {
     unexpected: {

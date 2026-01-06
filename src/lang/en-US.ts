@@ -1,3 +1,5 @@
+/** @format */
+
 export default {
   home: {
     title: "Welcome to my directory app !",
@@ -185,6 +187,30 @@ export default {
     submit: "Login",
     emailPlaceholder: "Email",
     passwordPlaceholder: "Password",
+    dontHaveAccount: "Don't have an account?",
+    signup: "Sign up",
+    orContinueWith: "Or continue with",
+    error: "Login error",
+    errorDescription: "An error occurred during login",
+    success: "Login successful",
+    successDescription: "You are now logged in",
+    processing: "Processing your authentication...",
+  },
+  signup: {
+    title: "Create an account",
+    name: "Name",
+    namePlaceholder: "Your name",
+    email: "Email",
+    emailPlaceholder: "your@email.com",
+    password: "Password",
+    passwordPlaceholder: "Minimum 8 characters",
+    loading: "Signing up...",
+    submit: "Sign up",
+    formError: "Form error",
+    error: "Signup error",
+    errorDescription: "An error occurred during signup",
+    alreadyHaveAccount: "Already have an account?",
+    login: "Log in",
   },
   errors: {
     unexpected: {

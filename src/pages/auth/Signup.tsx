@@ -11,8 +11,8 @@ import {
   FormLabel,
   FormMessage,
 } from "../../components/ui/form";
-import { useLoginForm } from "./useAuth";
-import { login } from "../../store/authSlice";
+import { useSignupForm } from "./useSignupForm";
+import { signup } from "../../store/authSlice";
 import { FieldErrors } from "react-hook-form";
 import { toast } from "../../hooks/use-toast";
 import { t } from "i18next";
@@ -20,13 +20,14 @@ import { useAppDispatch } from "../../store/store";
 import { useNavigate, Link } from "react-router-dom";
 import { SocialAuthButtons } from "../../components/auth/SocialAuthButtons";
 
-const Login: FC = () => {
-  interface LoginFormSchema {
+const Signup: FC = () => {
+  interface SignupFormSchema {
     email: string;
     password: string;
+    name?: string;
   }
 
-  const { form } = useLoginForm();
+  const { form } = useSignupForm();
   const [loading, setLoading] = useState(false);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -36,16 +37,16 @@ const Login: FC = () => {
     if (form.formState.isValid) {
       try {
         setLoading(true);
-        const result = await dispatch(login(values) as any);
-        if (login.fulfilled.match(result)) {
+        const result = await dispatch(signup(values) as any);
+        if (signup.fulfilled.match(result)) {
           navigate("/");
         }
       } catch (error) {
-        console.error("Error while logging in", error);
+        console.error("Error while signing up", error);
         toast({
           variant: "destructive",
-          title: t("login.error"),
-          description: t("login.errorDescription"),
+          title: t("signup.error"),
+          description: t("signup.errorDescription"),
         });
       } finally {
         setLoading(false);
@@ -53,10 +54,9 @@ const Login: FC = () => {
     }
   };
 
-  function onFormError(errors: FieldErrors<LoginFormSchema>) {
-    // Recursive function to collect error messages with their keys
+  function onFormError(errors: FieldErrors<SignupFormSchema>) {
     const collectErrorMessages = (
-      fieldErrors: FieldErrors<LoginFormSchema>,
+      fieldErrors: FieldErrors<SignupFormSchema>,
       parentKey = ""
     ): { field: string; message: string }[] => {
       const messages: { field: string; message: string }[] = [];
@@ -66,10 +66,8 @@ const Login: FC = () => {
 
         if (value && typeof value === "object") {
           if ("message" in value && typeof value.message === "string") {
-            // Add the message with its field path
             messages.push({ field: fieldPath, message: value.message });
           } else {
-            // Recurse for nested errors
             messages.push(
               ...collectErrorMessages(value as FieldErrors<any>, fieldPath)
             );
@@ -80,17 +78,15 @@ const Login: FC = () => {
       return messages;
     };
 
-    // Collect the error messages with their corresponding keys
     const errorMessages = collectErrorMessages(errors);
 
-    // Show the errors using toast
     toast({
       variant: "destructive",
-      title: t("login.formError"),
+      title: t("signup.formError"),
       description: (
-        <ul className="list-disc pl-3 mt-2  ml-2">
+        <ul className="list-disc pl-3 mt-2 ml-2">
           {errorMessages.map(({ field, message }, index) => (
-            <li key={index} className="mb-1 ">
+            <li key={index} className="mb-1">
               <strong>{field}</strong>: {message}
             </li>
           ))}
@@ -98,6 +94,7 @@ const Login: FC = () => {
       ),
     });
   }
+
   return (
     <div className="grid grid-cols-2 h-screen">
       <div
@@ -110,23 +107,45 @@ const Login: FC = () => {
       >
         <img src="/logo-horizontal.svg" alt="logo" className="w-1/2 mb-8" />
       </div>
-      <div className="flex flex-col justify-center items-center">
-        <h1 className="text-2xl font-bold mb-4">{t("login.title")}</h1>
+      <div className="flex flex-col justify-center items-center px-8">
+        <h1 className="text-2xl font-bold mb-4">{t("signup.title")}</h1>
 
         <Form {...form}>
           <form
-            className="flex flex-col gap-4"
+            className="flex flex-col gap-4 w-full max-w-md"
             onSubmit={form.handleSubmit(onSubmit, onFormError)}
           >
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{t("signup.name")}</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder={t("signup.namePlaceholder")}
+                      {...field}
+                      onInput={(e) => {
+                        field.onChange(e.currentTarget.value);
+                        form.trigger("name");
+                      }}
+                    />
+                  </FormControl>
+                  <FormMessage className="text-red" />
+                </FormItem>
+              )}
+            />
+
             <FormField
               control={form.control}
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("login.email")}</FormLabel>
+                  <FormLabel>{t("signup.email")}</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder={t("login.email")}
+                      type="email"
+                      placeholder={t("signup.emailPlaceholder")}
                       {...field}
                       onInput={(e) => {
                         field.onChange(e.currentTarget.value);
@@ -138,16 +157,17 @@ const Login: FC = () => {
                 </FormItem>
               )}
             />
+
             <FormField
               control={form.control}
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t("login.password")}</FormLabel>
+                  <FormLabel>{t("signup.password")}</FormLabel>
                   <FormControl>
                     <Input
                       type="password"
-                      placeholder={t("login.password")}
+                      placeholder={t("signup.passwordPlaceholder")}
                       {...field}
                       onInput={(e) => {
                         field.onChange(e.currentTarget.value);
@@ -161,15 +181,15 @@ const Login: FC = () => {
             />
 
             <Button className="bg-red hover:bg-red/90" type="submit">
-              {loading ? t("login.loading") : t("login.submit")}
+              {loading ? t("signup.loading") : t("signup.submit")}
             </Button>
 
             <SocialAuthButtons onSuccess={() => navigate("/")} />
 
             <div className="text-center text-sm">
-              <span>{t("login.dontHaveAccount")} </span>
-              <Link to="/signup" className="text-red hover:underline">
-                {t("login.signup")}
+              <span>{t("signup.alreadyHaveAccount")} </span>
+              <Link to="/login" className="text-red hover:underline">
+                {t("signup.login")}
               </Link>
             </div>
           </form>
@@ -179,4 +199,4 @@ const Login: FC = () => {
   );
 };
 
-export default Login;
+export default Signup;
