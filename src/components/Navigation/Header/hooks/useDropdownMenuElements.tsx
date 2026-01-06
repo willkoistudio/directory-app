@@ -1,3 +1,5 @@
+/** @format */
+
 import { useMemo, useState } from "react";
 import { Languages, Settings, SunMoon } from "lucide-react";
 import { DropdownMenuItem } from "../../../ui/dropdown-menu";
@@ -31,20 +33,20 @@ const useDropdownMenuElements = () => {
 
   return useMemo(
     () => [
-      // {
-      //   label: "Theme",
-      //   icon: <SunMoon className="cursor-pointer hover:text-gray " />,
-      //   content: themes.map((theme) => (
-      //     <DropdownMenuItem
-      //       className="cursor-pointer hover:bg-white/5"
-      //       onClick={() => changeTheme(theme)}
-      //       key={theme}
-      //       disabled={theme === currentTheme}
-      //     >
-      //       {theme}
-      //     </DropdownMenuItem>
-      //   )),
-      // },
+      {
+        label: "Theme",
+        icon: <SunMoon className="cursor-pointer hover:text-gray " />,
+        content: themes.map((theme) => (
+          <DropdownMenuItem
+            className="cursor-pointer hover:bg-white/5"
+            onClick={() => changeTheme(theme)}
+            key={theme}
+            disabled={theme === currentTheme}
+          >
+            {theme}
+          </DropdownMenuItem>
+        )),
+      },
       {
         label: "Languages",
         icon: <Languages className="cursor-pointer hover:text-gray " />,

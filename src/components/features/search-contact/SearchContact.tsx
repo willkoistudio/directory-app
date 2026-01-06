@@ -1,3 +1,5 @@
+/** @format */
+
 import { FC, useEffect, useState } from "react";
 import { Contact } from "../../../models/contact";
 import { Filter } from "lucide-react";
@@ -92,7 +94,7 @@ const SearchContact: FC<SearchContactProps> = ({ contacts, loading }) => {
   });
 
   useEffect(() => {
-    setLocalCompanies(companies);
+    setLocalCompanies(Array.isArray(companies) ? companies : []);
   }, [companies]);
 
   useEffect(() => {
@@ -172,10 +174,14 @@ const SearchContact: FC<SearchContactProps> = ({ contacts, loading }) => {
                         {t("search.contact.company")}
                       </Label>
                       <Autocomplete
-                        options={localCompanies.map((company) => ({
-                          label: company.name,
-                          value: company.id,
-                        }))}
+                        options={
+                          Array.isArray(localCompanies)
+                            ? localCompanies.map((company) => ({
+                                label: company.name,
+                                value: company.id,
+                              }))
+                            : []
+                        }
                         onChange={(value) => {
                           console.log(value);
                         }}

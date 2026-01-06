@@ -1,3 +1,5 @@
+/** @format */
+
 import { FC, useState } from "react";
 import { Input } from "../../components/ui/input";
 import { Button } from "../../components/ui/button";
@@ -14,6 +16,8 @@ import { login } from "../../store/authSlice";
 import { FieldErrors } from "react-hook-form";
 import { toast } from "../../hooks/use-toast";
 import { t } from "i18next";
+import { useAppDispatch } from "../../store/store";
+import { useNavigate } from "react-router-dom";
 
 const Login: FC = () => {
   interface LoginFormSchema {
@@ -23,15 +27,25 @@ const Login: FC = () => {
 
   const { form } = useLoginForm();
   const [loading, setLoading] = useState(false);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const onSubmit = async () => {
     const values = form.getValues();
     if (form.formState.isValid) {
       try {
         setLoading(true);
-        await dispatch(login(values) as any);
+        const result = await dispatch(login(values) as any);
+        if (login.fulfilled.match(result)) {
+          navigate("/");
+        }
       } catch (error) {
         console.error("Error while logging in", error);
+        toast({
+          variant: "destructive",
+          title: t("login.error"),
+          description: t("login.errorDescription"),
+        });
       } finally {
         setLoading(false);
       }
@@ -155,6 +169,3 @@ const Login: FC = () => {
 };
 
 export default Login;
-function dispatch(arg0: any) {
-  throw new Error("Function not implemented.");
-}

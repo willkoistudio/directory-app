@@ -1,3 +1,5 @@
+/** @format */
+
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { Company, CompanyData } from "../models/company";
 import { ServiceCompanyHttp } from "../services/company/company.service.http";

@@ -1,11 +1,13 @@
-import axios from "axios";
+/** @format */
+
+import apiClient from "../../lib/axios";
 import { ServiceCompany } from "./company.service";
 import { Company, CompanyData } from "../../models/company";
 
 export class ServiceCompanyHttp implements ServiceCompany {
   public async getCompanies(): Promise<Company[]> {
     try {
-      const { data } = await axios.get<Company[]>(`companies`);
+      const { data } = await apiClient.get<Company[]>(`companies`);
       return data;
     } catch (erreur) {
       throw new Error("Error fetching companies");
@@ -14,7 +16,7 @@ export class ServiceCompanyHttp implements ServiceCompany {
 
   public async getCompanyDetail(id: string): Promise<CompanyData> {
     try {
-      const { data } = await axios.get<CompanyData>(`companies/${id}`);
+      const { data } = await apiClient.get<CompanyData>(`companies/${id}`);
       return data;
     } catch (erreur) {
       throw new Error("Error fetching company");
@@ -23,7 +25,7 @@ export class ServiceCompanyHttp implements ServiceCompany {
 
   public async addCompany(company: CompanyData): Promise<void> {
     try {
-      const { data } = await axios.post<void>(`companies`, company);
+      const { data } = await apiClient.post<void>(`companies`, company);
       return data;
     } catch (erreur) {
       throw new Error("Error adding company");
@@ -32,7 +34,7 @@ export class ServiceCompanyHttp implements ServiceCompany {
 
   public async updateCompany(company: Company): Promise<void> {
     try {
-      const { data } = await axios.put<void>(
+      const { data } = await apiClient.put<void>(
         `companies/${company.id}`,
         company
       );
@@ -44,7 +46,7 @@ export class ServiceCompanyHttp implements ServiceCompany {
 
   public async removeCompany(id: string): Promise<void> {
     try {
-      const { data } = await axios.delete<void>(`companies/${id}`);
+      const { data } = await apiClient.delete<void>(`companies/${id}`);
       return data;
     } catch (erreur) {
       throw new Error("Error removing company");

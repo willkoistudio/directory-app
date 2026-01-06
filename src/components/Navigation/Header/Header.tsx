@@ -1,3 +1,5 @@
+/** @format */
+
 import { FC } from "react";
 import { NavigationMenu } from "../../../components/ui/navigation-menu";
 import { usePageName } from "../../../context/PageNameContext";
@@ -8,7 +10,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../../ui/dropdown-menu";
-import useDropdownMenuElements from "./hooks/useDropdownMenuElements";
+import useDropdownMenuElements from "../../Navigation/Header/hooks/useDropdownMenuElements";
 
 const Header: FC = () => {
   const { pageName } = usePageName();
