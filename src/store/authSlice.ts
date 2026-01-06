@@ -58,6 +58,28 @@ const authSlice = createSlice({
       if (token) {
         state.token = token;
         state.loggedIn = true;
+        // Note: currentUser sera mis à jour lors de la première requête authentifiée
+      }
+    },
+    // Action pour mettre à jour le token manuellement
+    setToken: (state, action) => {
+      console.log(
+        "🔧 setToken action - payload:",
+        action.payload ? `${action.payload.substring(0, 20)}...` : "null"
+      );
+      state.token = action.payload;
+      state.loggedIn = !!action.payload;
+      console.log("🔧 setToken - state.loggedIn:", state.loggedIn);
+      console.log(
+        "🔧 setToken - state.token:",
+        state.token ? "présent" : "absent"
+      );
+      if (action.payload) {
+        localStorage.setItem("auth_token", action.payload);
+        console.log("🔧 setToken - Token stocké dans localStorage");
+      } else {
+        localStorage.removeItem("auth_token");
+        console.log("🔧 setToken - Token supprimé de localStorage");
       }
     },
   },
@@ -94,5 +116,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { restoreSession } = authSlice.actions;
+export const { restoreSession, setToken } = authSlice.actions;
 export default authSlice.reducer;

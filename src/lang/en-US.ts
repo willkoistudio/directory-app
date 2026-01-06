@@ -195,6 +195,8 @@ export default {
     success: "Login successful",
     successDescription: "You are now logged in",
     processing: "Processing your authentication...",
+    providerNotEnabled:
+      "The {{provider}} provider is not enabled in Supabase. Please enable it in the authentication settings.",
   },
   signup: {
     title: "Create an account",

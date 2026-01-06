@@ -1,6 +1,12 @@
 /** @format */
 
-import { User, USERS_MOCKS, SignupForm, AuthResponse } from "../../models/user";
+import {
+  User,
+  USERS_MOCKS,
+  SignupForm,
+  AuthResponse,
+  LoginForm,
+} from "../../models/user";
 import { ServiceAuth } from "./auth.service";
 
 export class ServiceAuthMock implements ServiceAuth {
@@ -9,19 +15,29 @@ export class ServiceAuthMock implements ServiceAuth {
     private latence = 1000
   ) {}
 
-  public async login(): Promise<AuthResponse> {
+  public async login(form: LoginForm): Promise<AuthResponse> {
     return new Promise((resolve) =>
       setTimeout(() => {
         const mockToken = "mock_token_" + Date.now();
         localStorage.setItem("auth_token", mockToken);
+
+        // Si un email est fourni (connexion sociale), créer un utilisateur avec cet email
+        const user = form?.email
+          ? {
+              ...this.user,
+              email: form.email,
+              name: form.email.split("@")[0],
+            }
+          : (this.user as User);
+
         resolve({
-          user: this.user as User,
+          user: user as User,
           session: {
             access_token: mockToken,
             refresh_token: "mock_refresh_token",
             expires_in: 3600,
             token_type: "bearer",
-            user: this.user as User,
+            user: user as User,
           },
         });
       }, this.latence)

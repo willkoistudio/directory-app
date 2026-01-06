@@ -1,52 +1,127 @@
 /** @format */
 
 import { FC, useEffect } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useAppDispatch } from "../../store/store";
-import { login } from "../../store/authSlice";
+import { setToken } from "../../store/authSlice";
 import { toast } from "../../hooks/use-toast";
 import { t } from "i18next";
 
 const AuthCallback: FC = () => {
-  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
+  const location = useLocation();
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     const handleCallback = async () => {
-      // Récupérer les paramètres de l'URL (code, access_token, etc.)
-      const code = searchParams.get("code");
-      const accessToken = searchParams.get("access_token");
-      const error = searchParams.get("error");
+      console.log("🔵 AuthCallback - Début du traitement");
+      console.log("🔵 Location:", location);
+      console.log("🔵 Hash:", location.hash);
+      console.log("🔵 Search:", location.search);
+      console.log("🔵 Full URL:", window.location.href);
 
-      if (error) {
+      try {
+        // Supabase place le token dans le hash (#access_token=...)
+        // ou dans les query params (?code=...)
+        const hash = location.hash.substring(1); // Enlever le #
+        const params = new URLSearchParams(hash);
+        const queryParams = new URLSearchParams(location.search);
+
+        console.log("🔵 Hash string:", hash);
+        console.log("🔵 Hash params:", Object.fromEntries(params.entries()));
+        console.log(
+          "🔵 Query params:",
+          Object.fromEntries(queryParams.entries())
+        );
+
+        const accessToken =
+          params.get("access_token") || queryParams.get("access_token");
+        const refreshToken =
+          params.get("refresh_token") || queryParams.get("refresh_token");
+        const error = params.get("error") || queryParams.get("error");
+        const errorDescription =
+          params.get("error_description") ||
+          queryParams.get("error_description");
+
+        console.log(
+          "🔵 Access Token:",
+          accessToken ? `${accessToken.substring(0, 20)}...` : "null"
+        );
+        console.log("🔵 Refresh Token:", refreshToken ? "présent" : "absent");
+        console.log("🔵 Error:", error);
+        console.log("🔵 Error Description:", errorDescription);
+
+        if (error) {
+          console.error("❌ Erreur dans le callback:", error, errorDescription);
+          toast({
+            variant: "destructive",
+            title: t("login.error"),
+            description: errorDescription || error,
+          });
+          navigate("/login");
+          return;
+        }
+
+        if (accessToken) {
+          console.log("✅ Token trouvé, stockage en cours...");
+
+          // Stocker le token dans localStorage
+          localStorage.setItem("auth_token", accessToken);
+          console.log("✅ Token stocké dans localStorage");
+
+          if (refreshToken) {
+            localStorage.setItem("auth_refresh_token", refreshToken);
+            console.log("✅ Refresh token stocké");
+          }
+
+          // Mettre à jour le store Redux avec le token
+          console.log("✅ Mise à jour du store Redux...");
+          dispatch(setToken(accessToken));
+          console.log("✅ Store Redux mis à jour");
+
+          // Vérifier l'état après la mise à jour
+          setTimeout(() => {
+            const storedToken = localStorage.getItem("auth_token");
+            console.log(
+              "🔍 Token dans localStorage après dispatch:",
+              storedToken ? "présent" : "absent"
+            );
+            console.log("🔍 Redirection vers /...");
+          }, 100);
+
+          toast({
+            title: t("login.success"),
+            description: t("login.successDescription"),
+          });
+
+          // Rediriger vers la page d'accueil
+          console.log("🔄 Navigation vers /...");
+          navigate("/", { replace: true });
+        } else {
+          // Pas de token, rediriger vers login
+          console.error("❌ Aucun token trouvé dans l'URL");
+          console.log("❌ Hash:", hash);
+          console.log("❌ Search:", location.search);
+          toast({
+            variant: "destructive",
+            title: t("login.error"),
+            description: "No access token received",
+          });
+          navigate("/login");
+        }
+      } catch (error) {
+        console.error("❌ Erreur dans handleCallback:", error);
         toast({
           variant: "destructive",
           title: t("login.error"),
-          description: error,
+          description: t("login.errorDescription"),
         });
-        navigate("/login");
-        return;
-      }
-
-      // Si on a un code ou un token, l'authentification a réussi
-      // Dans un vrai scénario, vous devriez échanger le code contre un token
-      // Pour l'instant, on simule une connexion réussie
-      if (code || accessToken) {
-        toast({
-          title: t("login.success"),
-          description: t("login.successDescription"),
-        });
-        // Rediriger vers la page d'accueil
-        navigate("/");
-      } else {
-        // Pas de paramètres, rediriger vers login
         navigate("/login");
       }
     };
 
     handleCallback();
-  }, [searchParams, navigate, dispatch]);
+  }, [location, navigate, dispatch]);
 
   return (
     <div className="flex items-center justify-center h-screen">

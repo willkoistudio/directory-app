@@ -106,6 +106,7 @@ const Login: FC = () => {
           backgroundImage: `url('https://picsum.photos/2000')`,
           backgroundSize: "cover",
           backgroundPosition: "center",
+          transition: "all 0.3s ease-in-out",
         }}
       >
         <img src="/logo-horizontal.svg" alt="logo" className="w-1/2 mb-8" />
@@ -164,7 +165,7 @@ const Login: FC = () => {
               {loading ? t("login.loading") : t("login.submit")}
             </Button>
 
-            <SocialAuthButtons onSuccess={() => navigate("/")} />
+            <SocialAuthButtons />
 
             <div className="text-center text-sm">
               <span>{t("login.dontHaveAccount")} </span>

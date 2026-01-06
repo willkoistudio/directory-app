@@ -196,6 +196,8 @@ export default {
     success: "Connexion réussie",
     successDescription: "Vous êtes maintenant connecté",
     processing: "Traitement de votre authentification...",
+    providerNotEnabled:
+      "Le provider {{provider}} n'est pas activé dans Supabase. Veuillez l'activer dans les paramètres d'authentification.",
   },
   signup: {
     title: "Créer un compte",

@@ -27,24 +27,40 @@ const ProtectedRoute: React.FC<{ children: React.ReactElement }> = ({
   children,
 }) => {
   const isLoggedIn = useAppSelector((state) => state.auth.loggedIn);
+  const token = useAppSelector((state) => state.auth.token);
   const location = useLocation();
 
+  console.log("🛡️ ProtectedRoute - isLoggedIn:", isLoggedIn);
+  console.log("🛡️ ProtectedRoute - token:", token ? "présent" : "absent");
+  console.log("🛡️ ProtectedRoute - location:", location.pathname);
+
   if (!isLoggedIn) {
+    console.log("❌ ProtectedRoute - Redirection vers /login");
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
+  console.log("✅ ProtectedRoute - Accès autorisé");
   return children;
 };
 
 const AppContent: React.FC = () => {
   const isLoggedIn = useAppSelector((state) => state.auth.loggedIn);
+  const token = useAppSelector((state) => state.auth.token);
   const location = useLocation();
   const isLoginPage = location.pathname === "/login";
   const isSignupPage = location.pathname === "/signup";
   const isAuthCallbackPage = location.pathname === "/auth/callback";
 
+  console.log("📱 AppContent - isLoggedIn:", isLoggedIn);
+  console.log("📱 AppContent - token:", token ? "présent" : "absent");
+  console.log("📱 AppContent - pathname:", location.pathname);
+  console.log("📱 AppContent - isLoginPage:", isLoginPage);
+  console.log("📱 AppContent - isSignupPage:", isSignupPage);
+  console.log("📱 AppContent - isAuthCallbackPage:", isAuthCallbackPage);
+
   // Si l'utilisateur est déjà connecté et essaie d'accéder à /login ou /signup, rediriger vers la home
   if (isLoggedIn && (isLoginPage || isSignupPage)) {
+    console.log("🔄 AppContent - Utilisateur connecté, redirection vers /");
     return <Navigate to="/" replace />;
   }
 
@@ -73,7 +89,7 @@ const AppContent: React.FC = () => {
             <AppSidebar />
             <div className="w-full">
               <Header />
-              <main className="container mx-auto main-app-container">
+              <main className="container mx-auto main-app-container p-6">
                 <Routes>
                   {routes.map((route, index) => (
                     <Route
