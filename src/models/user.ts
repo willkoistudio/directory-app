@@ -1,12 +1,25 @@
 /** @format */
 
 export interface User {
-  id: number;
-  name: string;
-  email: string;
-  password: string;
-  role: string;
-  language: string;
+  id: string | number;
+  email?: string;
+  name?: string;
+  password?: string; // Pour le mock uniquement
+  role?: string; // Pour le mock uniquement
+  language?: string; // Pour le mock uniquement
+  [key: string]: any; // Pour les autres propriétés de l'utilisateur Supabase
+}
+
+export interface AuthResponse {
+  user: User;
+  session: {
+    access_token: string;
+    refresh_token: string;
+    expires_in: number;
+    expires_at?: number;
+    token_type: string;
+    user: User;
+  };
 }
 
 export interface LoginForm {

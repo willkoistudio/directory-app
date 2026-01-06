@@ -1,6 +1,6 @@
 /** @format */
 
-import { User, USERS_MOCKS, SignupForm } from "../../models/user";
+import { User, USERS_MOCKS, SignupForm, AuthResponse } from "../../models/user";
 import { ServiceAuth } from "./auth.service";
 
 export class ServiceAuthMock implements ServiceAuth {
@@ -9,25 +9,46 @@ export class ServiceAuthMock implements ServiceAuth {
     private latence = 1000
   ) {}
 
-  public async login(): Promise<User> {
+  public async login(): Promise<AuthResponse> {
     return new Promise((resolve) =>
-      setTimeout(() => resolve(this.user as User), this.latence)
+      setTimeout(() => {
+        const mockToken = "mock_token_" + Date.now();
+        localStorage.setItem("auth_token", mockToken);
+        resolve({
+          user: this.user as User,
+          session: {
+            access_token: mockToken,
+            refresh_token: "mock_refresh_token",
+            expires_in: 3600,
+            token_type: "bearer",
+            user: this.user as User,
+          },
+        });
+      }, this.latence)
     );
   }
 
-  public async signup(form: SignupForm): Promise<User> {
+  public async signup(form: SignupForm): Promise<AuthResponse> {
     return new Promise((resolve) =>
       setTimeout(() => {
         const newUser: User = {
-          id: Date.now(),
+          id: String(Date.now()),
           name: form.name || form.email.split("@")[0],
           email: form.email,
-          password: form.password,
-          role: "user",
-          language: "fr",
         };
         this.user = newUser;
-        resolve(newUser);
+        const mockToken = "mock_token_" + Date.now();
+        localStorage.setItem("auth_token", mockToken);
+        resolve({
+          user: newUser,
+          session: {
+            access_token: mockToken,
+            refresh_token: "mock_refresh_token",
+            expires_in: 3600,
+            token_type: "bearer",
+            user: newUser,
+          },
+        });
       }, this.latence)
     );
   }
@@ -46,6 +67,7 @@ export class ServiceAuthMock implements ServiceAuth {
     return new Promise((resolve) =>
       setTimeout(() => {
         this.user = null;
+        localStorage.removeItem("auth_token");
         resolve();
       }, this.latence)
     );

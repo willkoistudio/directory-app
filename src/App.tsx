@@ -19,7 +19,8 @@ import { Toaster } from "./components/ui/toaster";
 import Login from "./pages/auth/Login";
 import Signup from "./pages/auth/Signup";
 import AuthCallback from "./pages/auth/AuthCallback";
-import { useAppSelector } from "./store/store";
+import { useAppSelector, useAppDispatch } from "./store/store";
+import { restoreSession } from "./store/authSlice";
 
 // Composant pour protéger les routes
 const ProtectedRoute: React.FC<{ children: React.ReactElement }> = ({
@@ -93,9 +94,13 @@ const AppContent: React.FC = () => {
 };
 
 const App: React.FC = () => {
+  const dispatch = useAppDispatch();
+
   useEffect(() => {
     document.body.classList.add("dark");
-  }, []);
+    // Restaurer la session au démarrage si un token existe
+    dispatch(restoreSession());
+  }, [dispatch]);
 
   return (
     <BrowserRouter>

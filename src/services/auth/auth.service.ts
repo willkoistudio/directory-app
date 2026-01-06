@@ -1,10 +1,10 @@
 /** @format */
 
-import { LoginForm, SignupForm, User } from "../../models/user";
+import { LoginForm, SignupForm, AuthResponse } from "../../models/user";
 
 export interface ServiceAuth {
-  login: (form: LoginForm) => Promise<User>;
-  signup: (form: SignupForm) => Promise<User>;
+  login: (form: LoginForm) => Promise<AuthResponse>;
+  signup: (form: SignupForm) => Promise<AuthResponse>;
   getSocialAuthUrl: (
     provider: "google" | "github" | "facebook"
   ) => Promise<{ url: string }>;
