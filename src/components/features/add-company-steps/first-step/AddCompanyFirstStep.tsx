@@ -1,3 +1,5 @@
+/** @format */
+
 import { ChangeEvent, FC, useState } from "react";
 import { Card } from "../../../ui/card";
 import { CircleX, ImageUp } from "lucide-react";
@@ -5,6 +7,7 @@ import { Input } from "../../../ui/input";
 import { UseFormReturn } from "react-hook-form";
 import { AddCompanyFormSchema } from "../../../../pages/add-company/hooks/useAddCompanyForm";
 import { t } from "i18next";
+import { PLACEHOLDER_IMAGE_URL } from "../../../../const/common";
 
 const AddCompanyFirstStep: FC<UseFormReturn<AddCompanyFormSchema>> = ({
   getValues,
@@ -36,12 +39,12 @@ const AddCompanyFirstStep: FC<UseFormReturn<AddCompanyFormSchema>> = ({
   const removeFileHandler = () => {
     setValue("logo", "");
     setValue("logoFile", undefined);
-    setLogo("https://via.placeholder.com/350");
+    setLogo(PLACEHOLDER_IMAGE_URL);
     trigger("logo");
   };
   return (
     <>
-      <section className="pb-12 px-8">
+      <section className="pb-12 px-8 flex items-center justify-center flex-1">
         <Card className="border-0 relative w-[350px] mx-auto mb-12 mt-12">
           <CircleX
             className="absolute top-4 right-4 cursor-pointer"
@@ -56,14 +59,14 @@ const AddCompanyFirstStep: FC<UseFormReturn<AddCompanyFormSchema>> = ({
             />
           ) : (
             <img
-              src="https://via.placeholder.com/350"
+              src={PLACEHOLDER_IMAGE_URL}
               alt="image"
               width={350}
               className="mx-auto rounded-lg"
             />
           )}
         </Card>
-        <Card className="text-center border-2 border-dashed py-12 px-8 w-1/2 mx-auto relative">
+        <Card className="text-center border-2 border-dashed py-12 px-8 w-1/2 h-[250px] mx-auto relative">
           <ImageUp className="mx-auto h-12 w-12" />
           <p className="text-xl my-4 font-bold">
             {t("addCompany.step1.importLogo")}{" "}

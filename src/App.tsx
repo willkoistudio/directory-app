@@ -87,9 +87,9 @@ const AppContent: React.FC = () => {
         <PageNameProvider>
           <CscProvider>
             <AppSidebar />
-            <div className="w-full">
+            <div className="w-full flex flex-col">
               <Header />
-              <main className="container mx-auto main-app-container p-6">
+              <main className="container mx-auto main-app-container p-6 flex-1 flex flex-col">
                 <Routes>
                   {routes.map((route, index) => (
                     <Route

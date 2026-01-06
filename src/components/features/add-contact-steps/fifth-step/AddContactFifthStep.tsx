@@ -1,3 +1,5 @@
+/** @format */
+
 import { FC, useEffect, useState } from "react";
 import { Label } from "../../../ui/label";
 import { Button } from "../../../ui/button";
@@ -8,6 +10,7 @@ import { Card } from "../../../ui/card";
 import { Company } from "../../../../models/company";
 import { CSC_City, CSC_Country, CSC_State } from "../../../../models/location";
 import { t } from "i18next";
+import { PLACEHOLDER_IMAGE_URL } from "../../../../const/common";
 
 interface AddContactFifthStepProps extends UseFormReturn<AddContactFormSchema> {
   companies: Company[];
@@ -83,7 +86,7 @@ const AddContactFifthStep: FC<AddContactFifthStepProps> = ({
             className="h-[350px] w-[350px] bg-cover bg-center rounded-full flex items-center justify-center"
             style={{
               backgroundImage: `url(${
-                getValues("avatar") || "https://via.placeholder.com/350"
+                getValues("avatar") || PLACEHOLDER_IMAGE_URL
               })`,
             }}
           >

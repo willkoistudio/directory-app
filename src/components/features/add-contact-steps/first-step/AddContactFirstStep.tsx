@@ -1,3 +1,5 @@
+/** @format */
+
 import { ChangeEvent, FC, useState } from "react";
 import { Card } from "../../../ui/card";
 import { CircleX, ImageUp } from "lucide-react";
@@ -5,6 +7,7 @@ import { Input } from "../../../ui/input";
 import { UseFormReturn } from "react-hook-form";
 import { AddContactFormSchema } from "../../../../pages/add-contact/hooks/useAddContactForm";
 import { t } from "i18next";
+import { PLACEHOLDER_IMAGE_URL } from "../../../../const/common";
 
 const AddContactFirstStep: FC<UseFormReturn<AddContactFormSchema>> = ({
   getValues,
@@ -36,7 +39,7 @@ const AddContactFirstStep: FC<UseFormReturn<AddContactFormSchema>> = ({
   const removeFileHandler = () => {
     setValue("avatar", "");
     setValue("avatarFile", undefined);
-    setAvatar("https://via.placeholder.com/350");
+    setAvatar(PLACEHOLDER_IMAGE_URL);
     trigger("avatar");
   };
 
@@ -57,7 +60,7 @@ const AddContactFirstStep: FC<UseFormReturn<AddContactFormSchema>> = ({
             />
           ) : (
             <img
-              src="https://via.placeholder.com/350"
+              src={PLACEHOLDER_IMAGE_URL}
               alt="image"
               width={350}
               className="mx-auto rounded-lg"

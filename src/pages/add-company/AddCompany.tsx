@@ -1,3 +1,5 @@
+/** @format */
+
 import React, { FC, useEffect, useState } from "react";
 import { usePageName } from "../../context/PageNameContext";
 import { ROUTE_NAMES } from "../../const/routes";
@@ -19,7 +21,6 @@ import { addCompany, getCompanyDetail } from "../../store/companySlice";
 import { FieldErrors } from "react-hook-form";
 import { Skeleton } from "../../components/ui/skeleton";
 import styles from "../add-contact/AddContact.module.scss";
-import { useTranslation } from "react-i18next";
 import { t } from "i18next";
 
 const AddCompany: FC = () => {
@@ -282,7 +283,10 @@ const AddCompany: FC = () => {
             </div>
           </nav>
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit, onFormError)}>
+            <form
+              onSubmit={form.handleSubmit(onSubmit, onFormError)}
+              className="flex flex-1 flex-col"
+            >
               {dispatchCurrentStep(currentStep, {
                 states,
                 cities,

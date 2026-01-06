@@ -1,3 +1,5 @@
+/** @format */
+
 import { FC, useEffect, useState } from "react";
 import { Label } from "../../../ui/label";
 import { Button } from "../../../ui/button";
@@ -7,6 +9,7 @@ import { Card } from "../../../ui/card";
 import { CSC_City, CSC_Country, CSC_State } from "../../../../models/location";
 import { AddCompanyFormSchema } from "../../../../pages/add-company/hooks/useAddCompanyForm";
 import { t } from "i18next";
+import { PLACEHOLDER_IMAGE_URL } from "../../../../const/common";
 
 interface AddCompanyThirdStepProps extends UseFormReturn<AddCompanyFormSchema> {
   onSubmit: () => void;
@@ -68,7 +71,7 @@ const AddCompanyThirdStep: FC<AddCompanyThirdStepProps> = ({
             className="h-[350px] w-[350px] bg-cover bg-center rounded-full flex items-center justify-center"
             style={{
               backgroundImage: `url(${
-                getValues("logo") || "https://via.placeholder.com/350"
+                getValues("logo") || PLACEHOLDER_IMAGE_URL
               })`,
             }}
           >
