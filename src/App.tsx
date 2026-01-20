@@ -113,7 +113,10 @@ const App: React.FC = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    document.body.classList.add("dark");
+    // Charger le thème sauvegardé ou utiliser dark par défaut
+    const savedTheme = localStorage.getItem('app-theme') || 'dark';
+    document.body.classList.add(savedTheme);
+
     // Restaurer la session au démarrage si un token existe
     dispatch(restoreSession());
   }, [dispatch]);

@@ -184,8 +184,6 @@ const Signup: FC = () => {
               {loading ? t("signup.loading") : t("signup.submit")}
             </Button>
 
-            <SocialAuthButtons onSuccess={() => navigate("/")} />
-
             <div className="text-center text-sm">
               <span>{t("signup.alreadyHaveAccount")} </span>
               <Link to="/login" className="text-red hover:underline">
@@ -194,6 +192,10 @@ const Signup: FC = () => {
             </div>
           </form>
         </Form>
+
+        <div className="w-full max-w-md mt-6">
+          <SocialAuthButtons />
+        </div>
       </div>
     </div>
   );

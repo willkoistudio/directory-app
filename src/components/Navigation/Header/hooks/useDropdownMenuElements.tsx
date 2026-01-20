@@ -10,7 +10,10 @@ import { useTranslation } from "react-i18next";
 
 const useDropdownMenuElements = () => {
   const [currentLanguage, setCurrentLanguage] = useState(i18n.language);
-  const [currentTheme, setCurrentTheme] = useState(APP_THEME.DARK);
+  const [currentTheme, setCurrentTheme] = useState(() => {
+    const savedTheme = localStorage.getItem('app-theme');
+    return (savedTheme as APP_THEME) || APP_THEME.DARK;
+  });
   const themes = [APP_THEME.LIGHT, APP_THEME.DARK];
   const { t } = useTranslation();
 
@@ -21,14 +24,16 @@ const useDropdownMenuElements = () => {
 
   const changeTheme = (theme: APP_THEME) => {
     if (theme === APP_THEME.LIGHT) {
-      document.documentElement.classList.remove("dark");
-      document.documentElement.classList.add("light");
+      document.body.classList.remove("dark");
+      document.body.classList.add("light");
       setCurrentTheme(APP_THEME.LIGHT);
+      localStorage.setItem('app-theme', APP_THEME.LIGHT);
       return;
     }
-    document.documentElement.classList.remove("light");
-    document.documentElement.classList.add("dark");
+    document.body.classList.remove("light");
+    document.body.classList.add("dark");
     setCurrentTheme(APP_THEME.DARK);
+    localStorage.setItem('app-theme', APP_THEME.DARK);
   };
 
   return useMemo(
@@ -71,7 +76,7 @@ const useDropdownMenuElements = () => {
         ),
       },
     ],
-    [currentLanguage, changeLanguage]
+    [currentLanguage, currentTheme]
   );
 };
 

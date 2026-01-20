@@ -165,8 +165,6 @@ const Login: FC = () => {
               {loading ? t("login.loading") : t("login.submit")}
             </Button>
 
-            <SocialAuthButtons />
-
             <div className="text-center text-sm">
               <span>{t("login.dontHaveAccount")} </span>
               <Link to="/signup" className="text-red hover:underline">
@@ -175,6 +173,10 @@ const Login: FC = () => {
             </div>
           </form>
         </Form>
+
+        <div className="w-full max-w-md mt-6">
+          <SocialAuthButtons />
+        </div>
       </div>
     </div>
   );
