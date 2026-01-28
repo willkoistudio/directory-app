@@ -3,25 +3,25 @@ import {
   COMPANIES_MOCKS,
   Company,
   CompanyData,
-} from "../../models/company";
+} from "../../models/Company";
 import { ServiceCompany } from "./company.service";
 
 export class ServiceCompanyMock implements ServiceCompany {
   public constructor(
     private companies: Company[] = COMPANIES_MOCKS,
     private companiesData: CompanyData[] = COMPANIES_DATA_MOCKS,
-    private latence = 1000
+    private latence = 1000,
   ) {}
 
   public async getCompanies(): Promise<Company[]> {
     return new Promise((resolve) =>
-      setTimeout(() => resolve(this.companies), this.latence)
+      setTimeout(() => resolve(this.companies), this.latence),
     );
   }
 
   public async getCompanyDetail(id: string): Promise<CompanyData> {
     return new Promise((resolve) =>
-      setTimeout(() => resolve(this.companiesData[0]), this.latence)
+      setTimeout(() => resolve(this.companiesData[0]), this.latence),
     );
   }
 
@@ -29,7 +29,7 @@ export class ServiceCompanyMock implements ServiceCompany {
     return new Promise((resolve) =>
       setTimeout(() => {
         resolve();
-      }, this.latence)
+      }, this.latence),
     );
   }
 
@@ -37,10 +37,10 @@ export class ServiceCompanyMock implements ServiceCompany {
     return new Promise((resolve) =>
       setTimeout(() => {
         this.companies = this.companies.map((c) =>
-          c.id === contact.id ? contact : c
+          c.id === contact.id ? contact : c,
         );
         resolve();
-      }, this.latence)
+      }, this.latence),
     );
   }
 
@@ -49,7 +49,7 @@ export class ServiceCompanyMock implements ServiceCompany {
       setTimeout(() => {
         this.companies = this.companies.filter((c) => c.id !== id);
         resolve();
-      }, this.latence)
+      }, this.latence),
     );
   }
 }

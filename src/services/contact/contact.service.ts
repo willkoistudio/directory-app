@@ -1,4 +1,4 @@
-import { Contact, ContactData } from "../../models/contact";
+import { Contact, ContactData } from "../../models/Contact";
 
 export interface ServiceContact {
   getContacts: () => Promise<Contact[]>;

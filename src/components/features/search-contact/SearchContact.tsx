@@ -1,7 +1,7 @@
 /** @format */
 
 import { FC, useEffect, useState } from "react";
-import { Contact } from "../../../models/contact";
+import { Contact } from "../../../models/Contact";
 import { Filter } from "lucide-react";
 import {
   ColumnFiltersState,
@@ -52,7 +52,7 @@ import { removeContact } from "../../../store/contactSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 import { getCompanies } from "../../../store/companySlice";
-import { Company } from "../../../models/company";
+import { Company } from "../../../models/Company";
 import { useTranslation } from "react-i18next";
 import Autocomplete from "../../ui/autocomplete/Autocomplete";
 
@@ -225,7 +225,7 @@ const SearchContact: FC<SearchContactProps> = ({ contacts, loading }) => {
                             ? null
                             : flexRender(
                                 header.column.columnDef.header,
-                                header.getContext()
+                                header.getContext(),
                               )}
                         </TableHead>
                       );
@@ -245,7 +245,7 @@ const SearchContact: FC<SearchContactProps> = ({ contacts, loading }) => {
                         <TableCell key={cell.id}>
                           {flexRender(
                             cell.column.columnDef.cell,
-                            cell.getContext()
+                            cell.getContext(),
                           )}
                         </TableCell>
                       ))}
@@ -282,7 +282,7 @@ const SearchContact: FC<SearchContactProps> = ({ contacts, loading }) => {
                   removeContact(
                     table
                       .getSelectedRowModel()
-                      .rows.map((contact: Row<Contact>) => contact.id)
+                      .rows.map((contact: Row<Contact>) => contact.id),
                   )
                 }
               >

@@ -2,7 +2,7 @@
 
 import apiClient from "../../lib/axios";
 import { ServiceContact } from "./contact.service";
-import { Contact, ContactData } from "../../models/contact";
+import { Contact, ContactData } from "../../models/Contact";
 
 export class ServiceContactHttp implements ServiceContact {
   public async getContacts(): Promise<Contact[]> {
@@ -36,7 +36,7 @@ export class ServiceContactHttp implements ServiceContact {
     try {
       const { data } = await apiClient.put<void>(
         `contacts/${contact.id}`,
-        contact
+        contact,
       );
       return data;
     } catch (erreur) {

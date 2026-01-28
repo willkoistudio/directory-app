@@ -1,6 +1,6 @@
 import { FC, useState } from "react";
 import { Input } from "../../../ui/input";
-import { Company } from "../../../../models/company";
+import { Company } from "../../../../models/Company";
 import { ControllerRenderProps, UseFormReturn } from "react-hook-form";
 import { AddContactFormSchema } from "../../../../pages/add-contact/hooks/useAddContactForm";
 import { fieldsData } from "./AddContactSecondStep.data";
@@ -31,8 +31,7 @@ interface AddContactSecondStepForm {
   };
 }
 
-interface AddContactSecondStepProps
-  extends UseFormReturn<AddContactFormSchema> {
+interface AddContactSecondStepProps extends UseFormReturn<AddContactFormSchema> {
   companies: Company[];
   cities: CSC_City[];
   countries: CSC_Country[];
@@ -71,7 +70,7 @@ const AddContactSecondStep: FC<AddContactSecondStepProps> = ({
 
   const onFormChange = (
     value: string,
-    field: ControllerRenderProps<AddContactFormSchema>
+    field: ControllerRenderProps<AddContactFormSchema>,
   ) => {
     setFormLocal((prev) => {
       if (field.name.startsWith("address.")) {
@@ -230,7 +229,7 @@ const AddContactSecondStep: FC<AddContactSecondStepProps> = ({
               </FormItem>
             )}
           />
-        )
+        ),
       )}
     </section>
   );

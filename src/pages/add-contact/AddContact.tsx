@@ -18,8 +18,8 @@ import { getCompanies } from "../../store/companySlice";
 import { addContact } from "../../store/contactSlice";
 import { FieldErrors } from "react-hook-form";
 import { useToast } from "../../hooks/use-toast";
-import { ContactData } from "../../models/contact";
-import { Company } from "../../models/company";
+import { ContactData } from "../../models/Contact";
+import { Company } from "../../models/Company";
 import { Skeleton } from "../../components/ui/skeleton";
 import { FormStep } from "../../models/form";
 import styles from "./AddContact.module.scss";
@@ -82,7 +82,7 @@ const AddContact: FC = () => {
       await dispatch(getCompanies() as any);
       if (id) {
         const { payload: contactDetail } = await dispatch(
-          getContactDetail(id) as any
+          getContactDetail(id) as any,
         );
         if (contactDetail) {
           form.setValue("name", contactDetail.name);
@@ -118,7 +118,7 @@ const AddContact: FC = () => {
         avatar: String(values.avatar),
         company:
           companies.find(
-            (company) => company.id === String(values.companyId)
+            (company) => company.id === String(values.companyId),
           ) ?? ({} as Company),
         function: String(values.function),
         email: String(values.email),
@@ -154,7 +154,7 @@ const AddContact: FC = () => {
     // Recursive function to collect error messages with their keys
     const collectErrorMessages = (
       fieldErrors: FieldErrors<AddContactFormSchema>,
-      parentKey = ""
+      parentKey = "",
     ): { field: string; message: string }[] => {
       const messages: { field: string; message: string }[] = [];
 
@@ -168,7 +168,7 @@ const AddContact: FC = () => {
           } else {
             // Recurse for nested errors
             messages.push(
-              ...collectErrorMessages(value as FieldErrors<any>, fieldPath)
+              ...collectErrorMessages(value as FieldErrors<any>, fieldPath),
             );
           }
         }
@@ -252,7 +252,7 @@ const AddContact: FC = () => {
   const handleNextStep = async () => {
     if (await isCurrentStepValid(currentStep)) {
       const currentAddStep = addContactSteps.find(
-        (step) => step.stepNumber === currentStep
+        (step) => step.stepNumber === currentStep,
       );
       setCurrentStep(currentStep + 1);
       if (currentAddStep) {
@@ -260,8 +260,8 @@ const AddContact: FC = () => {
           prevSteps.map((step) =>
             step.stepNumber === currentStep
               ? { ...step, isCompleted: true }
-              : step
-          )
+              : step,
+          ),
         );
       }
       return;

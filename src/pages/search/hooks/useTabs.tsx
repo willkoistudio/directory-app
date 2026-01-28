@@ -3,8 +3,8 @@ import { APP_CONTEXT } from "../../../const/features";
 import { Building2, UserRoundSearch } from "lucide-react";
 import { SearchContact } from "../../../components/features/search-contact/SearchContact";
 import { SearchCompany } from "../../../components/features/search-company/SearchCompany";
-import { Contact } from "../../../models/contact";
-import { Company } from "../../../models/company";
+import { Contact } from "../../../models/Contact";
+import { Company } from "../../../models/Company";
 
 const useTabs = (
   fetchContacts: Function,
@@ -12,7 +12,7 @@ const useTabs = (
   contacts: Contact[],
   companies: Company[],
   loading: boolean,
-  removeContact: Function
+  removeContact: Function,
 ) => {
   const tabs = [
     {

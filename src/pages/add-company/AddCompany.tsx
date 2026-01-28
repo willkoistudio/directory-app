@@ -16,7 +16,7 @@ import {
 import { useCountryStateCity } from "../../context/CountryStateCityContext";
 import { useParams } from "react-router-dom";
 import { useToast } from "../../hooks/use-toast";
-import { CompanyData } from "../../models/company";
+import { CompanyData } from "../../models/Company";
 import { addCompany, getCompanyDetail } from "../../store/companySlice";
 import { FieldErrors } from "react-hook-form";
 import { Skeleton } from "../../components/ui/skeleton";
@@ -68,7 +68,7 @@ const AddCompany: FC = () => {
       await fetchCountries();
       if (id) {
         const { payload: companyDetail } = await dispatch(
-          getCompanyDetail(id) as any
+          getCompanyDetail(id) as any,
         );
         if (companyDetail) {
           form.setValue("name", companyDetail.name);
@@ -128,7 +128,7 @@ const AddCompany: FC = () => {
     // Recursive function to collect error messages with their keys
     const collectErrorMessages = (
       fieldErrors: FieldErrors<AddCompanyFormSchema>,
-      parentKey = ""
+      parentKey = "",
     ): { field: string; message: string }[] => {
       const messages: { field: string; message: string }[] = [];
 
@@ -142,7 +142,7 @@ const AddCompany: FC = () => {
           } else {
             // Recurse for nested errors
             messages.push(
-              ...collectErrorMessages(value as FieldErrors<any>, fieldPath)
+              ...collectErrorMessages(value as FieldErrors<any>, fieldPath),
             );
           }
         }
@@ -213,7 +213,7 @@ const AddCompany: FC = () => {
   const handleNextStep = async () => {
     if (await isCurrentStepValid(currentStep)) {
       const currentAddStep = addCompanySteps.find(
-        (step) => step.stepNumber === currentStep
+        (step) => step.stepNumber === currentStep,
       );
       setCurrentStep(currentStep + 1);
       if (currentAddStep) {
@@ -221,8 +221,8 @@ const AddCompany: FC = () => {
           prevSteps.map((step) =>
             step.stepNumber === currentStep
               ? { ...step, isCompleted: true }
-              : step
-          )
+              : step,
+          ),
         );
       }
       return;

@@ -1,4 +1,4 @@
-import { Company, CompanyData } from "../../models/company";
+import { Company, CompanyData } from "../../models/Company";
 
 export interface ServiceCompany {
   getCompanies: () => Promise<Company[]>;

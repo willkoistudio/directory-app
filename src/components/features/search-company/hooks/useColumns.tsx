@@ -9,7 +9,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "../../../ui/dropdown-menu";
-import { Company } from "../../../../models/company";
+import { Company } from "../../../../models/Company";
 import { t } from "i18next";
 
 export default function useColomns() {

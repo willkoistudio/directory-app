@@ -7,7 +7,7 @@ import { Save } from "lucide-react";
 import { UseFormReturn } from "react-hook-form";
 import { AddContactFormSchema } from "../../../../pages/add-contact/hooks/useAddContactForm";
 import { Card } from "../../../ui/card";
-import { Company } from "../../../../models/company";
+import { Company } from "../../../../models/Company";
 import { CSC_City, CSC_Country, CSC_State } from "../../../../models/location";
 import { t } from "i18next";
 import { PLACEHOLDER_IMAGE_URL } from "../../../../const/common";
@@ -35,28 +35,29 @@ const AddContactFifthStep: FC<AddContactFifthStepProps> = ({
 
   const getCompanyName = () => {
     const company = companies.find(
-      (company) => company.id === getValues("companyId")
+      (company) => company.id === getValues("companyId"),
     );
     setCompanyName(company?.name ?? "");
   };
 
   const getCountryName = () => {
     const country = countries.find(
-      (country) => String(country.id) === String(getValues("address.countryId"))
+      (country) =>
+        String(country.id) === String(getValues("address.countryId")),
     );
     setCountryName(country?.name ?? "");
   };
 
   const getStateName = () => {
     const state = states.find(
-      (state) => String(state.id) === String(getValues("address.stateId"))
+      (state) => String(state.id) === String(getValues("address.stateId")),
     );
     setStateName(state?.name ?? "");
   };
 
   const getCityName = () => {
     const city = cities.find(
-      (city) => String(city.id) === String(getValues("address.cityId"))
+      (city) => String(city.id) === String(getValues("address.cityId")),
     );
     setCityName(city?.name ?? "");
   };

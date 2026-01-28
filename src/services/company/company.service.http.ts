@@ -2,7 +2,7 @@
 
 import apiClient from "../../lib/axios";
 import { ServiceCompany } from "./company.service";
-import { Company, CompanyData } from "../../models/company";
+import { Company, CompanyData } from "../../models/Company";
 
 export class ServiceCompanyHttp implements ServiceCompany {
   public async getCompanies(): Promise<Company[]> {
@@ -36,7 +36,7 @@ export class ServiceCompanyHttp implements ServiceCompany {
     try {
       const { data } = await apiClient.put<void>(
         `companies/${company.id}`,
-        company
+        company,
       );
       return data;
     } catch (erreur) {

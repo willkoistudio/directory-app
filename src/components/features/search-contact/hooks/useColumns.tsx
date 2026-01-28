@@ -1,5 +1,5 @@
 import { ColumnDef } from "@tanstack/react-table";
-import { Contact } from "../../../../models/contact";
+import { Contact } from "../../../../models/Contact";
 import { Checkbox } from "../../../ui/checkbox";
 import { Avatar, AvatarFallback, AvatarImage } from "../../../ui/avatar";
 import { Button } from "../../../ui/button";
@@ -10,7 +10,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "../../../ui/dropdown-menu";
-import { Company } from "../../../../models/company";
+import { Company } from "../../../../models/Company";
 import { t } from "i18next";
 
 export default function useColomns(companies: Company[]) {
@@ -115,7 +115,7 @@ export default function useColomns(companies: Company[]) {
       },
       cell: ({ row }) => {
         const companyName = companies.find(
-          (company) => company.id === row.getValue("companyId")
+          (company) => company.id === row.getValue("companyId"),
         )?.name;
         return <div className="lowercase">{companyName}</div>;
       },

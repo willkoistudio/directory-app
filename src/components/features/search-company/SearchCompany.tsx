@@ -32,7 +32,7 @@ import {
 } from "../../../components/ui/drawer";
 import { Label } from "../../../components/ui/label";
 import { FC, useState } from "react";
-import { Company } from "../../../models/company";
+import { Company } from "../../../models/Company";
 import { Skeleton } from "../../../components/ui/skeleton";
 import useColumns from "./hooks/useColumns";
 import { useTranslation } from "react-i18next";
@@ -165,7 +165,7 @@ const SearchCompany: FC<SearchContactProps> = ({ companies, loading }) => {
                             ? null
                             : flexRender(
                                 header.column.columnDef.header,
-                                header.getContext()
+                                header.getContext(),
                               )}
                         </TableHead>
                       );
@@ -185,7 +185,7 @@ const SearchCompany: FC<SearchContactProps> = ({ companies, loading }) => {
                         <TableCell key={cell.id}>
                           {flexRender(
                             cell.column.columnDef.cell,
-                            cell.getContext()
+                            cell.getContext(),
                           )}
                         </TableCell>
                       ))}
