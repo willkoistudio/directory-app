@@ -1,5 +1,5 @@
-import { Address, ADDRESS_MOCKS } from "./address";
-import { COMPANIES_MOCKS, Company } from "./company";
+import { Address, ADDRESS_MOCKS } from "./Address";
+import { COMPANIES_MOCKS, Company } from "./Company";
 
 export interface Contact {
   id: string;

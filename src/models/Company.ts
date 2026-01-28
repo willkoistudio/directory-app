@@ -1,4 +1,4 @@
-import { Address, ADDRESS_MOCKS } from "./address";
+import { Address, ADDRESS_MOCKS } from "./Address";
 
 export interface Company {
   id: string;
