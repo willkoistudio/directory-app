@@ -31,11 +31,13 @@ const AuthCallback: FC = () => {
         console.log("🔵 Hash params:", Object.fromEntries(params.entries()));
         console.log(
           "🔵 Query params:",
-          Object.fromEntries(queryParams.entries())
+          Object.fromEntries(queryParams.entries()),
         );
 
         const accessToken =
-          params.get("access_token") || queryParams.get("access_token");
+          params.get("access_token") ||
+          queryParams.get("access_token") ||
+          queryParams.get("token");
         const refreshToken =
           params.get("refresh_token") || queryParams.get("refresh_token");
         const error = params.get("error") || queryParams.get("error");
@@ -45,7 +47,7 @@ const AuthCallback: FC = () => {
 
         console.log(
           "🔵 Access Token:",
-          accessToken ? `${accessToken.substring(0, 20)}...` : "null"
+          accessToken ? `${accessToken.substring(0, 20)}...` : "null",
         );
         console.log("🔵 Refresh Token:", refreshToken ? "présent" : "absent");
         console.log("🔵 Error:", error);
@@ -84,7 +86,7 @@ const AuthCallback: FC = () => {
             const storedToken = localStorage.getItem("auth_token");
             console.log(
               "🔍 Token dans localStorage après dispatch:",
-              storedToken ? "présent" : "absent"
+              storedToken ? "présent" : "absent",
             );
             console.log("🔍 Redirection vers /...");
           }, 100);
