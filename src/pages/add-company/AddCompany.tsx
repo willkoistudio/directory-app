@@ -65,7 +65,7 @@ const AddCompany: FC = () => {
   const fetchRessources = async () => {
     setLoading(true);
     try {
-      await fetchCountries();
+      const countriesData = await fetchCountries();
       if (id) {
         const { payload: companyDetail } = await dispatch(
           getCompanyDetail(id) as any,
@@ -80,9 +80,24 @@ const AddCompany: FC = () => {
           form.setValue("area", companyDetail.area);
           form.setValue("address.street", companyDetail.address.street);
           form.setValue("address.countryId", companyDetail.address.countryId);
-          form.setValue("address.cityId", companyDetail.address.cityID);
           form.setValue("address.postalCode", companyDetail.address.postalCode);
           form.setValue("address.stateId", companyDetail.address.stateId);
+          form.setValue("address.cityId", companyDetail.address.cityId);
+
+          // Load states for edit mode
+          const country = countriesData.find(
+            (c) => String(c.id) === String(companyDetail.address.countryId)
+          );
+          if (country) {
+            const statesData = await selectCountry(country.iso2);
+            // Load cities for edit mode
+            const state = statesData.find(
+              (s) => String(s.id) === String(companyDetail.address.stateId)
+            );
+            if (state) {
+              await getCities(state.iso2);
+            }
+          }
         }
       }
     } catch (error) {
@@ -110,8 +125,6 @@ const AddCompany: FC = () => {
           stateId: String(values.address.stateId),
           countryId: String(values.address.countryId),
         },
-
-        createdAt: new Date().toISOString(),
       };
       try {
         setLoading(true);

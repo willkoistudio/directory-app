@@ -18,6 +18,9 @@ export default {
       advancedSearchDescription:
         "Set the filters you want to apply to the search.",
       name: "Name",
+      email: "Email",
+      phone: "Phone",
+      creationDate: "Creation date",
       city: "City",
       function: "Function",
       postalCode: "Postal code",
@@ -145,6 +148,12 @@ export default {
       website: "Website",
       country: "Country",
       selectCountry: "Select a country",
+      area: "Area",
+      state: "State / Province",
+      city: "City",
+      postalCode: "Postal code",
+      street: "Street",
+      notes:  "Notes",
     },
     step3: {
       saveCompany: "Save company",

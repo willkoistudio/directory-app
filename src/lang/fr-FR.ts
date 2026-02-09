@@ -18,6 +18,9 @@ export default {
       advancedSearchDescription:
         "Définir les filtres que vous souhaitez appliquer à la recherche.",
       name: "Nom",
+      email: "Email",
+      phone: "Téléphone",
+      creationDate: "Date de création",
       city: "Ville",
       function: "Fonction",
       postalCode: "Code postal",
@@ -146,6 +149,12 @@ export default {
       website: "Site web",
       country: "Pays",
       selectCountry: "Sélectionner un pays",
+      area: "Zone d'activité",
+      state: "État / Province",
+      city: "Ville",
+      postalCode: "Code postal",
+      street: "Rue",
+      notes:  "Notes",
     },
     step3: {
       saveCompany: "Enregistrer l'entreprise",

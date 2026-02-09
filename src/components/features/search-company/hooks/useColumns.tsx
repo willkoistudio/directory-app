@@ -11,6 +11,7 @@ import {
 } from "../../../ui/dropdown-menu";
 import { Company } from "../../../../models/Company";
 import { t } from "i18next";
+import { formatDate } from "../../../../lib/utils";
 
 export default function useColomns() {
   const columns: ColumnDef<Company>[] = [
@@ -106,7 +107,7 @@ export default function useColomns() {
         );
       },
       cell: ({ row }) => (
-        <div className="capitalize">{row.getValue("createdAt")}</div>
+        <div className="capitalize">{formatDate(row.getValue("createdAt"))}</div>
       ),
     },
     {
@@ -127,7 +128,7 @@ export default function useColomns() {
               <DropdownMenuItem
                 className="cursor-pointer hover:bg-white/5"
                 onClick={() =>
-                  (window.location.href = `/company-detail/${company.id}`)
+                  (window.location.href = `/company/${company.id}`)
                 }
               >
                 {t("search.company.viewCompanyDetails")}

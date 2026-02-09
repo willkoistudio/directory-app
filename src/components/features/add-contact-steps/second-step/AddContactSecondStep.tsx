@@ -92,10 +92,10 @@ const AddContactSecondStep: FC<AddContactSecondStepProps> = ({
     field.onChange(value);
     trigger(field.name);
     if (field.name === "address.countryId") {
-      const country = countries.find((c) => c.id === Number(value));
+      const country = countries.find((c) => String(c.id) === String(value));
       if (country) selectCountry(country.iso2);
     } else if (field.name === "address.stateId") {
-      const state = states.find((s) => s.id === Number(value));
+      const state = states.find((s) => String(s.id) === String(value));
       if (state) getCities(state.iso2);
     }
   };

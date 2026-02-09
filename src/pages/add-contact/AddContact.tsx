@@ -78,7 +78,7 @@ const AddContact: FC = () => {
   const fetchRessources = async () => {
     setLoading(true);
     try {
-      await fetchCountries();
+      const countriesData = await fetchCountries();
       await dispatch(getCompanies() as any);
       if (id) {
         const { payload: contactDetail } = await dispatch(
@@ -98,9 +98,24 @@ const AddContact: FC = () => {
           form.setValue("keywords", contactDetail.keywords);
           form.setValue("address.street", contactDetail.address.street);
           form.setValue("address.countryId", contactDetail.address.countryId);
-          form.setValue("address.cityId", contactDetail.address.cityID);
+          form.setValue("address.cityId", contactDetail.address.cityId);
           form.setValue("address.postalCode", contactDetail.address.postalCode);
           form.setValue("address.stateId", contactDetail.address.stateId);
+
+          // Load states for edit mode
+          const country = countriesData.find(
+            (c) => String(c.id) === String(contactDetail.address.countryId)
+          );
+          if (country) {
+            const statesData = await selectCountry(country.iso2);
+            // Load cities for edit mode
+            const state = statesData.find(
+              (s) => String(s.id) === String(contactDetail.address.stateId)
+            );
+            if (state) {
+              await getCities(state.iso2);
+            }
+          }
         }
       }
     } catch (error) {
@@ -137,7 +152,6 @@ const AddContact: FC = () => {
         keywords: Array.isArray(values.keywords)
           ? (values.keywords as string[])
           : [],
-        createdAt: new Date().toISOString(),
       };
       try {
         setLoading(true);

@@ -11,6 +11,8 @@ import { useCountryStateCity } from "../../context/CountryStateCityContext";
 import { getCompanyDetail } from "../../store/companySlice";
 import { Skeleton } from "../../components/ui/skeleton";
 import { useTranslation } from "react-i18next";
+import { formatDate } from "../../lib/utils";
+import styles from "./CompanyDetail.module.scss";
 
 const CompanyDetail: React.FC = () => {
   const { setPageName } = usePageName();
@@ -106,7 +108,7 @@ const CompanyDetail: React.FC = () => {
             <div className="flex gap-4 mt-8">
               <div className="border-r border-gray pr-4">
                 <p>{t("companyDetail.website")}</p>
-                <p className="text-gray">{companyDetail?.website}</p>
+                <p className={`text-gray ${styles.companyWebsite}`}><a href={companyDetail?.website} target="_blank" rel="noopener noreferrer">{companyDetail?.website}</a></p>
               </div>
               <div className="border-r border-gray pr-4">
                 <p>{t("companyDetail.country")}</p>
@@ -117,13 +119,13 @@ const CompanyDetail: React.FC = () => {
               </div>
               <div>
                 <p>{t("companyDetail.dateCreated")}</p>
-                <p className="text-gray">{companyDetail?.createdAt}</p>
+                <p className="text-gray">{formatDate(companyDetail?.createdAt)}</p>
               </div>
             </div>
             {companyDetail?.updatedAt && (
               <div className="flex mt-8">
                 <p className="ml-auto mr-0 text-sm text-gray">
-                  {t("companyDetail.updated")} {companyDetail?.updatedAt}
+                  {t("companyDetail.updated")} {formatDate(companyDetail?.updatedAt)}
                 </p>
               </div>
             )}

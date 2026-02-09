@@ -1,16 +1,15 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useState } from "react";
 import { ServiceLocationHttp } from "../services/location/location.service.http";
 import { CSC_Country, CSC_State, CSC_City } from "../models/location";
-import { get } from "http";
 
 interface CountryStateCityContext {
   countries: CSC_Country[];
   states: CSC_State[];
   cities: CSC_City[];
-  fetchCountries: () => Promise<void>;
-  selectCountry: (countryCode: string) => void;
-  getStates: () => Promise<void>;
-  getCities: (stateCode: string) => Promise<void>;
+  fetchCountries: () => Promise<CSC_Country[]>;
+  selectCountry: (countryCode: string) => Promise<CSC_State[]>;
+  getStates: (countryCode?: string) => Promise<void>;
+  getCities: (stateCode: string) => Promise<CSC_City[]>;
   loadingLocations: boolean;
 }
 
@@ -18,10 +17,10 @@ const CscContext = createContext<CountryStateCityContext>({
   countries: [],
   states: [],
   cities: [],
-  fetchCountries: () => Promise.resolve(),
-  selectCountry: () => {},
+  fetchCountries: () => Promise.resolve([]),
+  selectCountry: () => Promise.resolve([]),
   getStates: () => Promise.resolve(),
-  getCities: () => Promise.resolve(),
+  getCities: () => Promise.resolve([]),
   loadingLocations: false,
 });
 
@@ -42,27 +41,44 @@ export const CscProvider: React.FC<{ children: React.ReactNode }> = ({
     const data = await serviceLocation.getCountries();
     setCountries(data);
     setLoadingLocations(false);
+    return data;
   };
 
   const selectCountry = async (countryCode: string) => {
+    console.log("selectCountry called with:", countryCode);
     setSelectedCountryCode(countryCode);
     setStates([]);
     setCities([]);
+    // Fetch states immediately
+    setLoadingLocations(true);
+    try {
+      const data = await serviceLocation.getStates(countryCode);
+      console.log("States fetched:", data);
+      setStates(data);
+      return data;
+    } catch (error) {
+      console.error("Error fetching states:", error);
+      return [];
+    } finally {
+      setLoadingLocations(false);
+    }
   };
 
-  const getStates = async () => {
-    if (!selectedCountryCode) {
+  const getStates = async (countryCode?: string) => {
+    console.log("getStates called with countryCode:", countryCode);
+    const code = countryCode || selectedCountryCode;
+    if (!code) {
       return;
     }
     setLoadingLocations(true);
-    const data = await serviceLocation.getStates(selectedCountryCode);
+    const data = await serviceLocation.getStates(code);
     setLoadingLocations(false);
     setStates(data);
   };
 
   const getCities = async (stateCode: string) => {
     if (!selectedCountryCode) {
-      return;
+      return [];
     }
     setLoadingLocations(true);
     const data = await serviceLocation.getCities(
@@ -71,11 +87,8 @@ export const CscProvider: React.FC<{ children: React.ReactNode }> = ({
     );
     setLoadingLocations(false);
     setCities(data);
+    return data;
   };
-
-  useEffect(() => {
-    getStates();
-  }, [selectedCountryCode]);
 
   return (
     <CscContext.Provider

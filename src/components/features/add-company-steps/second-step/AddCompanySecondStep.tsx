@@ -74,6 +74,7 @@ const AddCompanySecondStep: FC<AddCompanySecondStepProps> = ({
     value: string,
     field: ControllerRenderProps<AddCompanyFormSchema>
   ) => {
+    console.log("onFormChange called:", field.name, value);
     setFormLocal((prev) => {
       if (field.name.startsWith("address.")) {
         const addressField = field.name.split(".")[1];
@@ -94,10 +95,14 @@ const AddCompanySecondStep: FC<AddCompanySecondStepProps> = ({
     field.onChange(value);
     trigger(field.name);
     if (field.name === "address.countryId") {
-      const country = countries.find((c) => c.id === Number(value));
+      console.log("Country selected, value:", value, "type:", typeof value);
+      console.log("Countries available:", countries.length);
+      console.log("First country:", countries[0], "id type:", typeof countries[0]?.id);
+      const country = countries.find((c) => String(c.id) === String(value));
+      console.log("Found country:", country);
       if (country) selectCountry(country.iso2);
     } else if (field.name === "address.stateId") {
-      const state = states.find((s) => s.id === Number(value));
+      const state = states.find((s) => String(s.id) === String(value));
       if (state) getCities(state.iso2);
     }
   };
