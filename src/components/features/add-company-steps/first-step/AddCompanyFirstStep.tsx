@@ -8,6 +8,7 @@ import { UseFormReturn } from "react-hook-form";
 import { AddCompanyFormSchema } from "../../../../pages/add-company/hooks/useAddCompanyForm";
 import { t } from "i18next";
 import { PLACEHOLDER_IMAGE_URL } from "../../../../const/common";
+import { fileToBase64 } from "../../../../lib/utils";
 
 const AddCompanyFirstStep: FC<UseFormReturn<AddCompanyFormSchema>> = ({
   getValues,
@@ -31,8 +32,9 @@ const AddCompanyFirstStep: FC<UseFormReturn<AddCompanyFormSchema>> = ({
       return;
     }
 
-    setValue("logo", URL.createObjectURL(file));
-    setLogo(URL.createObjectURL(file));
+    const base64 = await fileToBase64(file);
+    setValue("logo", base64);
+    setLogo(base64);
     clearErrors("logoFile");
   };
 

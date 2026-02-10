@@ -13,7 +13,11 @@ import { Company } from "../../../../models/Company";
 import { t } from "i18next";
 import { formatDate } from "../../../../lib/utils";
 
-export default function useColomns() {
+interface UseColumnsProps {
+  onRemove: (id: string) => void;
+}
+
+export default function useColomns({ onRemove }: UseColumnsProps) {
   const columns: ColumnDef<Company>[] = [
     {
       id: "select",
@@ -125,15 +129,16 @@ export default function useColomns() {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuItem
+              <DropdownMenuItem 
                 className="cursor-pointer hover:bg-white/5"
-                onClick={() =>
-                  (window.location.href = `/company/${company.id}`)
-                }
+                onClick={() => (window.location.href = `/company/${company.id}`)}
               >
                 {t("search.company.viewCompanyDetails")}
               </DropdownMenuItem>
-              <DropdownMenuItem className="cursor-pointer hover:bg-white/5">
+              <DropdownMenuItem 
+                className="cursor-pointer hover:bg-white/5 text-red-500"
+                onClick={() => onRemove(company.id)}
+              >
                 {t("search.company.removeCompany")}
               </DropdownMenuItem>
             </DropdownMenuContent>

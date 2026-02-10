@@ -9,7 +9,7 @@ interface CountryStateCityContext {
   fetchCountries: () => Promise<CSC_Country[]>;
   selectCountry: (countryCode: string) => Promise<CSC_State[]>;
   getStates: (countryCode?: string) => Promise<void>;
-  getCities: (stateCode: string) => Promise<CSC_City[]>;
+  getCities: (stateCode: string, countryCode?: string) => Promise<CSC_City[]>;
   loadingLocations: boolean;
 }
 
@@ -45,7 +45,6 @@ export const CscProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   const selectCountry = async (countryCode: string) => {
-    console.log("selectCountry called with:", countryCode);
     setSelectedCountryCode(countryCode);
     setStates([]);
     setCities([]);
@@ -53,7 +52,6 @@ export const CscProvider: React.FC<{ children: React.ReactNode }> = ({
     setLoadingLocations(true);
     try {
       const data = await serviceLocation.getStates(countryCode);
-      console.log("States fetched:", data);
       setStates(data);
       return data;
     } catch (error) {
@@ -65,7 +63,6 @@ export const CscProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   const getStates = async (countryCode?: string) => {
-    console.log("getStates called with countryCode:", countryCode);
     const code = countryCode || selectedCountryCode;
     if (!code) {
       return;
@@ -76,13 +73,14 @@ export const CscProvider: React.FC<{ children: React.ReactNode }> = ({
     setStates(data);
   };
 
-  const getCities = async (stateCode: string) => {
-    if (!selectedCountryCode) {
+  const getCities = async (stateCode: string, countryCode?: string) => {
+    const country = countryCode || selectedCountryCode;
+    if (!country) {
       return [];
     }
     setLoadingLocations(true);
     const data = await serviceLocation.getCities(
-      selectedCountryCode,
+      country,
       stateCode
     );
     setLoadingLocations(false);

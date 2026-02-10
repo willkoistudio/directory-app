@@ -175,6 +175,7 @@ export default {
     email: "Email",
     address: "Adresse",
     city: "Ville",
+    street: "Rue",
     postalCode: "Code postal",
     notes: "Notes",
   },

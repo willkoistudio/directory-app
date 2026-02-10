@@ -19,18 +19,16 @@ const Autocomplete: React.FC<AutocompleteProps> = ({
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
+  // Update query when value or options change
   useEffect(() => {
-    updateQuery(value);
-  }, []);
-
-  const updateQuery = (optionValue: string) => {
-    const valueQuery =
-      options.find((option) => option.value === optionValue)?.label ?? "";
-
-    if (valueQuery && valueQuery !== query) {
-      setQuery(valueQuery);
+    if (value && options.length > 0) {
+      const found = options.find((option) => option.value === value);
+      if (found) {
+        setQuery(found.label);
+      }
     }
-  };
+  }, [value, options]);
+
   const filteredOptions = options.filter((option) => {
     if (!query) return [];
     return option.label.toLowerCase().includes(query.toLowerCase());
@@ -38,7 +36,10 @@ const Autocomplete: React.FC<AutocompleteProps> = ({
 
   const handleSelect = (optionValue: string) => {
     onChange(optionValue);
-    updateQuery(optionValue);
+    const found = options.find((option) => option.value === optionValue);
+    if (found) {
+      setQuery(found.label);
+    }
     setIsOpen(false);
   };
 

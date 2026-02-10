@@ -28,3 +28,15 @@ export function formatDate(date: string | Date): string {
   }
   return format(d, "MMMM d 'at' h:mm a", { locale })
 }
+
+/**
+ * Convert a File to Base64 string
+ */
+export function fileToBase64(file: File): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader()
+    reader.onload = () => resolve(reader.result as string)
+    reader.onerror = reject
+    reader.readAsDataURL(file)
+  })
+}

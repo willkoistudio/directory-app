@@ -46,7 +46,7 @@ const CompanyDetail: React.FC = () => {
       return "N/A";
     }
     const country = countries.find(
-      (country) => String(country.id) === countryId
+      (country) => String(country.id) === countryId,
     );
     return country?.name;
   };
@@ -56,7 +56,7 @@ const CompanyDetail: React.FC = () => {
       return "N/A";
     }
     const country = countries.find(
-      (country) => String(country.id) === countryId
+      (country) => String(country.id) === countryId,
     );
     return country?.emoji;
   };
@@ -108,7 +108,15 @@ const CompanyDetail: React.FC = () => {
             <div className="flex gap-4 mt-8">
               <div className="border-r border-gray pr-4">
                 <p>{t("companyDetail.website")}</p>
-                <p className={`text-gray ${styles.companyWebsite}`}><a href={companyDetail?.website} target="_blank" rel="noopener noreferrer">{companyDetail?.website}</a></p>
+                <p className={`text-gray ${styles.companyWebsite}`}>
+                  <a
+                    href={companyDetail?.website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {companyDetail?.website}
+                  </a>
+                </p>
               </div>
               <div className="border-r border-gray pr-4">
                 <p>{t("companyDetail.country")}</p>
@@ -119,13 +127,16 @@ const CompanyDetail: React.FC = () => {
               </div>
               <div>
                 <p>{t("companyDetail.dateCreated")}</p>
-                <p className="text-gray">{formatDate(companyDetail?.createdAt)}</p>
+                <p className="text-gray">
+                  {formatDate(String(companyDetail?.createdAt))}
+                </p>
               </div>
             </div>
             {companyDetail?.updatedAt && (
               <div className="flex mt-8">
                 <p className="ml-auto mr-0 text-sm text-gray">
-                  {t("companyDetail.updated")} {formatDate(companyDetail?.updatedAt)}
+                  {t("companyDetail.updated")}{" "}
+                  {formatDate(companyDetail?.updatedAt)}
                 </p>
               </div>
             )}

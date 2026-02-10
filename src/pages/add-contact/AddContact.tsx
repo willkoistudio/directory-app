@@ -108,12 +108,19 @@ const AddContact: FC = () => {
           );
           if (country) {
             const statesData = await selectCountry(country.iso2);
+            
+            // Re-set stateId AFTER states are loaded so Autocomplete can find the match
+            form.setValue("address.stateId", contactDetail.address.stateId);
+            
             // Load cities for edit mode
             const state = statesData.find(
               (s) => String(s.id) === String(contactDetail.address.stateId)
             );
             if (state) {
-              await getCities(state.iso2);
+              await getCities(state.iso2, country.iso2);
+              
+              // Re-set cityId AFTER cities are loaded so Autocomplete can find the match
+              form.setValue("address.cityId", contactDetail.address.cityId);
             }
           }
         }

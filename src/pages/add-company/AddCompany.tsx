@@ -90,12 +90,19 @@ const AddCompany: FC = () => {
           );
           if (country) {
             const statesData = await selectCountry(country.iso2);
+            
+            // Re-set stateId AFTER states are loaded so Autocomplete can find the match
+            form.setValue("address.stateId", companyDetail.address.stateId, { shouldDirty: true });
+            
             // Load cities for edit mode
             const state = statesData.find(
               (s) => String(s.id) === String(companyDetail.address.stateId)
             );
             if (state) {
-              await getCities(state.iso2);
+              await getCities(state.iso2, country.iso2);
+              
+              // Re-set cityId AFTER cities are loaded so Autocomplete can find the match
+              form.setValue("address.cityId", companyDetail.address.cityId, { shouldDirty: true });
             }
           }
         }

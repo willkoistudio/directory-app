@@ -187,7 +187,7 @@ const AddContactSecondStep: FC<AddContactSecondStepProps> = ({
                 <Autocomplete
                   disabled={loadingLocations}
                   options={getItems(field.name)}
-                  value={getLocalStateValue(field.name)}
+                  value={String(field.value ?? "")}
                   onChange={(value) => onFormChange(value, field)}
                 />
                 <FormMessage className="text-red" />

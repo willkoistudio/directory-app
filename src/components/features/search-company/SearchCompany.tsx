@@ -36,6 +36,8 @@ import { Company } from "../../../models/Company";
 import { Skeleton } from "../../../components/ui/skeleton";
 import useColumns from "./hooks/useColumns";
 import { useTranslation } from "react-i18next";
+import { useDispatch } from "react-redux";
+import { removeCompany, getCompanies } from "../../../store/companySlice";
 
 interface SearchContactProps {
   companies: Company[];
@@ -48,8 +50,15 @@ const SearchCompany: FC<SearchContactProps> = ({ companies, loading }) => {
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = useState({});
 
+  const dispatch = useDispatch();
   const { t } = useTranslation();
-  const { columns } = useColumns();
+
+  const handleRemove = async (id: string) => {
+    await dispatch(removeCompany(id) as any);
+    await dispatch(getCompanies() as any);
+  };
+
+  const { columns } = useColumns({ onRemove: handleRemove });
 
   const table = useReactTable({
     data: companies,

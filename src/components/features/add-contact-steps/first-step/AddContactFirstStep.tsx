@@ -8,6 +8,7 @@ import { UseFormReturn } from "react-hook-form";
 import { AddContactFormSchema } from "../../../../pages/add-contact/hooks/useAddContactForm";
 import { t } from "i18next";
 import { PLACEHOLDER_IMAGE_URL } from "../../../../const/common";
+import { fileToBase64 } from "../../../../lib/utils";
 
 const AddContactFirstStep: FC<UseFormReturn<AddContactFormSchema>> = ({
   getValues,
@@ -31,8 +32,9 @@ const AddContactFirstStep: FC<UseFormReturn<AddContactFormSchema>> = ({
       return;
     }
 
-    setValue("avatar", URL.createObjectURL(file));
-    setAvatar(URL.createObjectURL(file));
+    const base64 = await fileToBase64(file);
+    setValue("avatar", base64);
+    setAvatar(base64);
     clearErrors("avatarFile");
   };
 
