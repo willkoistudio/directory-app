@@ -158,6 +158,7 @@ export default {
     step3: {
       saveCompany: "Save company",
       summary: "Summary",
+      companyLogo: "Company logo",
     },
   },
   companyDetail: {

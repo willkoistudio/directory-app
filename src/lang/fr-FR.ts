@@ -159,6 +159,7 @@ export default {
     step3: {
       saveCompany: "Enregistrer l'entreprise",
       summary: "Résumé",
+      companyLogo: "Logo de l'entreprise",
     },
   },
   companyDetail: {
