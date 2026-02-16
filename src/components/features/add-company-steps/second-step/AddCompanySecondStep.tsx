@@ -1,8 +1,6 @@
 import { FC, useState } from "react";
 import { Input } from "../../../ui/input";
 import { Textarea } from "../../../ui/textarea";
-import { Button } from "../../../ui/button";
-import { Save } from "lucide-react";
 import { ControllerRenderProps, UseFormReturn } from "react-hook-form";
 import { fieldsData } from "./AddCompanySecondStep.data";
 import {
@@ -33,8 +31,7 @@ interface AddCompanySecondStepForm {
   };
 }
 
-interface AddCompanySecondStepProps
-  extends UseFormReturn<AddCompanyFormSchema> {
+interface AddCompanySecondStepProps extends UseFormReturn<AddCompanyFormSchema> {
   cities: CSC_City[];
   countries: CSC_Country[];
   states: CSC_State[];
@@ -54,6 +51,15 @@ const AddCompanySecondStep: FC<AddCompanySecondStepProps> = ({
   getCities,
   loadingLocations,
 }) => {
+  console.log("[AddCompanySecondStep] Mount/render", {
+    countryId: getValues("address.countryId"),
+    stateId: getValues("address.stateId"),
+    cityId: getValues("address.cityId"),
+    countriesCount: countries.length,
+    statesCount: states.length,
+    citiesCount: cities.length,
+  });
+
   const [formLocal, setFormLocal] = useState<AddCompanySecondStepForm>({
     name: getValues("name"),
     phone: getValues("phone"),
@@ -72,7 +78,7 @@ const AddCompanySecondStep: FC<AddCompanySecondStepProps> = ({
 
   const onFormChange = (
     value: string,
-    field: ControllerRenderProps<AddCompanyFormSchema>
+    field: ControllerRenderProps<AddCompanyFormSchema>,
   ) => {
     console.log("onFormChange called:", field.name, value);
     setFormLocal((prev) => {
@@ -97,7 +103,12 @@ const AddCompanySecondStep: FC<AddCompanySecondStepProps> = ({
     if (field.name === "address.countryId") {
       console.log("Country selected, value:", value, "type:", typeof value);
       console.log("Countries available:", countries.length);
-      console.log("First country:", countries[0], "id type:", typeof countries[0]?.id);
+      console.log(
+        "First country:",
+        countries[0],
+        "id type:",
+        typeof countries[0]?.id,
+      );
       const country = countries.find((c) => String(c.id) === String(value));
       console.log("Found country:", country);
       if (country) selectCountry(country.iso2);
@@ -230,7 +241,7 @@ const AddCompanySecondStep: FC<AddCompanySecondStepProps> = ({
                 </FormItem>
               )}
             />
-          )
+          ),
         )}
       </section>
     </>
