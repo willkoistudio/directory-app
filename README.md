@@ -1,70 +1,109 @@
-# Getting Started with Create React App
+# Directory App — Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+React SPA for the Directory App. Manages contacts and companies with full authentication support.
 
-## Available Scripts
+## Tech Stack
 
-In the project directory, you can run:
+| Layer | Technology |
+|---|---|
+| Framework | React 18 + TypeScript |
+| Build tool | Vite 6 |
+| Routing | React Router DOM 7 |
+| State management | Redux Toolkit 2 |
+| UI primitives | Radix UI |
+| Styling | Tailwind CSS + tailwindcss-animate |
+| Forms | React Hook Form 7 + Zod 3 |
+| HTTP client | Axios |
+| i18n | i18next + react-i18next (EN / FR) |
+| Charts | Recharts |
+| Icons | lucide-react |
+| Notifications | Sonner |
 
-### `npm start`
+## Prerequisites
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- Node.js 18+
+- Backend API running on `http://localhost:3000`
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Installation
 
-### `npm test`
+```bash
+npm install
+cp .env.example .env
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Environment Variables
 
-### `npm run build`
+```env
+VITE_API_URL=http://localhost:3000
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Running the App
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```bash
+# Development
+npm run dev
+# → http://localhost:5173
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+# Production build
+npm run build
 
-### `npm run eject`
+# Preview production build
+npm run serve
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Project Structure
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```
+src/
+├── assets/             # Static assets and global CSS
+├── components/
+│   ├── Navigation/     # Sidebar and Header
+│   └── ui/            # Reusable Radix-based components
+├── const/             # App-wide constants
+├── context/
+│   ├── PageNameContext.tsx
+│   └── CountryStateCityContext.tsx
+├── hooks/             # Custom React hooks
+├── lang/              # Translation files
+│   ├── en-US.ts
+│   └── fr-FR.ts
+├── lib/               # Utility functions
+├── models/            # TypeScript interfaces
+│   ├── Contact.ts
+│   ├── Company.ts
+│   ├── Address.ts
+│   └── ...
+├── pages/
+│   └── auth/
+│       ├── Login.tsx
+│       ├── Signup.tsx
+│       └── AuthCallback.tsx   # Receives JWT from OAuth redirect
+├── services/          # Axios API service layer
+├── store/
+│   └── authSlice.ts   # Redux auth state
+├── App.tsx
+├── routes.tsx         # Route definitions + ProtectedRoute
+├── i18n.ts
+└── index.tsx
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Key Patterns
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+**Route protection** — All routes are wrapped by `ProtectedRoute`. Unauthenticated users are redirected to `/login`. Already-authenticated users hitting `/login` or `/signup` are redirected to the app.
 
-## Learn More
+**Auth state** — Stored in Redux (`authSlice`). Persisted across page reloads. The `AuthCallback` page handles the OAuth redirect from the backend: extracts the JWT from the `?token=` query param and dispatches it to the store.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+**Forms** — All forms use React Hook Form with a Zod schema for validation. No uncontrolled form logic.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+**API calls** — Centralized in `src/services/`. Axios instance configured with base URL and auth header injection.
 
-### Code Splitting
+**i18n** — Language toggle between English and French. Translation keys in `src/lang/`. Configured in `src/i18n.ts`.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Authentication Flow
 
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+1. User submits login or signup form
+2. Frontend calls `POST /login` or `POST /signup`
+3. Backend returns `{ access_token, user }`
+4. Token stored in Redux state
+5. Axios interceptor attaches `Authorization: Bearer <token>` on every subsequent request
+6. On OAuth: user navigates to `/auth/google` (or github/facebook), backend handles the flow and redirects back to `/auth/callback?token=<jwt>`, `AuthCallback` extracts and stores the token
