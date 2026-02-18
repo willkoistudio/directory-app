@@ -25,10 +25,10 @@ export class ServiceContactMock implements ServiceContact {
     );
   }
 
-  public async addContact(contact: ContactData): Promise<void> {
+  public async addContact(contact: ContactData): Promise<ContactData> {
     return new Promise((resolve) =>
       setTimeout(() => {
-        resolve();
+        resolve({ ...contact, id: crypto.randomUUID() });
       }, this.latence),
     );
   }

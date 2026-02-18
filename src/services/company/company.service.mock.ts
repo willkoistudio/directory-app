@@ -25,10 +25,10 @@ export class ServiceCompanyMock implements ServiceCompany {
     );
   }
 
-  public async addCompany(company: CompanyData): Promise<void> {
+  public async addCompany(company: CompanyData): Promise<CompanyData> {
     return new Promise((resolve) =>
       setTimeout(() => {
-        resolve();
+        resolve({ ...company, id: crypto.randomUUID() });
       }, this.latence),
     );
   }

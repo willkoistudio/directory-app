@@ -23,7 +23,7 @@ export class ServiceContactHttp implements ServiceContact {
     }
   }
 
-  public async addContact(contact: ContactData): Promise<void> {
+  public async addContact(contact: ContactData): Promise<ContactData> {
     try {
       const payload = {
         name: contact.name,
@@ -39,7 +39,7 @@ export class ServiceContactHttp implements ServiceContact {
         avatar: contact.avatar,
         notes: contact.notes,
       };
-      const { data } = await apiClient.post<void>(`contacts`, payload);
+      const { data } = await apiClient.post<ContactData>(`contacts`, payload);
       return data;
     } catch (erreur) {
       throw new Error("Error adding contact");

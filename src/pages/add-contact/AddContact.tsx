@@ -10,7 +10,7 @@ import {
   AddContactFormSchema,
   useAddContactForm,
 } from "./hooks/useAddContactForm";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { getContactDetail } from "../../store/contactSlice";
@@ -38,6 +38,7 @@ const AddContact: FC = () => {
     loadingLocations,
   } = useCountryStateCity();
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { toast } = useToast();
   const { t } = useTranslation();
@@ -161,7 +162,10 @@ const AddContact: FC = () => {
     };
     try {
       setLoading(true);
-      await dispatch(addContact(contact) as any);
+      const { payload } = await dispatch(addContact(contact) as any);
+      if (payload?.id) {
+        navigate(`/contact/${payload.id}`);
+      }
     } catch (error) {
       console.error("Error while adding contact", error);
     } finally {

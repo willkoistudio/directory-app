@@ -14,7 +14,7 @@ import {
   useAddCompanyForm,
 } from "./hooks/useAddCompanyForm";
 import { useCountryStateCity } from "../../context/CountryStateCityContext";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useToast } from "../../hooks/use-toast";
 import { CompanyData } from "../../models/Company";
 import { addCompany, getCompanyDetail } from "../../store/companySlice";
@@ -56,7 +56,7 @@ const AddCompany: FC = () => {
   } = useCountryStateCity();
 
   const { id } = useParams<{ id: string }>();
-
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
@@ -134,7 +134,10 @@ const AddCompany: FC = () => {
     };
     try {
       setLoading(true);
-      await dispatch(addCompany(company) as any);
+      const { payload } = await dispatch(addCompany(company) as any);
+      if (payload?.id) {
+        navigate(`/company/${payload.id}`);
+      }
     } catch (error) {
       console.error("Error while adding company", error);
     } finally {

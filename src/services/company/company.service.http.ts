@@ -23,9 +23,9 @@ export class ServiceCompanyHttp implements ServiceCompany {
     }
   }
 
-  public async addCompany(company: CompanyData): Promise<void> {
+  public async addCompany(company: CompanyData): Promise<CompanyData> {
     try {
-      const { data } = await apiClient.post<void>(`companies`, company);
+      const { data } = await apiClient.post<CompanyData>(`companies`, company);
       return data;
     } catch (erreur) {
       throw new Error("Error adding company");
