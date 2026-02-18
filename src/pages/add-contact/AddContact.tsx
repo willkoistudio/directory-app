@@ -45,7 +45,7 @@ const AddContact: FC = () => {
   const { companies } = useSelector((state: RootState) => state.company);
   const { dispatchCurrentStep, form, stepsIconColor } = useAddContactForm();
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [currentStep, setCurrentStep] = useState(1);
   const [addContactSteps, setAddContactSteps] = useState<FormStep[]>([
     {
@@ -365,7 +365,7 @@ const AddContact: FC = () => {
         </>
       ) : (
         <>
-          <Skeleton className="bg-white/10 h-16 w-fullmb-4 mt-12 mb-10" />
+          <Skeleton className="bg-white/10 h-16 w-full mt-12 mb-4" />
           <Skeleton className="bg-white/10 h-[500px] w-full" />
         </>
       )}

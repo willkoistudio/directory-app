@@ -59,7 +59,7 @@ const AddCompany: FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { toast } = useToast();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const { dispatchCurrentStep, form, stepsIconColor } = useAddCompanyForm();
 
   const fetchRessources = async () => {
@@ -323,7 +323,7 @@ const AddCompany: FC = () => {
         </>
       ) : (
         <>
-          <Skeleton className="bg-white/10 h-16 w-fullmb-4 mt-12 mb-10" />
+          <Skeleton className="bg-white/10 h-16 w-full mt-12 mb-4" />
           <Skeleton className="bg-white/10 h-[500px] w-full" />
         </>
       )}

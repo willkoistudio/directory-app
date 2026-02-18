@@ -13,7 +13,12 @@ import {
 import { Company } from "../../../../models/Company";
 import { t } from "i18next";
 
-export default function useColomns(companies: Company[]) {
+interface UseColumnsProps {
+  companies: Company[];
+  onRemove: (id: string) => void;
+}
+
+export default function useColomns({ companies, onRemove }: UseColumnsProps) {
   const columns: ColumnDef<Contact>[] = [
     {
       id: "select",
@@ -174,7 +179,10 @@ export default function useColomns(companies: Company[]) {
               >
                 {t("search.contact.viewContactDetails")}
               </DropdownMenuItem>
-              <DropdownMenuItem className="cursor-pointer hover:bg-white/5">
+              <DropdownMenuItem
+                className="cursor-pointer hover:bg-white/5 text-red-500"
+                onClick={() => onRemove(contact.id)}
+              >
                 {t("search.contact.removeContact")}
               </DropdownMenuItem>
             </DropdownMenuContent>

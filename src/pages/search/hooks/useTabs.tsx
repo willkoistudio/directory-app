@@ -1,4 +1,3 @@
-import { useMemo } from "react";
 import { APP_CONTEXT } from "../../../const/features";
 import { Building2, UserRoundSearch } from "lucide-react";
 import { SearchContact } from "../../../components/features/search-contact/SearchContact";
@@ -12,14 +11,13 @@ const useTabs = (
   contacts: Contact[],
   companies: Company[],
   loading: boolean,
-  removeContact: Function,
 ) => {
   const tabs = [
     {
       value: APP_CONTEXT.CONTACT,
       label: "Contacts",
       icon: <UserRoundSearch size={16} />,
-      content: <SearchContact {...{ contacts, loading, removeContact }} />,
+      content: <SearchContact {...{ contacts, loading }} />,
     },
     {
       value: APP_CONTEXT.COMPANY,

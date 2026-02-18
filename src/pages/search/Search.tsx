@@ -9,10 +9,11 @@ import {
 } from "../../components/ui/tabs";
 import { APP_CONTEXT } from "../../const/features";
 import { useDispatch, useSelector } from "react-redux";
-import { getContacts, removeContact } from "../../store/contactSlice";
+import { getContacts } from "../../store/contactSlice";
 import { getCompanies } from "../../store/companySlice";
 import { RootState } from "../../store/store";
 import useTabs from "./hooks/useTabs";
+import { Skeleton } from "../../components/ui/skeleton";
 
 const Search: FC = () => {
   const { setPageName } = usePageName();
@@ -20,7 +21,7 @@ const Search: FC = () => {
 
   const { contacts } = useSelector((state: RootState) => state.contact);
   const { companies } = useSelector((state: RootState) => state.company);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const fetchContacts = async () => {
     setLoading(true);
@@ -49,7 +50,6 @@ const Search: FC = () => {
     contacts,
     companies,
     loading,
-    removeContact
   );
 
   useEffect(() => {
@@ -59,27 +59,38 @@ const Search: FC = () => {
 
   return (
     <section>
-      <Tabs defaultValue={APP_CONTEXT.CONTACT} className="mt-12">
-        <TabsList className="grid w-full grid-cols-2 bg-white/10 h-auto">
+      {loading && !contacts.length && !companies.length ? (
+        <div className="mt-12">
+          <Skeleton className="bg-white/10 h-14 w-full mb-4" />
+          <div className="flex justify-between mb-8">
+            <Skeleton className="bg-white/10 h-12 w-1/2" />
+            <Skeleton className="bg-white/10 h-12 w-[120px]" />
+          </div>
+          <Skeleton className="bg-white/10 h-[400px] w-full" />
+        </div>
+      ) : (
+        <Tabs defaultValue={APP_CONTEXT.CONTACT} className="mt-12">
+          <TabsList className="grid w-full grid-cols-2 bg-white/10 h-auto">
+            {tabs.map((tab) => (
+              <TabsTrigger
+                key={tab.value}
+                value={tab.value}
+                className="cursor-pointer hover:bg-gray h-14"
+                onClick={() => {
+                  handleTabsChange(tab.value);
+                }}
+              >
+                <span className="mr-2">{tab.icon}</span> <span>{tab.label}</span>
+              </TabsTrigger>
+            ))}
+          </TabsList>
           {tabs.map((tab) => (
-            <TabsTrigger
-              key={tab.value}
-              value={tab.value}
-              className="cursor-pointer hover:bg-gray h-14"
-              onClick={() => {
-                handleTabsChange(tab.value);
-              }}
-            >
-              <span className="mr-2">{tab.icon}</span> <span>{tab.label}</span>
-            </TabsTrigger>
+            <TabsContent value={tab.value} key={tab.value}>
+              {tab.content}
+            </TabsContent>
           ))}
-        </TabsList>
-        {tabs.map((tab) => (
-          <TabsContent value={tab.value} key={tab.value}>
-            {tab.content}
-          </TabsContent>
-        ))}
-      </Tabs>
+        </Tabs>
+      )}
     </section>
   );
 };

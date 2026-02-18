@@ -48,13 +48,13 @@ import {
 
 import { Skeleton } from "../../../components/ui/skeleton";
 import useColumns from "./hooks/useColumns";
-import { removeContact } from "../../../store/contactSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 import { getCompanies } from "../../../store/companySlice";
 import { Company } from "../../../models/Company";
 import { useTranslation } from "react-i18next";
 import Autocomplete from "../../ui/autocomplete/Autocomplete";
+import { getContacts, removeContact } from "../../../store/contactSlice";
 
 interface SearchContactProps {
   contacts: Contact[];
@@ -71,8 +71,14 @@ const SearchContact: FC<SearchContactProps> = ({ contacts, loading }) => {
   const [localCompanies, setLocalCompanies] = useState<Company[]>([]);
 
   const { companies } = useSelector((state: RootState) => state.company);
-  const { columns } = useColumns(localCompanies);
   const { t } = useTranslation();
+
+  const handleRemove = async (id: string | string[]) => {
+    await dispatch(removeContact(id) as any);
+    await dispatch(getContacts() as any);
+  };
+
+  const { columns } = useColumns({ companies: localCompanies, onRemove: handleRemove });
 
   const table = useReactTable({
     data: contacts,
@@ -279,10 +285,10 @@ const SearchContact: FC<SearchContactProps> = ({ contacts, loading }) => {
                   !table.getIsAllRowsSelected()
                 }
                 onClick={() =>
-                  removeContact(
+                  handleRemove(
                     table
                       .getSelectedRowModel()
-                      .rows.map((contact: Row<Contact>) => contact.id),
+                      .rows.map((contact: Row<Contact>) => contact.original.id),
                   )
                 }
               >
