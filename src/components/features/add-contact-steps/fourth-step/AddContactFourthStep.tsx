@@ -22,7 +22,7 @@ const AddContactFourthStep: FC<UseFormReturn<AddContactFormSchema>> = ({
 
   const onFormChange = (
     event: React.KeyboardEvent<HTMLInputElement>,
-    field: ControllerRenderProps<AddContactFormSchema>
+    field: ControllerRenderProps<AddContactFormSchema>,
   ) => {
     if (event.key !== "Enter") {
       return;
@@ -39,7 +39,7 @@ const AddContactFourthStep: FC<UseFormReturn<AddContactFormSchema>> = ({
 
   const removeKeyword = (
     index: number,
-    field: ControllerRenderProps<AddContactFormSchema>
+    field: ControllerRenderProps<AddContactFormSchema>,
   ) => {
     const updated = keywords.filter((_, i) => i !== index);
     setKeywords(updated);
@@ -49,7 +49,7 @@ const AddContactFourthStep: FC<UseFormReturn<AddContactFormSchema>> = ({
 
   return (
     <section>
-      <div className="mt-12 w-1/2 mx-auto">
+      <div className="w-1/2 mx-auto">
         <FormField
           control={control}
           name="keywords"

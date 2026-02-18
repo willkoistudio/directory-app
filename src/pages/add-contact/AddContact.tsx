@@ -139,9 +139,8 @@ const AddContact: FC = () => {
       name: String(values.name),
       avatar: String(values.avatar),
       company:
-        companies.find(
-          (company) => company.id === String(values.companyId),
-        ) ?? ({} as Company),
+        companies.find((company) => company.id === String(values.companyId)) ??
+        ({} as Company),
       function: String(values.function),
       email: String(values.email),
       phone: String(values.phone),
@@ -306,7 +305,7 @@ const AddContact: FC = () => {
     <div className="h-full flex flex-col">
       {!loading ? (
         <>
-          <nav className="flex border border-white/10 rounded-lg px-6 py-4 mt-12">
+          <nav className="flex border border-white/10 rounded-lg px-6 py-4">
             {addContactSteps.map((step) => (
               <div
                 className="add-contact-steps-navigation flex gap-2 items-center "
@@ -365,7 +364,7 @@ const AddContact: FC = () => {
         </>
       ) : (
         <>
-          <Skeleton className="bg-white/10 h-16 w-full mt-12 mb-4" />
+          <Skeleton className="bg-white/10 h-16 w-full mb-4" />
           <Skeleton className="bg-white/10 h-[500px] w-full" />
         </>
       )}

@@ -60,7 +60,7 @@ const Search: FC = () => {
   return (
     <section>
       {loading && !contacts.length && !companies.length ? (
-        <div className="mt-12">
+        <div>
           <Skeleton className="bg-white/10 h-14 w-full mb-4" />
           <div className="flex justify-between mb-8">
             <Skeleton className="bg-white/10 h-12 w-1/2" />
@@ -69,7 +69,7 @@ const Search: FC = () => {
           <Skeleton className="bg-white/10 h-[400px] w-full" />
         </div>
       ) : (
-        <Tabs defaultValue={APP_CONTEXT.CONTACT} className="mt-12">
+        <Tabs defaultValue={APP_CONTEXT.CONTACT}>
           <TabsList className="grid w-full grid-cols-2 bg-white/10 h-auto">
             {tabs.map((tab) => (
               <TabsTrigger
@@ -80,7 +80,8 @@ const Search: FC = () => {
                   handleTabsChange(tab.value);
                 }}
               >
-                <span className="mr-2">{tab.icon}</span> <span>{tab.label}</span>
+                <span className="mr-2">{tab.icon}</span>{" "}
+                <span>{tab.label}</span>
               </TabsTrigger>
             ))}
           </TabsList>

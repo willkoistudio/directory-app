@@ -47,7 +47,7 @@ const AddCompanyFirstStep: FC<UseFormReturn<AddCompanyFormSchema>> = ({
   return (
     <>
       <section className="pb-12 px-8 flex items-center justify-center flex-1">
-        <Card className="border-0 relative w-[350px] mx-auto mb-12 mt-12">
+        <Card className="border-0 relative w-[350px] mx-auto mb-12">
           <CircleX
             className="absolute top-4 right-4 cursor-pointer"
             onClick={removeFileHandler}

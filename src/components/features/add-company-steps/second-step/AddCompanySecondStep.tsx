@@ -51,7 +51,6 @@ const AddCompanySecondStep: FC<AddCompanySecondStepProps> = ({
   getCities,
   loadingLocations,
 }) => {
-
   const [formLocal, setFormLocal] = useState<AddCompanySecondStepForm>({
     name: getValues("name"),
     phone: getValues("phone"),
@@ -175,7 +174,7 @@ const AddCompanySecondStep: FC<AddCompanySecondStepProps> = ({
 
   return (
     <>
-      <section className="grid grid-cols-2 gap-8 px-8 mt-12">
+      <section className="grid grid-cols-2 gap-8 px-8">
         {fieldsData.map((fieldData, idFieldData) =>
           fieldData.type === "autocomplete" ? (
             <FormField

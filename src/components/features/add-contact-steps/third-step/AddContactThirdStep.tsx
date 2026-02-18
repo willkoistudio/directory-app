@@ -33,7 +33,7 @@ const AddContactThirdStep: FC<UseFormReturn<AddContactFormSchema>> = ({
 
   const onFormChange = (
     value: string,
-    field: ControllerRenderProps<AddContactFormSchema>
+    field: ControllerRenderProps<AddContactFormSchema>,
   ) => {
     setFormLocal((prev) => ({
       ...prev,
@@ -60,7 +60,7 @@ const AddContactThirdStep: FC<UseFormReturn<AddContactFormSchema>> = ({
 
   return (
     <>
-      <section className="grid grid-cols-2 gap-8 px-8 mt-12">
+      <section className="grid grid-cols-2 gap-8 px-8">
         {fieldsData.map((fieldData, idFieldData) =>
           fieldData.type !== "textarea" ? (
             <FormField
@@ -101,7 +101,7 @@ const AddContactThirdStep: FC<UseFormReturn<AddContactFormSchema>> = ({
                 </FormItem>
               )}
             />
-          )
+          ),
         )}
       </section>
     </>

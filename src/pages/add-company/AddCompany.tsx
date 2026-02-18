@@ -86,23 +86,27 @@ const AddCompany: FC = () => {
 
           // Load states for edit mode
           const country = countriesData.find(
-            (c) => String(c.id) === String(companyDetail.address.countryId)
+            (c) => String(c.id) === String(companyDetail.address.countryId),
           );
           if (country) {
             const statesData = await selectCountry(country.iso2);
-            
+
             // Re-set stateId AFTER states are loaded so Autocomplete can find the match
-            form.setValue("address.stateId", companyDetail.address.stateId, { shouldDirty: true });
-            
+            form.setValue("address.stateId", companyDetail.address.stateId, {
+              shouldDirty: true,
+            });
+
             // Load cities for edit mode
             const state = statesData.find(
-              (s) => String(s.id) === String(companyDetail.address.stateId)
+              (s) => String(s.id) === String(companyDetail.address.stateId),
             );
             if (state) {
               await getCities(state.iso2, country.iso2);
-              
+
               // Re-set cityId AFTER cities are loaded so Autocomplete can find the match
-              form.setValue("address.cityId", companyDetail.address.cityId, { shouldDirty: true });
+              form.setValue("address.cityId", companyDetail.address.cityId, {
+                shouldDirty: true,
+              });
             }
           }
         }
@@ -265,7 +269,7 @@ const AddCompany: FC = () => {
     <>
       {!loading ? (
         <>
-          <nav className="mt-12 flex border border-white/10 rounded-lg px-6 py-4">
+          <nav className="flex border border-white/10 rounded-lg px-6 py-4">
             {addCompanySteps.map((step) => (
               <div
                 className="add-contact-steps-navigation flex gap-2 items-center"
@@ -323,7 +327,7 @@ const AddCompany: FC = () => {
         </>
       ) : (
         <>
-          <Skeleton className="bg-white/10 h-16 w-full mt-12 mb-4" />
+          <Skeleton className="bg-white/10 h-16 w-full mb-4" />
           <Skeleton className="bg-white/10 h-[500px] w-full" />
         </>
       )}

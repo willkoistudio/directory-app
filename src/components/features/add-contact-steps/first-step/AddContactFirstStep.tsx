@@ -47,7 +47,7 @@ const AddContactFirstStep: FC<UseFormReturn<AddContactFormSchema>> = ({
 
   return (
     <>
-      <section className="flex pb-12 mt-12 justify-around h-full">
+      <section className="flex pb-12 justify-around h-full">
         <Card className="border-0 relative mb-12 w-[350px] my-auto">
           <CircleX
             className="absolute top-4 right-4 cursor-pointer"

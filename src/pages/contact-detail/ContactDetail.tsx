@@ -53,7 +53,7 @@ const ContactDetail: React.FC = () => {
       return "N/A";
     }
     const country = countries.find(
-      (country) => String(country.id) === countryId
+      (country) => String(country.id) === countryId,
     );
     return country?.name;
   };
@@ -63,7 +63,7 @@ const ContactDetail: React.FC = () => {
       return "N/A";
     }
     const country = countries.find(
-      (country) => String(country.id) === countryId
+      (country) => String(country.id) === countryId,
     );
     return country?.emoji;
   };
@@ -73,7 +73,7 @@ const ContactDetail: React.FC = () => {
       return "N/A";
     }
     const company = companies.find(
-      (company) => String(company.id) === companyId
+      (company) => String(company.id) === companyId,
     );
     return company?.name;
   };
@@ -85,7 +85,7 @@ const ContactDetail: React.FC = () => {
 
   return (
     <>
-      <nav className="flex items-center justify-between mt-12">
+      <nav className="flex items-center justify-between">
         <Button variant="outline" onClick={() => navigate(-1)}>
           {t("contactDetail.backToSearch")}
         </Button>

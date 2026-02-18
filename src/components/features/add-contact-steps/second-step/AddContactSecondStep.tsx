@@ -171,7 +171,7 @@ const AddContactSecondStep: FC<AddContactSecondStepProps> = ({
   };
 
   return (
-    <section className="grid grid-cols-2 gap-8 mt-12 px-8">
+    <section className="grid grid-cols-2 gap-8 px-8">
       {fieldsData.map((fieldData, idFieldData) =>
         fieldData.type === "autocomplete" ? (
           <FormField

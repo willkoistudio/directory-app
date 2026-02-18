@@ -68,7 +68,7 @@ const CompanyDetail: React.FC = () => {
 
   return (
     <>
-      <nav className="flex items-center justify-between mt-12">
+      <nav className="flex items-center justify-between">
         <Button variant="outline" onClick={() => navigate(-1)}>
           {t("companyDetail.backToSearch")}
         </Button>
