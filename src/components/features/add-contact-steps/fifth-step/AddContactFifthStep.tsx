@@ -23,7 +23,6 @@ interface AddContactFifthStepProps extends UseFormReturn<AddContactFormSchema> {
 const AddContactFifthStep: FC<AddContactFifthStepProps> = ({
   getValues,
   companies,
-  onSubmit,
   countries,
   states,
   cities,
@@ -200,7 +199,7 @@ const AddContactFifthStep: FC<AddContactFifthStepProps> = ({
         </Card>
       </div>
       <div className="flex justify-center px-8 w-full">
-        <Button className="bg-red hover:bg-red/90 h-14 px-8" onClick={onSubmit}>
+        <Button type="submit" className="bg-red hover:bg-red/90 h-14 px-8">
           <Save /> {t("addContact.step5.saveContact")}
         </Button>
       </div>

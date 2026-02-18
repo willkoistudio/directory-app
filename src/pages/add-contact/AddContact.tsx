@@ -104,21 +104,21 @@ const AddContact: FC = () => {
 
           // Load states for edit mode
           const country = countriesData.find(
-            (c) => String(c.id) === String(contactDetail.address.countryId)
+            (c) => String(c.id) === String(contactDetail.address.countryId),
           );
           if (country) {
             const statesData = await selectCountry(country.iso2);
-            
+
             // Re-set stateId AFTER states are loaded so Autocomplete can find the match
             form.setValue("address.stateId", contactDetail.address.stateId);
-            
+
             // Load cities for edit mode
             const state = statesData.find(
-              (s) => String(s.id) === String(contactDetail.address.stateId)
+              (s) => String(s.id) === String(contactDetail.address.stateId),
             );
             if (state) {
               await getCities(state.iso2, country.iso2);
-              
+
               // Re-set cityId AFTER cities are loaded so Autocomplete can find the match
               form.setValue("address.cityId", contactDetail.address.cityId);
             }
@@ -134,40 +134,38 @@ const AddContact: FC = () => {
 
   const onSubmit = async () => {
     const values = form.getValues();
-    if (form.formState.isValid) {
-      const contact: ContactData = {
-        name: String(values.name),
-        avatar: String(values.avatar),
-        company:
-          companies.find(
-            (company) => company.id === String(values.companyId),
-          ) ?? ({} as Company),
-        function: String(values.function),
-        email: String(values.email),
-        phone: String(values.phone),
-        workPhone: String(values.workPhone),
-        fax: String(values.fax),
-        website: String(values.website),
-        notes: String(values.notes),
-        address: {
-          street: String(values.address.street),
-          cityId: String(values.address.cityId),
-          postalCode: String(values.address.postalCode),
-          stateId: String(values.address.stateId),
-          countryId: String(values.address.countryId),
-        },
-        keywords: Array.isArray(values.keywords)
-          ? (values.keywords as string[])
-          : [],
-      };
-      try {
-        setLoading(true);
-        await dispatch(addContact(contact) as any);
-      } catch (error) {
-        console.error("Error while addinig contact", error);
-      } finally {
-        setLoading(false);
-      }
+    const contact: ContactData = {
+      name: String(values.name),
+      avatar: String(values.avatar),
+      company:
+        companies.find(
+          (company) => company.id === String(values.companyId),
+        ) ?? ({} as Company),
+      function: String(values.function),
+      email: String(values.email),
+      phone: String(values.phone),
+      workPhone: String(values.workPhone),
+      fax: String(values.fax),
+      website: String(values.website),
+      notes: String(values.notes),
+      address: {
+        street: String(values.address.street),
+        cityId: String(values.address.cityId),
+        postalCode: String(values.address.postalCode),
+        stateId: String(values.address.stateId),
+        countryId: String(values.address.countryId),
+      },
+      keywords: Array.isArray(values.keywords)
+        ? (values.keywords as string[])
+        : [],
+    };
+    try {
+      setLoading(true);
+      await dispatch(addContact(contact) as any);
+    } catch (error) {
+      console.error("Error while adding contact", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -301,7 +299,7 @@ const AddContact: FC = () => {
   }, []);
 
   return (
-    <div>
+    <div className="h-full flex flex-col">
       {!loading ? (
         <>
           <nav className="flex border border-white/10 rounded-lg px-6 py-4 mt-12">
@@ -343,7 +341,10 @@ const AddContact: FC = () => {
             </div>
           </nav>
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit, onFormError)}>
+            <form
+              onSubmit={form.handleSubmit(onSubmit, onFormError)}
+              className="my-auto"
+            >
               {dispatchCurrentStep(currentStep, {
                 companies,
                 states,

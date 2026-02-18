@@ -51,14 +51,6 @@ const AddCompanySecondStep: FC<AddCompanySecondStepProps> = ({
   getCities,
   loadingLocations,
 }) => {
-  console.log("[AddCompanySecondStep] Mount/render", {
-    countryId: getValues("address.countryId"),
-    stateId: getValues("address.stateId"),
-    cityId: getValues("address.cityId"),
-    countriesCount: countries.length,
-    statesCount: states.length,
-    citiesCount: cities.length,
-  });
 
   const [formLocal, setFormLocal] = useState<AddCompanySecondStepForm>({
     name: getValues("name"),

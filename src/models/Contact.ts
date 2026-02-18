@@ -28,7 +28,7 @@ export interface ContactData {
   address: Address;
   keywords: string[];
   avatar: string;
-  createdAt: string;
+  createdAt?: string;
   updatedAt?: string;
 }
 

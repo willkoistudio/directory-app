@@ -20,7 +20,6 @@ interface AddCompanyThirdStepProps extends UseFormReturn<AddCompanyFormSchema> {
 
 const AddCompanyThirdStep: FC<AddCompanyThirdStepProps> = ({
   getValues,
-  onSubmit,
   countries,
   states,
   cities,
@@ -148,7 +147,7 @@ const AddCompanyThirdStep: FC<AddCompanyThirdStepProps> = ({
         </Card>
       </div>
       <div className="flex justify-center px-8 w-full">
-        <Button className="bg-red hover:bg-red/90 h-14 px-8" onClick={onSubmit}>
+        <Button type="submit" className="bg-red hover:bg-red/90 h-14 px-8">
           <Save /> {t("addCompany.step3.saveCompany")}
         </Button>
       </div>

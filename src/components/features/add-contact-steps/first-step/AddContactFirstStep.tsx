@@ -47,8 +47,8 @@ const AddContactFirstStep: FC<UseFormReturn<AddContactFormSchema>> = ({
 
   return (
     <>
-      <section className="pb-12 mt-12">
-        <Card className="border-0 relative mb-12 w-[350px] mx-auto">
+      <section className="flex pb-12 mt-12 justify-around h-full">
+        <Card className="border-0 relative mb-12 w-[350px] my-auto">
           <CircleX
             className="absolute top-4 right-4 cursor-pointer"
             onClick={removeFileHandler}
@@ -69,7 +69,7 @@ const AddContactFirstStep: FC<UseFormReturn<AddContactFormSchema>> = ({
             />
           )}
         </Card>
-        <Card className="text-center border-2 border-dashed py-12 px-8 w-1/2 relative mx-auto">
+        <Card className="text-center border-2 border-dashed py-12 px-8 w-1/2 relative my-auto">
           <ImageUp className="mx-auto h-12 w-12" />
           <p className="text-xl my-4 font-bold">
             {t("addContact.formInfoAvatar")}{" "}

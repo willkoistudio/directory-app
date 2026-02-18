@@ -154,7 +154,7 @@ export default {
       city: "Ville",
       postalCode: "Code postal",
       street: "Rue",
-      notes:  "Notes",
+      notes: "Notes",
     },
     step3: {
       saveCompany: "Enregistrer l'entreprise",

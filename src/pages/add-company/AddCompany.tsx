@@ -116,31 +116,29 @@ const AddCompany: FC = () => {
 
   const onSubmit = async () => {
     const values = form.getValues();
-    if (form.formState.isValid) {
-      const company: CompanyData = {
-        name: String(values.name),
-        logo: String(values.logo),
-        phone: String(values.phone),
-        fax: String(values.fax),
-        website: String(values.website),
-        notes: String(values.notes),
-        area: String(values.area),
-        address: {
-          street: String(values.address.street),
-          cityId: String(values.address.cityId),
-          postalCode: String(values.address.postalCode),
-          stateId: String(values.address.stateId),
-          countryId: String(values.address.countryId),
-        },
-      };
-      try {
-        setLoading(true);
-        await dispatch(addCompany(company) as any);
-      } catch (error) {
-        console.error("Error while addinig contact", error);
-      } finally {
-        setLoading(false);
-      }
+    const company: CompanyData = {
+      name: String(values.name),
+      logo: String(values.logo),
+      phone: String(values.phone),
+      fax: String(values.fax),
+      website: String(values.website),
+      notes: String(values.notes),
+      area: String(values.area),
+      address: {
+        street: String(values.address.street),
+        cityId: String(values.address.cityId),
+        postalCode: String(values.address.postalCode),
+        stateId: String(values.address.stateId),
+        countryId: String(values.address.countryId),
+      },
+    };
+    try {
+      setLoading(true);
+      await dispatch(addCompany(company) as any);
+    } catch (error) {
+      console.error("Error while adding company", error);
+    } finally {
+      setLoading(false);
     }
   };
 

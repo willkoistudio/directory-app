@@ -84,6 +84,10 @@ export default {
       phone: "Phone",
       country: "Country",
       selectCountry: "Select a country",
+      state: "State / Province",
+      city: "City",
+      postalCode: "Postal code",
+      street: "Street",
     },
     step3: {
       fax: "Fax",
