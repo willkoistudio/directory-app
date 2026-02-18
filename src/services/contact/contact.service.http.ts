@@ -25,7 +25,21 @@ export class ServiceContactHttp implements ServiceContact {
 
   public async addContact(contact: ContactData): Promise<void> {
     try {
-      const { data } = await apiClient.post<void>(`contacts`, contact);
+      const payload = {
+        name: contact.name,
+        email: contact.email,
+        phone: contact.phone,
+        workPhone: contact.workPhone,
+        fax: contact.fax,
+        function: contact.function,
+        website: contact.website,
+        companyId: contact.company?.id,
+        address: contact.address,
+        keywords: contact.keywords,
+        avatar: contact.avatar,
+        notes: contact.notes,
+      };
+      const { data } = await apiClient.post<void>(`contacts`, payload);
       return data;
     } catch (erreur) {
       throw new Error("Error adding contact");

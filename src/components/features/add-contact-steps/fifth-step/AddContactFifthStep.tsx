@@ -83,17 +83,13 @@ const AddContactFifthStep: FC<AddContactFifthStepProps> = ({
       <div className="py-12 flex gap-8 flex-row">
         <div className="basis-1/4">
           <div
-            className="h-[350px] w-[350px] bg-cover bg-center rounded-full flex items-center justify-center"
+            className="h-[350px] w-[350px] bg-cover bg-center rounded-full"
             style={{
               backgroundImage: `url(${
                 getValues("avatar") || PLACEHOLDER_IMAGE_URL
               })`,
             }}
-          >
-            <Label className="font-bold mb-2 block">
-              {t("addContact.step5.formInfoAvatar")}
-            </Label>
-          </div>
+          />
         </div>
         <Card className="px-8 py-8 basis-1/2">
           <div>

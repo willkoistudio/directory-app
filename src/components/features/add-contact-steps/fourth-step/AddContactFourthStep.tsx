@@ -27,21 +27,23 @@ const AddContactFourthStep: FC<UseFormReturn<AddContactFormSchema>> = ({
     if (event.key !== "Enter") {
       return;
     }
-    if (inputValue) {
-      setKeywords([...keywords, inputValue]);
+    event.preventDefault();
+    if (inputValue.trim()) {
+      const updated = [...keywords, inputValue.trim()];
+      setKeywords(updated);
       setInputValue("");
-      field.onChange(keywords);
+      field.onChange(updated);
+      trigger("keywords");
     }
-
-    trigger("keywords");
   };
 
   const removeKeyword = (
     index: number,
     field: ControllerRenderProps<AddContactFormSchema>
   ) => {
-    setKeywords(keywords.filter((_, i) => i !== index));
-    field.onChange(keywords);
+    const updated = keywords.filter((_, i) => i !== index);
+    setKeywords(updated);
+    field.onChange(updated);
     trigger("keywords");
   };
 
