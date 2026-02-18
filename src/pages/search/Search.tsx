@@ -70,7 +70,7 @@ const Search: FC = () => {
         </div>
       ) : (
         <Tabs defaultValue={APP_CONTEXT.CONTACT}>
-          <TabsList className="grid w-full grid-cols-2 bg-white/10 h-auto">
+          <TabsList className="grid w-full grid-cols-2 bg-gray/10 h-auto">
             {tabs.map((tab) => (
               <TabsTrigger
                 key={tab.value}
